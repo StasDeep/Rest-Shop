@@ -1,0 +1,17 @@
+certifi==2017.7.27.1
+chardet==3.0.4
+coreapi==2.3.1
+coreschema==0.0.4
+Django==1.11.4
+django-crispy-forms==1.6.1
+django-filter==1.0.4
+djangorestframework==3.6.4
+idna==2.6
+itypes==1.1.0
+Jinja2==2.9.6
+Markdown==2.6.9
+MarkupSafe==1.0
+pytz==2017.2
+requests==2.18.4
+uritemplate==3.0.0
+urllib3==1.22
