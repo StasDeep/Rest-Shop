@@ -102,3 +102,6 @@ ENV/
 
 # PyCharm
 .idea
+
+# Secrets
+secret_settings.py
