@@ -7,6 +7,9 @@ class Property(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name_plural = 'properties'
+
 
 class PropertyValue(models.Model):
     value = models.CharField(max_length=255)
@@ -34,7 +37,7 @@ class Product(models.Model):
 # TODO: install Pillow
 # class ProductImage(models.Model):
 #     product = models.ForeignKey(to=Product, on_delete=models.CASCADE)
-    # image = models.ImageField(upload_to="images")
+#     image = models.ImageField(upload_to="images")
 
 
 class Unit(models.Model):
