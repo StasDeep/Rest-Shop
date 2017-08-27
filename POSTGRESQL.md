@@ -32,7 +32,7 @@ Change user settings:
 ```
 ALTER ROLE restshopuser SET client_encoding TO 'utf8';
 ALTER ROLE restshopuser SET default_transaction_isolation TO 'read committed';
-ALTER ROLE restshopuser SET timezone TO 'Europe/Minsk';
+ALTER ROLE restshopuser SET timezone TO 'UTC';
 ```
 
 Now, all we need to do is give our database user access rights to the database we created:
