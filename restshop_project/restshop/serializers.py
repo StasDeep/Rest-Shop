@@ -11,8 +11,10 @@ class UnitSerializer(serializers.ModelSerializer):
         fields = ('sku', 'price', 'properties')
 
     def get_properties(self, obj):
-        return {property_value.property.name: property_value.value
-                for property_value in obj.value_set.all()}
+        return [{
+                    'name': property_value.property.name,
+                    'value': property_value.value
+                } for property_value in obj.value_set.all()]
 
 
 class ProductListSerializer(serializers.ModelSerializer):
