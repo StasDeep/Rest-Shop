@@ -17,3 +17,13 @@ cp restshop_project/restshop_project/secret_settings.py.example restshop_project
 ```
 
 Change `USER_NAME` and `USER_PASSWORD` constants in `secret_settings.py`.
+
+Set up database schema:
+```
+python manage.py migrate
+```
+
+Create superuser:
+```
+python manage.py createsuperuser
+```
