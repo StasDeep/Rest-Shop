@@ -6,6 +6,7 @@ from .serializers import ProductListSerializer, ProductSerializer
 
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
+    http_method_names = ['get']
 
     def get_serializer_class(self):
         if self.action == 'list':
