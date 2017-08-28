@@ -46,6 +46,13 @@ class Product(models.Model):
 class ProductImage(models.Model):
     product = models.ForeignKey(to=Product, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='product_images/')
+    is_main = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['product__title', '-is_main', 'image']
+
+    def __str__(self):
+        return '{}: {}'.format(self.product.title, self.image.name)
 
 
 class Unit(models.Model):
