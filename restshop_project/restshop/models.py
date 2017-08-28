@@ -67,3 +67,18 @@ class Unit(models.Model):
     def __str__(self):
         properties = ', '.join(str(value) for value in self.value_set.all())
         return '{}: {}'.format(self.product.title, properties)
+
+
+class Order(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    unit_set = models.ManyToManyField(to=Unit)
+    name = models.CharField(max_length=255)
+    address = models.CharField(max_length=255)
+    phone = models.CharField(max_length=15)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        items_count = self.unit_set.all().count()
+        return 'Order ({} items) by {}'.format(items_count, self.name)

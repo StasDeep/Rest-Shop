@@ -3,7 +3,13 @@ from django.contrib import admin
 from django.core.exceptions import ValidationError
 
 from .models import (
-    PropertyValue, Property, Product, ProductImage, Tag, Unit
+    Order,
+    PropertyValue,
+    Property,
+    Product,
+    ProductImage,
+    Tag,
+    Unit
 )
 
 
@@ -32,4 +38,10 @@ class UnitForm(forms.ModelForm):
 class UnitAdmin(admin.ModelAdmin):
     form = UnitForm
 
-admin.site.register([PropertyValue, Property, Product, ProductImage, Tag, Unit], UnitAdmin)
+admin.site.register([Order,
+                     PropertyValue,
+                     Property,
+                     Product,
+                     ProductImage,
+                     Tag,
+                     Unit], UnitAdmin)
