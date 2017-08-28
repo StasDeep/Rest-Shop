@@ -14,13 +14,18 @@ class UnitForm(forms.ModelForm):
 
     def clean(self):
         values = self.cleaned_data.get('value_set')
+
+        # Multiple values for one property (Color: Black, Color: White)
+        # are disallowed for a single unit.
         properties = []
         if values:
             for value in values.all():
                 if value.property.id not in properties:
                     properties.append(value.property.id)
                 else:
-                    raise ValidationError('Unit property {} has multiple values'.format(value.property.name))
+                    raise ValidationError(
+                        'Unit property {} has multiple values'.format(value.property.name)
+                    )
         return self.cleaned_data
 
 
