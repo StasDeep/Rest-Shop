@@ -55,6 +55,9 @@ class Unit(models.Model):
     sku = models.CharField(max_length=255, primary_key=True)
     price = models.PositiveIntegerField()
 
+    class Meta:
+        ordering = ['product__title', 'sku']
+
     def __str__(self):
         properties = ', '.join(str(value) for value in self.value_set.all())
         return '{}: {}'.format(self.product.title, properties)
