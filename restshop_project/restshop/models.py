@@ -43,10 +43,9 @@ class Product(models.Model):
         return self.title
 
 
-# TODO: install Pillow
-# class ProductImage(models.Model):
-#     product = models.ForeignKey(to=Product, on_delete=models.CASCADE)
-#     image = models.ImageField(upload_to="images")
+class ProductImage(models.Model):
+    product = models.ForeignKey(to=Product, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='product_images/')
 
 
 class Unit(models.Model):
