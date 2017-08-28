@@ -70,11 +70,21 @@ class Unit(models.Model):
 
 
 class Order(models.Model):
+    PENDING = 'PE'
+    REJECTED = 'RE'
+    COMPLETED = 'CO'
+    STATUSES = (
+        (PENDING, 'Pending'),
+        (REJECTED, 'Rejected'),
+        (COMPLETED, 'Completed'),
+    )
+
     created_at = models.DateTimeField(auto_now_add=True)
     unit_set = models.ManyToManyField(to=Unit)
     name = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
     phone = models.CharField(max_length=15)
+    status = models.CharField(max_length=2, choices=STATUSES, default=PENDING)
 
     class Meta:
         ordering = ['-created_at']
