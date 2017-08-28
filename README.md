@@ -1,6 +1,6 @@
 # Rest-Shop
 
-E-commerce with Django REST Framework.
+Sneakers shop test site with Python 3 and Angular.
 
 ## Installation
 
