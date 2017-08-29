@@ -33,8 +33,18 @@ class Tag(models.Model):
         return self.name
 
 
+class Seller(models.Model):
+    user = models.OneToOneField(to=User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    address = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+
 class Product(models.Model):
     tag_set = models.ManyToManyField(to=Tag)
+    seller = models.ForeignKey(to=Seller, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
 
     class Meta:
@@ -93,12 +103,3 @@ class Order(models.Model):
     def __str__(self):
         items_count = self.unit_set.all().count()
         return 'Order ({} items) by {}'.format(items_count, self.name)
-
-
-class Seller(models.Model):
-    user = models.OneToOneField(to=User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=255)
-    address = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.name
