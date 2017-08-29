@@ -1,15 +1,14 @@
-from rest_framework import viewsets
+from rest_framework import generics
 
 from .models import Product
 from .serializers import ProductListSerializer, ProductSerializer
 
 
-class ProductViewSet(viewsets.ModelViewSet):
+class ProductList(generics.ListAPIView):
     queryset = Product.objects.all()
-    http_method_names = ['get']
+    serializer_class = ProductListSerializer
 
-    def get_serializer_class(self):
-        if self.action == 'list':
-            return ProductListSerializer
-        else:
-            return ProductSerializer
+
+class ProductDetail(generics.RetrieveAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
