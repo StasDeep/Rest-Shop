@@ -8,6 +8,7 @@ from .models import (
     Property,
     Product,
     ProductImage,
+    Seller,
     Tag,
     Unit
 )
@@ -43,5 +44,6 @@ admin.site.register([Order,
                      Property,
                      Product,
                      ProductImage,
+                     Seller,
                      Tag,
                      Unit], UnitAdmin)

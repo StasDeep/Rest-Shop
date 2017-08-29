@@ -1,8 +1,8 @@
+from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import serializers
 
-from .models import Product, Unit
-
+from .models import Product, Unit, Seller
 
 EMPTY_PHOTO_URL = 'product_images/empty.jpg'
 
@@ -63,3 +63,48 @@ class ProductSerializer(ProductListSerializer):
             return [image.image.url for image in images.all()]
         else:
             return [EMPTY_PHOTO_URL]
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('email', 'password')
+        write_only_fields = ('password',)
+
+    def create(self, validated_data):
+        user = User.objects.create(
+            email=validated_data['email'],
+            username=validated_data['email']
+        )
+
+        user.set_password(validated_data['password'])
+        user.save()
+
+        return user
+
+
+class SellerSerializer(serializers.HyperlinkedModelSerializer):
+    name = serializers.CharField(source='seller.name')
+    address = serializers.CharField(source='seller.address')
+
+    class Meta:
+        model = User
+        fields = ('email', 'password', 'name', 'address')
+
+    def create(self, validated_data):
+        user = User.objects.create(
+            email=validated_data['email'],
+            username=validated_data['email'],
+            is_staff=True
+        )
+
+        user.set_password(validated_data['password'])
+        user.save()
+
+        Seller.objects.create(
+            user=user,
+            name=validated_data['seller']['name'],
+            address=validated_data['seller']['address']
+        )
+
+        return user
