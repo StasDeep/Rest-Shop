@@ -9,16 +9,25 @@ EMPTY_PHOTO_URL = 'product_images/empty.jpg'
 
 class UnitSerializer(serializers.ModelSerializer):
     properties = serializers.SerializerMethodField()
+    images = serializers.SerializerMethodField()
 
     class Meta:
         model = Unit
-        fields = ('sku', 'price', 'properties')
+        fields = ('sku', 'price', 'properties', 'images')
 
     def get_properties(self, obj):
         return [{
                     'name': property_value.property.name,
                     'value': property_value.value
                 } for property_value in obj.value_set.all()]
+
+    def get_images(self, obj):
+        images = obj.unitimage_set.all()
+
+        if images.exists():
+            return [image.image.url for image in images.all()]
+        else:
+            return [EMPTY_PHOTO_URL]
 
 
 class ProductListSerializer(serializers.ModelSerializer):
@@ -36,10 +45,20 @@ class ProductListSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'tags', 'image')
 
     def get_image(self, obj):
-        try:
-            return obj.productimage_set.get(is_main=True).image.url
-        except ObjectDoesNotExist:
+        unit = obj.unit_set.filter(unitimage__isnull=False).first()
+
+        # If there are no units for the product:
+        if unit is None:
             return EMPTY_PHOTO_URL
+
+        # Get image (preferably, main one) for the unit.
+        image = unit.unitimage_set.order_by('-is_main').first()
+
+        # If there are no images for the unit:
+        if image is None:
+            return EMPTY_PHOTO_URL
+
+        return image.image.url
 
 
 # Inherit from list serializer to get tags field.
@@ -50,19 +69,9 @@ class ProductSerializer(ProductListSerializer):
         source='unit_set'
     )
 
-    images = serializers.SerializerMethodField()
-
     class Meta:
         model = Product
-        fields = ('id', 'title', 'tags', 'units', 'images')
-
-    def get_images(self, obj):
-        images = obj.productimage_set.all()
-
-        if images.exists():
-            return [image.image.url for image in images.all()]
-        else:
-            return [EMPTY_PHOTO_URL]
+        fields = ('id', 'title', 'tags', 'units')
 
 
 class UserSerializer(serializers.ModelSerializer):

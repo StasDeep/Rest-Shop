@@ -48,22 +48,10 @@ class Product(models.Model):
     title = models.CharField(max_length=255)
 
     class Meta:
-        ordering = ['id']
+        ordering = ['title']
 
     def __str__(self):
         return self.title
-
-
-class ProductImage(models.Model):
-    product = models.ForeignKey(to=Product, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='product_images/')
-    is_main = models.BooleanField(default=False)
-
-    class Meta:
-        ordering = ['product__title', '-is_main', 'image']
-
-    def __str__(self):
-        return '{}: {}'.format(self.product.title, self.image.name)
 
 
 class Unit(models.Model):
@@ -79,6 +67,21 @@ class Unit(models.Model):
     def __str__(self):
         properties = ', '.join(str(value) for value in self.value_set.all())
         return '{}: {}'.format(self.product.title, properties)
+
+
+class UnitImage(models.Model):
+    # Units can have same colors, but different sizes.
+    # No need to create separate Image instances for these units.
+    # That's why ManyToMany is used (one photo can be attached to different units).
+    unit_set = models.ManyToManyField(to=Unit)
+    image = models.ImageField(upload_to='product_images/')
+    is_main = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['image']
+
+    def __str__(self):
+        return '{}: {}'.format(self.unit_set.first().product.title, self.image.name)
 
 
 class Order(models.Model):
