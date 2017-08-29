@@ -98,7 +98,7 @@ class Order(models.Model):
     unit_set = models.ManyToManyField(to=Unit)
     name = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
-    phone = models.CharField(max_length=15)
+    phone = models.CharField(max_length=31)
     status = models.CharField(max_length=2, choices=STATUSES, default=PENDING)
 
     class Meta:
