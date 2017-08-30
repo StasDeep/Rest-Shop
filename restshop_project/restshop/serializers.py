@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import serializers
 
-from .models import Product, Unit, Seller
+from .models import Product, Unit, Seller, Order
 
 EMPTY_PHOTO_URL = 'product_images/empty.jpg'
 
@@ -118,7 +118,7 @@ class SellerSerializer(serializers.ModelSerializer):
         return user
 
 
-class OrderSerializer(serializers.Serializer):
+class OrderUnitSerializer(serializers.Serializer):
     units = serializers.ListField()
     name = serializers.CharField(max_length=255)
     address = serializers.CharField(max_length=255)
@@ -156,3 +156,9 @@ class OrderSerializer(serializers.Serializer):
                 raise serializers.ValidationError('Unit is not in stock')
 
         return value
+
+
+class OrderListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = ('id', 'status', 'created_at')

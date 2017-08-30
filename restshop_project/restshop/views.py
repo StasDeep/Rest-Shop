@@ -2,9 +2,11 @@ from django.contrib.auth.models import User
 from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.viewsets import ViewSet
 
 from .models import Product, Order, Unit, OrderUnit
-from .serializers import ProductListSerializer, ProductSerializer, UserSerializer, SellerSerializer, OrderSerializer
+from .serializers import ProductListSerializer, ProductSerializer, UserSerializer, SellerSerializer, \
+    OrderUnitSerializer, OrderListSerializer
 
 
 class ProductListView(generics.ListAPIView):
@@ -27,12 +29,17 @@ class SellerCreateView(generics.CreateAPIView):
     serializer_class = SellerSerializer
 
 
-class OrderCreateView(generics.CreateAPIView):
-    queryset = Order.objects.all()
+class OrderViewSet(ViewSet):
     permission_classes = (IsAuthenticated,)
 
-    def post(self, request, *args, **kwargs):
-        serializer = OrderSerializer(data=request.data)
+    def list(self, request):
+        user = request.user
+        queryset = Order.objects.filter(user=user)
+        serializer = OrderListSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def create(self, request):
+        serializer = OrderUnitSerializer(data=request.data)
 
         if not serializer.is_valid():
             return Response({'errors': serializer.error_messages}, status=status.HTTP_400_BAD_REQUEST)

@@ -7,7 +7,7 @@ from .models import Order, Product, Seller, Unit, OrderUnit
 
 class OrderTestCase(APITestCase):
     def setUp(self):
-        self.url = reverse('restshop:order_create')
+        self.url = reverse('restshop:order-list')
         User.objects.create_user('temp', 'temp@gmail.com', '123123')
         self.client.login(username='temp', password='123123')
 
@@ -132,3 +132,26 @@ class OrderTestCase(APITestCase):
         for data in data_set:
             response = self.client.post(self.url, data, format='json')
             self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_order_list_retrieval(self):
+        data = {
+            'name': 'Temp',
+            'phone': '+375555555',
+            'address': '5th Str 55',
+            'units': [
+                {'sku': '000000', 'quantity': 2},
+                {'sku': '000001', 'quantity': 2}
+            ]
+        }
+        response = self.client.post(self.url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.client.logout()
+
+        data['name'] = 'Temp2'
+        User.objects.create_user('temp2', 'temp2@gmail.com', '123123')
+        self.client.login(username='temp2', password='123123')
+        response = self.client.post(self.url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        response = self.client.get(self.url)
+        self.assertEqual(len(response.data), 1)
