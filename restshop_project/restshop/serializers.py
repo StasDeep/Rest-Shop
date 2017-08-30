@@ -91,7 +91,7 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
-class SellerSerializer(serializers.HyperlinkedModelSerializer):
+class SellerSerializer(serializers.ModelSerializer):
     name = serializers.CharField(source='seller.name')
     address = serializers.CharField(source='seller.address')
 
@@ -116,3 +116,43 @@ class SellerSerializer(serializers.HyperlinkedModelSerializer):
         )
 
         return user
+
+
+class OrderSerializer(serializers.Serializer):
+    units = serializers.ListField()
+    name = serializers.CharField(max_length=255)
+    address = serializers.CharField(max_length=255)
+    phone = serializers.CharField(max_length=31)
+
+    def create(self, validated_data):
+        return validated_data
+
+    def validate_units(self, value):
+        if not isinstance(value, list):
+            raise serializers.ValidationError('Units must be passed as an array')
+
+        for unit_order in value:
+            if 'sku' not in unit_order or 'quantity' not in unit_order:
+                raise serializers.ValidationError('Units must contain sku and quantity parameters')
+
+            sku = unit_order['sku']
+            quantity = unit_order['quantity']
+
+            if not isinstance(sku, str):
+                raise serializers.ValidationError('Parameter sku must be a string')
+
+            if not isinstance(quantity, int):
+                raise serializers.ValidationError('Parameter quantity must be an integer number')
+
+            if quantity <= 0:
+                raise serializers.ValidationError('Parameter quantity must be more than zero')
+
+            try:
+                unit = Unit.objects.get(sku=sku)
+            except ObjectDoesNotExist:
+                raise serializers.ValidationError('Unit does not exist')
+
+            if not unit.in_stock:
+                raise serializers.ValidationError('Unit is not in stock')
+
+        return value

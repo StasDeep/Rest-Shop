@@ -95,7 +95,8 @@ class Order(models.Model):
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
-    unit_set = models.ManyToManyField(to=Unit)
+    unit_set = models.ManyToManyField(to=Unit, through='OrderUnit')
+    user = models.ForeignKey(to=User)
     name = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
     phone = models.CharField(max_length=31)
@@ -107,3 +108,9 @@ class Order(models.Model):
     def __str__(self):
         items_count = self.unit_set.all().count()
         return 'Order ({} items) by {}'.format(items_count, self.name)
+
+
+class OrderUnit(models.Model):
+    order = models.ForeignKey(to=Order)
+    unit = models.ForeignKey(to=Unit)
+    quantity = models.PositiveIntegerField()
