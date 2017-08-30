@@ -44,18 +44,37 @@ class OrderCreateView(generics.CreateAPIView):
         address = data['address']
         phone = data['phone']
 
-        order = Order.objects.create(
-            user=user,
-            name=name,
-            address=address,
-            phone=phone
-        )
+        # One order is broken into several ones: one for each seller.
+        # It's done to prevent ambiguous statuses.
+        # While iterating through units,
+        # their sellers are pushed to sellers list
+        # and corresponding orders are pushed to orders list by the same index.
+        sellers = []
+        orders = []
+
+        def get_order_by_seller(seller):
+            if seller in sellers:
+                order_index = sellers.index(seller)
+                return orders[order_index]
+            else:
+                order = Order.objects.create(
+                    user=user,
+                    name=name,
+                    address=address,
+                    phone=phone
+                )
+
+                sellers.append(seller)
+                orders.append(order)
+
+                return order
 
         for unit_order in data['units']:
             unit = Unit.objects.get(sku=unit_order['sku'])
+            unit_seller = unit.product.seller
             quantity = unit_order['quantity']
             OrderUnit.objects.create(
-                order=order,
+                order=get_order_by_seller(unit_seller),
                 unit=unit,
                 quantity=quantity
             )
