@@ -6,7 +6,7 @@ from rest_framework.viewsets import ViewSet
 
 from .models import Product, Order, Unit, OrderUnit
 from .serializers import ProductListSerializer, ProductSerializer, UserSerializer, SellerSerializer, \
-    OrderUnitSerializer, OrderListSerializer
+    OrderUnitSerializer, OrderListSerializer, OrderDetailSerializer
 
 
 class ProductListView(generics.ListAPIView):
@@ -36,6 +36,16 @@ class OrderViewSet(ViewSet):
         user = request.user
         queryset = Order.objects.filter(user=user)
         serializer = OrderListSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        user = request.user
+        order = Order.objects.get(pk=pk)
+
+        if user.id != order.user.id:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+        serializer = OrderDetailSerializer(order)
         return Response(serializer.data)
 
     def create(self, request):

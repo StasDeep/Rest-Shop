@@ -162,3 +162,15 @@ class OrderListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ('id', 'status', 'created_at')
+
+
+class OrderDetailSerializer(serializers.ModelSerializer):
+    units = UnitSerializer(
+        many=True,
+        read_only=True,
+        source='unit_set'
+    )
+
+    class Meta:
+        model = Order
+        fields = ('id', 'status', 'created_at', 'name', 'address', 'phone', 'units')

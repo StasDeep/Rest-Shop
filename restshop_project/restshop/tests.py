@@ -6,8 +6,19 @@ from .models import Order, Product, Seller, Unit, OrderUnit
 
 
 class OrderTestCase(APITestCase):
+    order_data = {
+        'name': 'Temp',
+        'phone': '+375555555',
+        'address': '5th Str 55',
+        'units': [
+            {'sku': '000000', 'quantity': 2},
+            {'sku': '000001', 'quantity': 2}
+        ]
+    }
+
     def setUp(self):
         self.url = reverse('restshop:order-list')
+
         User.objects.create_user('temp', 'temp@gmail.com', '123123')
         self.client.login(username='temp', password='123123')
 
@@ -26,19 +37,16 @@ class OrderTestCase(APITestCase):
         Unit.objects.create(product=product, sku='100001', price=95)
         Unit.objects.create(product=product, sku='100002', price=95, in_stock=False)
 
-    def test_create_order(self):
-        """Create a new order object."""
-        data = {
-            'name': 'Temp',
-            'phone': '+375555555',
-            'address': '5th Str 55',
-            'units': [
-                {'sku': '000000', 'quantity': 2},
-                {'sku': '000001', 'quantity': 2}
-            ]
-        }
+    def create_order_and_assert(self, data=None):
+        if data is None:
+            data = self.order_data
+
         response = self.client.post(self.url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_create_order(self):
+        """Create a new order object."""
+        self.create_order_and_assert()
         self.assertEqual(Order.objects.count(), 1)
         self.assertEqual(OrderUnit.objects.count(), 2)
 
@@ -54,8 +62,7 @@ class OrderTestCase(APITestCase):
                 {'sku': '100000', 'quantity': 1}
             ]
         }
-        response = self.client.post(self.url, data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.create_order_and_assert(data)
         self.assertEqual(Order.objects.count(), 2)
         self.assertEqual(OrderUnit.objects.count(), 3)
 
@@ -134,24 +141,50 @@ class OrderTestCase(APITestCase):
             self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_order_list_retrieval(self):
-        data = {
-            'name': 'Temp',
-            'phone': '+375555555',
-            'address': '5th Str 55',
-            'units': [
-                {'sku': '000000', 'quantity': 2},
-                {'sku': '000001', 'quantity': 2}
-            ]
-        }
-        response = self.client.post(self.url, data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        """Get orders list of user."""
+        self.create_order_and_assert()
         self.client.logout()
 
+        data = self.order_data.copy()
         data['name'] = 'Temp2'
+
         User.objects.create_user('temp2', 'temp2@gmail.com', '123123')
         self.client.login(username='temp2', password='123123')
-        response = self.client.post(self.url, data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
+        self.create_order_and_assert(data)
         response = self.client.get(self.url)
         self.assertEqual(len(response.data), 1)
+
+    def test_order_list_when_not_logged_in(self):
+        """Get orders list when not logged in (expecting 403)."""
+        self.client.logout()
+
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_order_detail_retrieval(self):
+        """Get single order."""
+        self.create_order_and_assert()
+
+        response = self.client.get(self.url)
+        order_id = response.data[0]['id']
+
+        url = reverse('restshop:order-detail', kwargs={'pk': order_id})
+        response = self.client.get(url)
+        self.assertEqual(response.data['name'], 'Temp')
+        self.assertEqual(len(response.data['units']), 2)
+
+    def test_order_detail_when_unauthorized(self):
+        """Get single order when user is not the owner."""
+        self.create_order_and_assert()
+        response = self.client.get(self.url)
+        order_id = response.data[0]['id']
+
+        self.client.logout()
+
+        User.objects.create_user('temp2', 'temp2@gmail.com', '123123')
+        self.client.login(username='temp2', password='123123')
+
+        url = reverse('restshop:order-detail', kwargs={'pk': order_id})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
