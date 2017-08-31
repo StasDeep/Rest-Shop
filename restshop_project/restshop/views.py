@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import generics, status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
@@ -20,11 +20,13 @@ class ProductDetailView(generics.RetrieveAPIView):
 
 
 class UserCreateView(generics.CreateAPIView):
+    permission_classes = (AllowAny,)
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 
 class SellerCreateView(generics.CreateAPIView):
+    permission_classes = (AllowAny,)
     queryset = User.objects.all()
     serializer_class = SellerSerializer
 
