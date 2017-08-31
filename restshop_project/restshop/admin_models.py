@@ -10,7 +10,7 @@ class UnitForm(forms.ModelForm):
         model = Unit
         fields = '__all__'
 
-    def clean(self):
+    def clean_value_set(self):
         values = self.cleaned_data.get('value_set')
 
         # Multiple values for one property (Color: Black, Color: White)
@@ -24,7 +24,7 @@ class UnitForm(forms.ModelForm):
                     raise ValidationError(
                         'Unit property {} has multiple values'.format(value.property.name)
                     )
-        return self.cleaned_data
+        return values
 
 
 class StaffModelAdmin(admin.ModelAdmin):
