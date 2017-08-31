@@ -6,6 +6,7 @@ Django==1.11.4
 django-crispy-forms==1.6.1
 django-filter==1.0.4
 djangorestframework==3.6.4
+djangorestframework-sav==0.1.0
 idna==2.6
 itypes==1.1.0
 Jinja2==2.9.6

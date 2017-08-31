@@ -188,3 +188,23 @@ class OrderTestCase(APITestCase):
         url = reverse('restshop:order-detail', kwargs={'pk': order_id})
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+
+class UserTestCase(APITestCase):
+    def setUp(self):
+        self.url = reverse('restshop:auth')
+        User.objects.create_user('temp', 'temp@gmail.com', '123123')
+
+    def test_login(self):
+        """Log in as a common user."""
+        response = self.client.post(self.url, {'username': 'temp', 'password': '123123'})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        print(response.data)
+
+        response = self.client.get(reverse('restshop:order-list'))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        self.client.logout()
+
+        response = self.client.get(reverse('restshop:order-list'))
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
