@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group, Permission
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import serializers
 
@@ -106,6 +106,9 @@ class SellerSerializer(serializers.ModelSerializer):
             is_staff=True
         )
 
+        staff_group = self.get_staff_group()
+        user.groups.add(staff_group)
+
         user.set_password(validated_data['password'])
         user.save()
 
@@ -116,6 +119,28 @@ class SellerSerializer(serializers.ModelSerializer):
         )
 
         return user
+
+    def get_staff_group(self):
+        """Get staff group with seller permissions or create if does not exist."""
+        try:
+            return Group.objects.get(name='Staff')
+        except ObjectDoesNotExist:
+            group = Group.objects.create(name='Staff')
+
+        content_types = ('unit', 'product', 'unitimage')
+        permissions = ('add', 'change', 'delete')
+
+        for content_type in content_types:
+            for permission in permissions:
+                codename = '{}_{}'.format(permission, content_type)
+                print(codename)
+                permission = Permission.objects.get(codename=codename)
+                group.permissions.add(permission)
+
+        permission = Permission.objects.get(codename='change_order')
+        group.permissions.add(permission)
+
+        return group
 
 
 class OrderUnitSerializer(serializers.Serializer):

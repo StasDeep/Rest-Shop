@@ -114,3 +114,6 @@ class OrderUnit(models.Model):
     order = models.ForeignKey(to=Order)
     unit = models.ForeignKey(to=Unit)
     quantity = models.PositiveIntegerField()
+
+    def __str__(self):
+        return '{} pcs of {} by {}'.format(self.quantity, self.unit.product, self.order.name)

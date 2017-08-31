@@ -1,9 +1,8 @@
-from django import forms
 from django.contrib import admin
-from django.core.exceptions import ValidationError
 
 from .models import (
     Order,
+    OrderUnit,
     PropertyValue,
     Property,
     Product,
@@ -12,39 +11,16 @@ from .models import (
     Unit,
     UnitImage
 )
+from .admin_models import UnitAdmin, ProductAdmin, UnitImageAdmin, OrderAdmin
 
 
-class UnitForm(forms.ModelForm):
-    class Meta:
-        model = Unit
-        fields = '__all__'
-
-    def clean(self):
-        values = self.cleaned_data.get('value_set')
-
-        # Multiple values for one property (Color: Black, Color: White)
-        # are disallowed for a single unit.
-        properties = []
-        if values:
-            for value in values.all():
-                if value.property.id not in properties:
-                    properties.append(value.property.id)
-                else:
-                    raise ValidationError(
-                        'Unit property {} has multiple values'.format(value.property.name)
-                    )
-        return self.cleaned_data
-
-
-class UnitAdmin(admin.ModelAdmin):
-    form = UnitForm
-
-admin.site.register([Order,
+admin.site.register([OrderUnit,
                      PropertyValue,
                      Property,
-                     Product,
                      Seller,
-                     Tag,
-                     UnitImage])
+                     Tag])
 
 admin.site.register(Unit, UnitAdmin)
+admin.site.register(Product, ProductAdmin)
+admin.site.register(UnitImage, UnitImageAdmin)
+admin.site.register(Order, OrderAdmin)
