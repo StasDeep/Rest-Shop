@@ -127,7 +127,7 @@ class SellerSerializer(serializers.ModelSerializer):
         except ObjectDoesNotExist:
             group = Group.objects.create(name='Staff')
 
-        content_types = ('unit', 'product', 'unitimage')
+        content_types = ('unit', 'product', 'unitimage', 'orderunit')
         permissions = ('add', 'change', 'delete')
 
         for content_type in content_types:

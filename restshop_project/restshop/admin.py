@@ -11,11 +11,9 @@ from .models import (
     Unit,
     UnitImage
 )
-from .admin_models import UnitAdmin, ProductAdmin, UnitImageAdmin, OrderAdmin
+from .admin_models import UnitAdmin, ProductAdmin, UnitImageAdmin, OrderAdmin, OrderUnitAdmin
 
-
-admin.site.register([OrderUnit,
-                     PropertyValue,
+admin.site.register([PropertyValue,
                      Property,
                      Seller,
                      Tag])
@@ -24,3 +22,4 @@ admin.site.register(Unit, UnitAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(UnitImage, UnitImageAdmin)
 admin.site.register(Order, OrderAdmin)
+admin.site.register(OrderUnit, OrderUnitAdmin)
