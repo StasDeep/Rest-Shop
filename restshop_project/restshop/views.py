@@ -1,17 +1,49 @@
 from django.contrib.auth.models import User
+from django.db.models import Q
 from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
-from .models import Product, Order, Unit, OrderUnit
+from .models import Product, Order, Unit, OrderUnit, PropertyValue
 from .serializers import ProductListSerializer, ProductSerializer, UserSerializer, SellerSerializer, \
     OrderUnitSerializer, OrderListSerializer, OrderDetailSerializer
 
 
 class ProductListView(generics.ListAPIView):
-    queryset = Product.objects.all()
     serializer_class = ProductListSerializer
+
+    def get_queryset(self):
+        queryset = Product.objects.all()
+
+        q = self.request.query_params.get('q', None)
+        tags = self.request.GET.getlist('tags')
+        criteria = self.request.GET.getlist('properties')
+        in_stock = self.request.query_params.get('in_stock', None)
+        price_min = self.request.query_params.get('price_min', None)
+        price_max = self.request.query_params.get('price_max', None)
+
+        if q is not None:
+            queryset = queryset.filter(title__icontains=q)
+
+        if tags:
+            for tag in tags:
+                queryset = queryset.filter(tag_set__name__iexact=tag).distinct()
+
+        if criteria:
+            for criterium in criteria:
+                queryset = queryset.filter(unit__value_set__in=[criterium]).distinct()
+
+        if in_stock == '1':
+            queryset = queryset.filter(unit__in_stock=True).distinct()
+
+        if price_min is not None:
+            queryset = queryset.filter(unit__price__gte=int(price_min)).distinct()
+
+        if price_max is not None:
+            queryset = queryset.filter(unit__price__lte=int(price_max)).distinct()
+
+        return queryset
 
 
 class ProductDetailView(generics.RetrieveAPIView):

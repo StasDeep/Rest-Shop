@@ -13,7 +13,7 @@ class UnitSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Unit
-        fields = ('sku', 'price', 'properties', 'images')
+        fields = ('sku', 'price', 'properties', 'images', 'in_stock')
 
     def get_properties(self, obj):
         return [{
@@ -141,7 +141,6 @@ class SellerSerializer(serializers.ModelSerializer):
         for content_type in content_types:
             for permission in content_types[content_type]:
                 codename = '{}_{}'.format(permission, content_type)
-                print(codename)
                 permission = Permission.objects.get(codename=codename)
                 group.permissions.add(permission)
 
