@@ -207,4 +207,4 @@ class UserTestCase(APITestCase):
         self.client.logout()
 
         response = self.client.get(reverse('restshop:order-list'))
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
