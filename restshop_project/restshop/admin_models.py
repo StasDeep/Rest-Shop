@@ -92,6 +92,20 @@ class QuerysetForSellerMixin(BaseModelAdmin):
 class OrderUnitInline(QuerysetForSellerMixin, admin.StackedInline):
     model = OrderUnit
     extra = 1
+    can_delete = False
+
+    def get_max_num(self, request, obj=None, **kwargs):
+        if request.user.is_superuser:
+            return super(OrderUnitInline, self).get_max_num(request, obj, **kwargs)
+
+        # If not superuser, forbid adding units to order.
+        return 0
+
+    def get_readonly_fields(self, request, obj=None):
+        if request.user.is_superuser:
+            return self.readonly_fields
+
+        return self.readonly_fields + ('unit', 'quantity')
 
 
 class UnitImageInline(QuerysetForSellerMixin, admin.StackedInline):
@@ -134,6 +148,12 @@ class UnitImageAdmin(StaffModelAdmin):
 class OrderAdmin(StaffModelAdmin):
     seller_field_path = SELLER_LOOKUPS['order']['lookup']
     inlines = (OrderUnitInline,)
+
+    def get_readonly_fields(self, request, obj=None):
+        if request.user.is_superuser:
+            return self.readonly_fields
+
+        return self.readonly_fields + ('user', 'name', 'address', 'phone')
 
 
 class OrderUnitAdmin(StaffModelAdmin):
