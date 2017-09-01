@@ -125,8 +125,7 @@ class SellerSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = User.objects.create(
             email=validated_data['email'],
-            username=validated_data['email'],
-            is_staff=True
+            username=validated_data['email']
         )
 
         staff_group = self.get_staff_group()
