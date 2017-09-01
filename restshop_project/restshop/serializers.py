@@ -127,18 +127,23 @@ class SellerSerializer(serializers.ModelSerializer):
         except ObjectDoesNotExist:
             group = Group.objects.create(name='Staff')
 
-        content_types = ('unit', 'product', 'unitimage', 'orderunit')
-        permissions = ('add', 'change', 'delete')
+        all_permissions = ('add', 'change', 'delete')
+        content_types = {
+            'unit': all_permissions,
+            'product': all_permissions,
+            'unitimage': all_permissions,
+            'orderunit': all_permissions,
+            'order': ('change',),
+            'property': ('add',),
+            'propertyvalue': ('add',)
+        }
 
         for content_type in content_types:
-            for permission in permissions:
+            for permission in content_types[content_type]:
                 codename = '{}_{}'.format(permission, content_type)
                 print(codename)
                 permission = Permission.objects.get(codename=codename)
                 group.permissions.add(permission)
-
-        permission = Permission.objects.get(codename='change_order')
-        group.permissions.add(permission)
 
         return group
 
