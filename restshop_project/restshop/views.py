@@ -5,9 +5,19 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
-from .models import Product, Order, Unit, OrderUnit, PropertyValue
+from .models import Product, Order, Unit, OrderUnit, PropertyValue, Tag, Property
 from .serializers import ProductListSerializer, ProductSerializer, UserSerializer, SellerSerializer, \
-    OrderUnitSerializer, OrderListSerializer, OrderDetailSerializer
+    OrderUnitSerializer, OrderListSerializer, OrderDetailSerializer, TagSerializer, PropertySerializer
+
+
+class TagListView(generics.ListAPIView):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
+
+
+class PropertyListView(generics.ListAPIView):
+    queryset = Property.objects.all()
+    serializer_class = PropertySerializer
 
 
 class ProductListView(generics.ListAPIView):

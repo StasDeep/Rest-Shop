@@ -2,9 +2,33 @@ from django.contrib.auth.models import User, Group, Permission
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import serializers
 
-from .models import Product, Unit, Seller, Order
+from .models import Product, Unit, Seller, Order, Tag, Property
 
 EMPTY_PHOTO_URL = 'product_images/empty.jpg'
+
+
+class TagSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Tag
+
+    def to_representation(self, instance):
+        return instance.name
+
+
+class PropertySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Property
+
+    def to_representation(self, instance):
+        return {
+            'name': instance.name,
+            'values': [{
+                'id': value.id,
+                'value': value.value
+            } for value in instance.propertyvalue_set.all()]
+        }
 
 
 class UnitSerializer(serializers.ModelSerializer):
@@ -31,10 +55,9 @@ class UnitSerializer(serializers.ModelSerializer):
 
 
 class ProductListSerializer(serializers.ModelSerializer):
-    tags = serializers.SlugRelatedField(
+    tags = TagSerializer(
         many=True,
         read_only=True,
-        slug_field='name',
         source='tag_set'
     )
 
