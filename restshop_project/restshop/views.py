@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db.models import Q
 from rest_framework import generics, status
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
@@ -8,6 +9,10 @@ from rest_framework.viewsets import ViewSet
 from .models import Product, Order, Unit, OrderUnit, PropertyValue, Tag, Property
 from .serializers import ProductListSerializer, ProductSerializer, UserSerializer, SellerSerializer, \
     OrderUnitSerializer, OrderListSerializer, OrderDetailSerializer, TagSerializer, PropertySerializer
+
+
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 25
 
 
 class TagListView(generics.ListAPIView):
@@ -22,6 +27,7 @@ class PropertyListView(generics.ListAPIView):
 
 class ProductListView(generics.ListAPIView):
     serializer_class = ProductListSerializer
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
         queryset = Product.objects.all()
