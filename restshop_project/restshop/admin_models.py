@@ -134,6 +134,19 @@ class StaffModelAdmin(QuerysetForSellerMixin, admin.ModelAdmin):
 class ProductAdmin(StaffModelAdmin):
     seller_field_path = SELLER_LOOKUPS['product']['lookup']
 
+    def get_exclude(self, request, obj=None):
+        if request.user.is_superuser:
+            return super(ProductAdmin, self).get_exclude(request, obj)
+
+        return ['seller']
+
+    def save_model(self, request, product, form, change):
+        # If seller is creating product, set seller field.
+        if not request.user.is_superuser:
+            product.seller = get_seller(request)
+
+        super(ProductAdmin, self).save_model(request, product, form, change)
+
 
 class UnitAdmin(StaffModelAdmin):
     seller_field_path = SELLER_LOOKUPS['unit']['lookup']
