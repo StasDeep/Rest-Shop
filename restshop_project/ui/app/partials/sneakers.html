@@ -1,16 +1,14 @@
 <h1>Sneakers</h1>
-<div class="col-md-5">
+<div>
    <div class="row-fluid listing sidebar">
-       <div ng-repeat="sneakers in sneakersListing">
-           <h2><a ng-href="#/{{'sneakers/' + sneakers.id}}">{{sneakers.title}}</a></h2>
-           <div class="tags" >
-               <span ng-repeat="tag in sneakers.tags"> {{tag}}</span>
+       <div class="sneakers-list-item text-center"
+            ng-repeat="sneakers in sneakersListing"
+            ng-click="go('/sneakers/' + sneakers.id)">
+           <img class="sneakers-main-image" src="{{ sneakers.image }}">
+           <p><span class="sneakers-title">{{ sneakers.title }}</span></p>
+           <div class="tags">
+               <span ng-repeat="tag in sneakers.tags"> <span class="label label-tag">{{ tag }}</span></span>
            </div>
        </div>
    </div>
-</div>
-
-<!-- 2nd Column -->
-<div class="col-md-7">
-   <div class="slide" ui-view></div>
 </div>

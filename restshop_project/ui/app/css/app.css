@@ -24,3 +24,30 @@
 .unit {
     margin-bottom: 25px;
 }
+
+.sneakers-main-image {
+    width: 220px;
+}
+
+.sneakers-list-item {
+    margin-bottom: 15px;
+    margin-right: 15px;
+    padding: 15px;
+    display: inline-block;
+    width: 250px;
+}
+
+.sneakers-list-item:hover {
+    border: #d93740 solid 2px;
+    padding: 13px;
+    cursor: pointer;
+}
+
+.sneakers-list-item .sneakers-title {
+    color: #d93740;
+}
+
+.label-tag {
+    background-color: #d93740;
+    border-radius: 0;
+}

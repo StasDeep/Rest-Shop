@@ -10,17 +10,17 @@ angular.module('myApp', [
     'myApp.controllers',
     'ngAnimate'
 ]).
-config(['$stateProvider',
-    function($stateProvider) {
-        $stateProvider.state('sneakers', {
-            url:'/sneakers',
-            templateUrl: 'partials/sneakers.html',
-            controller: 'SneakersCtrl'
-        });
-        $stateProvider.state('sneakers.details', {
-            url:'/:id',
-            templateUrl: 'partials/sneakers.details.html',
-            controller: 'SneakersDetailsCtrl'
-        });
-    }
-]);
+    config(['$stateProvider',
+        function($stateProvider) {
+            $stateProvider.state('sneakers', {
+                url:'/sneakers',
+                templateUrl: 'partials/sneakers.html',
+                controller: 'SneakersCtrl'
+            });
+            $stateProvider.state('sneakers-details', {
+                url:'/sneakers/:id',
+                templateUrl: 'partials/sneakers.details.html',
+                controller: 'SneakersDetailsCtrl'
+            });
+        }
+    ]);
