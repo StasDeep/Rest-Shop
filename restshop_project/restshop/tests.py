@@ -49,6 +49,7 @@ class OrderTestCase(APITestCase):
         self.create_order_and_assert()
         self.assertEqual(Order.objects.count(), 1)
         self.assertEqual(OrderUnit.objects.count(), 2)
+        self.assertEqual(Unit.objects.get(sku='000000').num_in_stock, 3)
 
     def test_create_order_different_sellers(self):
         """Create multiple orders by ordering products from different sellers."""

@@ -140,10 +140,14 @@ class OrderViewSet(ViewSet):
             unit = Unit.objects.get(sku=unit_order['sku'])
             unit_seller = unit.product.seller
             quantity = unit_order['quantity']
-            OrderUnit.objects.create(
-                order=get_order_by_seller(unit_seller),
-                unit=unit,
-                quantity=quantity
-            )
+
+            if unit.num_in_stock >= quantity:
+                OrderUnit.objects.create(
+                    order=get_order_by_seller(unit_seller),
+                    unit=unit,
+                    quantity=quantity
+                )
+                unit.num_in_stock -= quantity
+                unit.save()
 
         return Response({'status': 'success'}, status=status.HTTP_201_CREATED)
