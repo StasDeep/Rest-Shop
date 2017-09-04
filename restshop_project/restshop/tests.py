@@ -35,7 +35,7 @@ class OrderTestCase(APITestCase):
         product = Product.objects.create(seller=seller, title='Adidas Yeezy Boost')
         Unit.objects.create(product=product, sku='100000', price=95)
         Unit.objects.create(product=product, sku='100001', price=95)
-        Unit.objects.create(product=product, sku='100002', price=95, in_stock=False)
+        Unit.objects.create(product=product, sku='100002', price=95, num_in_stock=0)
 
     def create_order_and_assert(self, data=None):
         if data is None:
@@ -199,7 +199,6 @@ class UserTestCase(APITestCase):
         """Log in as a common user."""
         response = self.client.post(self.url, {'username': 'temp', 'password': '123123'})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        print(response.data)
 
         response = self.client.get(reverse('restshop:order-list'))
         self.assertEqual(response.status_code, status.HTTP_200_OK)

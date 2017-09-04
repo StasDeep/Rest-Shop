@@ -51,7 +51,7 @@ class ProductListView(generics.ListAPIView):
                 queryset = queryset.filter(unit__value_set__in=[criterium]).distinct()
 
         if in_stock == '1':
-            queryset = queryset.filter(unit__in_stock=True).distinct()
+            queryset = queryset.filter(unit__num_in_stock__gt=0).distinct()
 
         if price_min is not None:
             queryset = queryset.filter(unit__price__gte=int(price_min)).distinct()

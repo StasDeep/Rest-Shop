@@ -37,7 +37,7 @@ class UnitSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Unit
-        fields = ('sku', 'price', 'properties', 'images', 'in_stock')
+        fields = ('sku', 'price', 'properties', 'images', 'num_in_stock')
 
     def get_properties(self, obj):
         return [{
@@ -203,8 +203,8 @@ class OrderUnitSerializer(serializers.Serializer):
             except ObjectDoesNotExist:
                 raise serializers.ValidationError('Unit does not exist')
 
-            if not unit.in_stock:
-                raise serializers.ValidationError('Unit is not in stock')
+            if unit.num_in_stock < quantity:
+                raise serializers.ValidationError('There are not enough units in stock')
 
         return value
 

@@ -59,7 +59,7 @@ class Unit(models.Model):
     value_set = models.ManyToManyField(to=PropertyValue)
     sku = models.CharField(max_length=255, primary_key=True)
     price = models.PositiveIntegerField()
-    in_stock = models.BooleanField(default=True)
+    num_in_stock = models.PositiveIntegerField(default=5)
 
     class Meta:
         ordering = ['product__title', 'sku']
