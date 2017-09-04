@@ -4,7 +4,7 @@ from rest_framework import serializers
 
 from .models import Product, Unit, Seller, Order, Tag, Property
 
-EMPTY_PHOTO_URL = 'product_images/empty.jpg'
+EMPTY_PHOTO_URL = 'ui/app/product_images/empty.jpg'
 
 
 class TagSerializer(serializers.ModelSerializer):

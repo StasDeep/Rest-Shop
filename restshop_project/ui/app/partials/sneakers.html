@@ -1,0 +1,16 @@
+<h1>Sneakers</h1>
+<div class="col-md-5">
+   <div class="row-fluid listing sidebar">
+       <div ng-repeat="sneakers in sneakersListing">
+           <h2><a ng-href="#/{{'sneakers/' + sneakers.id}}">{{sneakers.title}}</a></h2>
+           <div class="tags" >
+               <span ng-repeat="tag in sneakers.tags"> {{tag}}</span>
+           </div>
+       </div>
+   </div>
+</div>
+
+<!-- 2nd Column -->
+<div class="col-md-7">
+   <div class="slide" ui-view></div>
+</div>

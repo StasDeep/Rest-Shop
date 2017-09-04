@@ -74,7 +74,7 @@ class UnitImage(models.Model):
     # No need to create separate Image instances for these units.
     # That's why ManyToMany is used (one photo can be attached to different units).
     unit_set = models.ManyToManyField(to=Unit)
-    image = models.ImageField(upload_to='product_images/')
+    image = models.ImageField(upload_to='ui/app/product_images/')
     is_main = models.BooleanField(default=False)
 
     class Meta:
