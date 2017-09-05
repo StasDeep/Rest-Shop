@@ -4,8 +4,6 @@ from rest_framework import serializers
 
 from .models import Product, Unit, Seller, Order, Tag, Property
 
-EMPTY_PHOTO_URL = 'ui/app/product_images/empty.jpg'
-
 
 class TagSerializer(serializers.ModelSerializer):
 
@@ -51,7 +49,7 @@ class UnitSerializer(serializers.ModelSerializer):
         if images.exists():
             return [image.image.url for image in images.all()]
         else:
-            return [EMPTY_PHOTO_URL]
+            return [None]
 
 
 class ProductListSerializer(serializers.ModelSerializer):
@@ -72,14 +70,14 @@ class ProductListSerializer(serializers.ModelSerializer):
 
         # If there are no units for the product:
         if unit is None:
-            return EMPTY_PHOTO_URL
+            return None
 
         # Get image (preferably, main one) for the unit.
         image = unit.unitimage_set.order_by('-is_main').first()
 
         # If there are no images for the unit:
         if image is None:
-            return EMPTY_PHOTO_URL
+            return None
 
         return image.image.url
 

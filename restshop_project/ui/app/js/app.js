@@ -9,9 +9,9 @@ angular.module('myApp', [
     'myApp.directives',
     'myApp.controllers',
     'ngAnimate'
-]).
-    config(['$stateProvider',
-        function($stateProvider) {
+])
+    .config(['$stateProvider',
+        function ($stateProvider) {
             $stateProvider.state('sneakers', {
                 url:'/sneakers',
                 templateUrl: 'partials/sneakers.html',

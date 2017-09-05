@@ -106,5 +106,5 @@ ENV/
 # Secrets
 secret_settings.py
 
-# Images
-product_images/
+# Media files
+media/
