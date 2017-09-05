@@ -73,7 +73,7 @@ class UnitImage(models.Model):
     # Units can have same colors, but different sizes.
     # No need to create separate Image instances for these units.
     # That's why ManyToMany is used (one photo can be attached to different units).
-    unit_set = models.ManyToManyField(to=Unit)
+    unit_set = models.ManyToManyField(to=Unit, blank=True)
     image = models.ImageField(upload_to='product_images/')
     is_main = models.BooleanField(default=False)
 
@@ -81,7 +81,13 @@ class UnitImage(models.Model):
         ordering = ['image']
 
     def __str__(self):
-        return '{}: {}'.format(self.unit_set.first().product.title, self.image.name)
+        unit = self.unit_set.first()
+        if unit is not None:
+            product_title = unit.product.title
+        else:
+            product_title = 'No unit assigned'
+
+        return '{}: {}'.format(product_title, self.image.name)
 
 
 class Order(models.Model):

@@ -19,6 +19,7 @@ a:focus {
 .sneakers-main-image {
     width: 240px;
     height: 240px;
+    border: solid #f0f0f0 1px;
 }
 
 .sneakers-list-item {
