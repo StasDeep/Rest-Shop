@@ -10,4 +10,17 @@
            </div>
        </div>
    </div>
+
+   <div class="row text-center">
+       <button class="btn btn-red"
+               ng-class="{'disabled': !prevPageUrl}"
+               ng-click="changeList(prevPageUrl)">
+           Prev
+       </button>
+       <button class="btn btn-red"
+               ng-class="{'disabled': !nextPageUrl}"
+               ng-click="changeList(nextPageUrl)">
+           Next
+       </button>
+   </div>
 </div>

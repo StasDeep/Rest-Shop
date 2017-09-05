@@ -2,12 +2,14 @@ header {
     margin: 25px 0;
 }
 
-.restshop-logo {
-    max-width: 600px;
+@media screen and (min-width: 630px) {
+    .restshop-logo {
+        width: 600px;
+    }
 }
 
-.items-container {
-
+a:focus {
+    outline: none;
 }
 
 .unit {
@@ -38,6 +40,21 @@ header {
 }
 
 .label-tag {
-    background-color: #d93740;
+    background-color: #fff;
+    border: solid #d93740 1px;
+    color: #d93740;
     border-radius: 0;
+}
+
+.btn {
+    border-radius: 0;
+}
+
+.btn-red {
+    color: #fff;
+    background-color: #d93740;
+}
+
+.btn-red:hover {
+    background-color: #be2c36;
 }
