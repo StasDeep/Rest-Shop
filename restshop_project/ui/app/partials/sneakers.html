@@ -13,13 +13,13 @@
 
    <div class="row text-center">
        <button class="btn btn-red"
-               ng-class="{'disabled': !prevPageUrl}"
-               ng-click="changeList(prevPageUrl)">
+               ng-class="{'disabled': !hasPrev}"
+               ng-click="addUrlParameter('page', page - 1)">
            Prev
        </button>
        <button class="btn btn-red"
-               ng-class="{'disabled': !nextPageUrl}"
-               ng-click="changeList(nextPageUrl)">
+               ng-class="{'disabled': !hasNext}"
+               ng-click="addUrlParameter('page', page + 1)">
            Next
        </button>
    </div>

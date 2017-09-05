@@ -14,6 +14,14 @@ from .serializers import ProductListSerializer, ProductSerializer, UserSerialize
 class StandardResultsSetPagination(PageNumberPagination):
     page_size = 25
 
+    def get_paginated_response(self, data):
+        return Response({
+            'page': self.page.number,
+            'has_prev': self.page.has_previous(),
+            'has_next': self.page.has_next(),
+            'results': data
+        })
+
 
 class TagListView(generics.ListAPIView):
     queryset = Tag.objects.all()
