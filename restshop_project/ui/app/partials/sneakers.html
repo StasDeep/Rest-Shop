@@ -1,9 +1,9 @@
 <div>
-   <div class="row listing sidebar">
+   <div class="row text-center">
        <div class="sneakers-list-item text-center"
             ng-repeat="sneakers in sneakersListing"
             ng-click="go('/sneakers/' + sneakers.id)">
-           <img class="sneakers-main-image" src="{{ sneakers.image }}">
+           <img class="sneakers-main-image" ng-src="{{ sneakers.image }}">
            <p><span class="sneakers-title">{{ sneakers.title }}</span></p>
            <div class="tags">
                <span ng-repeat="tag in sneakers.tags"> <span class="label label-tag">{{ tag }}</span></span>
