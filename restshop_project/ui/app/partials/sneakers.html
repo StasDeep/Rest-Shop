@@ -1,5 +1,18 @@
 <div>
-   <div class="row text-center">
+    <div class="row">
+        <div class="col-sm-3">
+            <h2>Tags</h2>
+            <label class="filter-tag" ng-repeat="tag in tags">
+                <input type="checkbox"
+                       value="{{ tag.name }}"
+                       ng-model="tag.selected"
+                       ng-change="tagFilter()">
+                {{ tag.name }}
+            </label>
+        </div>
+    </div>
+
+    <div class="row text-center">
        <div class="sneakers-list-item text-center"
             ng-repeat="sneakers in sneakersListing"
             ng-click="$state.go('sneakers-details', {id: sneakers.id})">
@@ -9,9 +22,9 @@
                <span ng-repeat="tag in sneakers.tags"> <span class="label label-tag">{{ tag }}</span></span>
            </div>
        </div>
-   </div>
+    </div>
 
-   <div class="row text-center">
+    <div class="row text-center">
        <button class="btn btn-red"
                ng-class="{'disabled': !hasPrev}"
                ng-click="addUrlParameter('page', page - 1)">
@@ -22,5 +35,5 @@
                ng-click="addUrlParameter('page', page + 1)">
            Next
        </button>
-   </div>
+    </div>
 </div>

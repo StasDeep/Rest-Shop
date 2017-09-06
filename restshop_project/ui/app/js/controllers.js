@@ -3,6 +3,9 @@ angular.module('restShopApp.controllers', [])
     .controller('SneakersCtrl', ['$scope', '$http', '$location', '$anchorScroll', 'config',
         function ($scope, $http, $location, $anchorScroll, config) {
             $scope.addUrlParameter = function (parameter, value) {
+                // Reset page, because list can become smaller and thus page can no longer exist.
+                $location.search('page', null);
+
                 $location.search(parameter, value);
                 $scope.loadList()
             };
@@ -20,21 +23,27 @@ angular.module('restShopApp.controllers', [])
 
                 if (q) {
                     queryString += 'q=' + q + ';';
-                } else if (page) {
+                }
+                if (page) {
                     queryString += 'page=' + page + ';';
-                } else if (inStock) {
+                }
+                if (inStock) {
                     queryString += 'in_stock=' + inStock + ';';
-                } else if (priceMin) {
+                }
+                if (priceMin) {
                     queryString += 'price_min=' + priceMin + ';';
-                } else if (priceMax) {
+                }
+                if (priceMax) {
                     queryString += 'price_max=' + priceMax + ';';
-                } else if (tags) {
+                }
+                if (tags) {
                     tags = tags.split(',');
 
                     for (var i = 0; i < tags.length; i++) {
                         queryString += 'tags=' + tags[i] + ';';
                     }
-                } else if (properties) {
+                }
+                if (properties) {
                     properties = properties.split(',');
 
                     for (var i = 0; i < properties.length; i++) {
@@ -67,6 +76,33 @@ angular.module('restShopApp.controllers', [])
                     // Scroll to top of the page to show new results.
                     $anchorScroll();
                 });
+            };
+
+            $http.get(config.serverUrl + '/tags').then(function (response) {
+                var tagsFromUrl = $location.search().tags || '';
+                tagsFromUrl = tagsFromUrl.split(',').map(function (tag) { return tag.toLowerCase() });
+
+                $scope.tags = response.data.map(function (tag) {
+                    var isSelected = tagsFromUrl.includes(tag.toLowerCase());
+                    return {
+                        name: tag,
+                        selected: isSelected
+                    }
+                });
+            });
+
+            $scope.tagFilter = function () {
+                var selectedTags = $scope.tags
+                    .filter(function (tagObj) {
+                        return tagObj.selected;
+                    })
+                    .map(function (tagObj) {
+                        return tagObj.name;
+                    });
+
+                var paramValue = selectedTags.join(',') || null;
+
+                $scope.addUrlParameter('tags', paramValue);
             };
 
             $scope.loadList();

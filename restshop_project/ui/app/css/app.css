@@ -2,10 +2,18 @@ header {
     margin: 25px 0;
 }
 
+.restshop-logo {
+    cursor: pointer;
+}
+
 @media screen and (min-width: 630px) {
     .restshop-logo {
         width: 600px;
     }
+}
+
+.row {
+    margin-bottom: 30px;
 }
 
 a:focus {
@@ -14,6 +22,10 @@ a:focus {
 
 .unit {
     margin-bottom: 25px;
+}
+
+.filter-tag {
+    display: block;
 }
 
 .sneakers-main-image {

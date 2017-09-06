@@ -18,9 +18,9 @@
 <body>
     <header>
         <div class="container text-center">
-            <a ui-sref="sneakers">
-                <img class="img-responsive center-block restshop-logo" src="img/logo.png">
-            </a>
+            <img class="img-responsive center-block restshop-logo"
+                 src="img/logo.png"
+                 ng-click="$state.go('sneakers', {}, {reload: true})">
         </div>
     </header>
 
