@@ -1,11 +1,7 @@
 'use strict';
-angular.module('myApp.controllers', [])
+angular.module('restShopApp.controllers', [])
     .controller('SneakersCtrl', ['$scope', '$http', '$location', '$anchorScroll', 'config',
         function ($scope, $http, $location, $anchorScroll, config) {
-            $scope.go = function (path) {
-                $location.path(path);
-            };
-
             $scope.addUrlParameter = function (parameter, value) {
                 $location.search(parameter, value);
                 $scope.loadList()
@@ -24,33 +20,21 @@ angular.module('myApp.controllers', [])
 
                 if (q) {
                     queryString += 'q=' + q + ';';
-                }
-
-                if (page) {
+                } else if (page) {
                     queryString += 'page=' + page + ';';
-                }
-
-                if (inStock) {
+                } else if (inStock) {
                     queryString += 'in_stock=' + inStock + ';';
-                }
-
-                if (priceMin) {
+                } else if (priceMin) {
                     queryString += 'price_min=' + priceMin + ';';
-                }
-
-                if (priceMax) {
+                } else if (priceMax) {
                     queryString += 'price_max=' + priceMax + ';';
-                }
-
-                if (tags) {
+                } else if (tags) {
                     tags = tags.split(',');
 
                     for (var i = 0; i < tags.length; i++) {
                         queryString += 'tags=' + tags[i] + ';';
                     }
-                }
-
-                if (properties) {
+                } else if (properties) {
                     properties = properties.split(',');
 
                     for (var i = 0; i < properties.length; i++) {

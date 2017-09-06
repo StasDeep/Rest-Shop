@@ -2,25 +2,28 @@
 
 
 // Declare app level module which depends on filters, and services
-angular.module('myApp', [
+angular.module('restShopApp', [
     'ui.router',
-    'myApp.filters',
-    'myApp.services',
-    'myApp.directives',
-    'myApp.controllers',
+    'restShopApp.filters',
+    'restShopApp.services',
+    'restShopApp.directives',
+    'restShopApp.controllers',
     'ngAnimate'
 ])
     .config(['$stateProvider',
         function ($stateProvider) {
             $stateProvider.state('sneakers', {
-                url:'/sneakers',
+                url: '/sneakers',
                 templateUrl: 'partials/sneakers.html',
                 controller: 'SneakersCtrl'
             });
             $stateProvider.state('sneakers-details', {
-                url:'/sneakers/:id',
-                templateUrl: 'partials/sneakers.details.html',
+                url: '/sneakers/:id',
+                templateUrl: 'partials/sneakers-details.html',
                 controller: 'SneakersDetailsCtrl'
             });
         }
-    ]);
+    ])
+    .run(function ($rootScope, $state) {
+        $rootScope.$state = $state;
+    });

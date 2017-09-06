@@ -2,7 +2,7 @@
    <div class="row text-center">
        <div class="sneakers-list-item text-center"
             ng-repeat="sneakers in sneakersListing"
-            ng-click="go('/sneakers/' + sneakers.id)">
+            ng-click="$state.go('sneakers-details', {id: sneakers.id})">
            <img class="sneakers-main-image" ng-src="{{ sneakers.image }}">
            <p><span class="sneakers-title">{{ sneakers.title }}</span></p>
            <div class="tags">
