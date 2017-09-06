@@ -9,7 +9,7 @@ router = DefaultRouter()
 router.register(r'orders', OrderViewSet, base_name='order')
 
 urlpatterns = [
-    url(r'^tags$', TagListView.as_view(), name='tag-list'),
+    url(r'^tags/$', TagListView.as_view(), name='tag-list'),
     url(r'^properties/$', PropertyListView.as_view(), name='property-list'),
     url(r'^products/$', ProductListView.as_view(), name='product-list'),
     url(r'^products/(?P<pk>[0-9]+)/$', ProductDetailView.as_view(), name='product-detail'),
