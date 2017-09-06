@@ -35,7 +35,7 @@ a:focus {
     outline: none;
 }
 
-.collapse-filter-button .glyphicon-chevron-down {
+.collapse-filter-button .glyphicon {
     font-size: 11pt;
 }
 
@@ -49,7 +49,7 @@ a:focus {
     color: #d93740;
 }
 
-.property-name .glyphicon-chevron-down {
+.property-name .glyphicon {
     font-size: 10pt;
 }
 
@@ -61,8 +61,8 @@ a:focus {
     margin-bottom: 25px;
 }
 
-.filter-checkbox {
-    display: block;
+.checkbox-uppercase label {
+    text-transform: uppercase;
 }
 
 .filter-text {

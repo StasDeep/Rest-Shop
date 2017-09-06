@@ -1,10 +1,5 @@
 {
-  "name": "angular-seed",
-  "description": "A starter project for AngularJS",
-  "version": "0.0.0",
-  "homepage": "https://github.com/angular/angular-seed",
-  "license": "MIT",
-  "private": true,
+  "name": "rest-shop",
   "dependencies": {
     "angular": "1.2.x",
     "angular-ui-router": "0.2.10",
