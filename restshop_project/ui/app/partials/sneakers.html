@@ -18,18 +18,20 @@
                        ng-change="refreshFilter()">
                 In stock
             </label>
-            <label class="filter-text">
+            <div class="filter-text">
                 Min $<input type="number"
                             min="0"
                             ng-model="priceMin"
                             ng-change="refreshFilter()">
-            </label>
-            <label class="filter-text">
+                <button ng-click="priceMin = null; refreshFilter()">Reset</button>
+            </div>
+            <div class="filter-text">
                 Max $<input type="number"
                             min="1"
                             ng-model="priceMax"
                             ng-change="refreshFilter()">
-            </label>
+                <button ng-click="priceMax = null; refreshFilter()">Reset</button>
+            </div>
         </div>
     </div>
 
