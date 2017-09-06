@@ -20,6 +20,43 @@ a:focus {
     outline: none;
 }
 
+.collapse-filter-button {
+    width: 100%;
+    text-transform: uppercase;
+    font-size: 14pt;
+    background-color: #fff;
+    border: solid #d93740 1px;
+    color: #d93740;
+}
+
+.collapse-filter-button:hover, .collapse-filter-button:focus {
+    background-color: #faf5f5;
+    color: #d93740;
+    outline: none;
+}
+
+.collapse-filter-button .glyphicon-chevron-down {
+    font-size: 11pt;
+}
+
+.property-name {
+    display: inline-block;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.property-name:hover {
+    color: #d93740;
+}
+
+.property-name .glyphicon-chevron-down {
+    font-size: 10pt;
+}
+
+.num-of-options {
+    margin-left: 5px;
+}
+
 .unit {
     margin-bottom: 25px;
 }

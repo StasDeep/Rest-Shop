@@ -1,46 +1,58 @@
 <div>
-    <div class="row" style="display: none">
-        <div class="col-sm-4">
-            <h2>Tags</h2>
-            <label class="filter-checkbox" ng-repeat="tag in tags">
-                <input type="checkbox"
-                       ng-model="tag.selected"
-                       ng-change="refreshFilter()">
-                {{ tag.name }}
-            </label>
-        </div>
-        <div class="col-sm-4">
-            <h2>Filter</h2>
-            <label class="filter-checkbox">
-                <input type="checkbox"
-                       ng-model="inStock"
-                       ng-change="refreshFilter()">
-                In stock
-            </label>
-            <div class="filter-text">
-                Min $<input type="number"
-                            min="0"
-                            ng-model="priceMin"
-                            ng-change="refreshFilter()">
-                <button ng-click="priceMin = null; refreshFilter()">Reset</button>
-            </div>
-            <div class="filter-text">
-                Max $<input type="number"
-                            min="1"
-                            ng-model="priceMax"
-                            ng-change="refreshFilter()">
-                <button ng-click="priceMax = null; refreshFilter()">Reset</button>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div ng-repeat="property in properties">
-                <h2>{{ property.name }}</h2>
-                <label class="filter-checkbox" ng-repeat="value in property.values">
+    <div class="row">
+        <button class="btn collapse-filter-button" data-toggle="collapse" data-target="#filter-options">
+            Filter Options <span class="glyphicon glyphicon-chevron-down"></span>
+        </button>
+    </div>
+    <div id="filter-options" class="collapse">
+        <div class="row">
+            <div class="col-sm-4">
+                <h2>Tags</h2>
+                <label class="filter-checkbox" ng-repeat="tag in tags">
                     <input type="checkbox"
-                           ng-model="value.selected"
+                           ng-model="tag.selected"
                            ng-change="refreshFilter()">
-                    {{ value.value }}
+                    {{ tag.name }}
                 </label>
+            </div>
+            <div class="col-sm-4">
+                <h2>Filter</h2>
+                <label class="filter-checkbox">
+                    <input type="checkbox"
+                           ng-model="inStock"
+                           ng-change="refreshFilter()">
+                    In stock
+                </label>
+                <div class="filter-text">
+                    Min $<input type="number"
+                                min="0"
+                                ng-model="priceMin"
+                                ng-change="refreshFilter()">
+                    <button ng-click="priceMin = null; refreshFilter()">Reset</button>
+                </div>
+                <div class="filter-text">
+                    Max $<input type="number"
+                                min="1"
+                                ng-model="priceMax"
+                                ng-change="refreshFilter()">
+                    <button ng-click="priceMax = null; refreshFilter()">Reset</button>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div ng-repeat="property in properties">
+                    <h2 class="property-name" data-toggle="collapse" data-target="#property-value-{{ $index }}">
+                        {{ property.name }} <span class="glyphicon glyphicon-chevron-down"></span>
+                    </h2>
+                    <span class="num-of-options">{{ property.values.length }} options</span>
+                    <div id="property-value-{{ $index }}" class="collapse">
+                        <label class="filter-checkbox" ng-repeat="value in property.values">
+                            <input type="checkbox"
+                                   ng-model="value.selected"
+                                   ng-change="refreshFilter()">
+                            {{ value.value }}
+                        </label>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
