@@ -24,8 +24,16 @@ a:focus {
     margin-bottom: 25px;
 }
 
-.filter-tag {
+.filter-checkbox {
     display: block;
+}
+
+.filter-text {
+    display: block;
+}
+
+.filter-text input {
+    width: 80px;
 }
 
 .sneakers-main-image {

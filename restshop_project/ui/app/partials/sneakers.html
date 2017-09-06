@@ -2,12 +2,33 @@
     <div class="row">
         <div class="col-sm-3">
             <h2>Tags</h2>
-            <label class="filter-tag" ng-repeat="tag in tags">
+            <label class="filter-checkbox" ng-repeat="tag in tags">
                 <input type="checkbox"
                        value="{{ tag.name }}"
                        ng-model="tag.selected"
-                       ng-change="tagFilter()">
+                       ng-change="refreshFilter()">
                 {{ tag.name }}
+            </label>
+        </div>
+        <div class="col-sm-3">
+            <h2>Filter</h2>
+            <label class="filter-checkbox">
+                <input type="checkbox"
+                       ng-model="inStock"
+                       ng-change="refreshFilter()">
+                In stock
+            </label>
+            <label class="filter-text">
+                Min $<input type="number"
+                            min="0"
+                            ng-model="priceMin"
+                            ng-change="refreshFilter()">
+            </label>
+            <label class="filter-text">
+                Max $<input type="number"
+                            min="1"
+                            ng-model="priceMax"
+                            ng-change="refreshFilter()">
             </label>
         </div>
     </div>

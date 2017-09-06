@@ -2,11 +2,14 @@
 angular.module('restShopApp.controllers', [])
     .controller('SneakersCtrl', ['$scope', '$http', '$location', '$anchorScroll', 'config',
         function ($scope, $http, $location, $anchorScroll, config) {
-            $scope.addUrlParameter = function (parameter, value) {
+            function addUrlParameter(parameter, value) {
                 // Reset page, because list can become smaller and thus page can no longer exist.
                 $location.search('page', null);
-
                 $location.search(parameter, value);
+            }
+
+            $scope.addUrlParameterAndReloadList = function (parameter, value) {
+                addUrlParameter(parameter, value);
                 $scope.loadList()
             };
 
@@ -91,7 +94,7 @@ angular.module('restShopApp.controllers', [])
                 });
             });
 
-            $scope.tagFilter = function () {
+            $scope.refreshFilter = function () {
                 var selectedTags = $scope.tags
                     .filter(function (tagObj) {
                         return tagObj.selected;
@@ -100,10 +103,28 @@ angular.module('restShopApp.controllers', [])
                         return tagObj.name;
                     });
 
-                var paramValue = selectedTags.join(',') || null;
+                var tagsParamValue = selectedTags.join(',') || null;
+                addUrlParameter('tags', tagsParamValue);
 
-                $scope.addUrlParameter('tags', paramValue);
+                var inStockParamValue = $scope.inStock ? '1' : null;
+                addUrlParameter('in_stock', inStockParamValue);
+
+                var priceMinParamValue = $scope.priceMin ? $scope.priceMin.toString() : null;
+                addUrlParameter('price_min', priceMinParamValue);
+
+                var priceMaxParamValue = $scope.priceMax ? $scope.priceMax.toString() : null;
+                addUrlParameter('price_max', priceMaxParamValue);
+
+                $scope.loadList();
             };
+
+            $scope.inStock = $location.search().in_stock === '1';
+
+            $scope.priceMin = $location.search().price_min;
+            $scope.priceMin = parseInt($scope.priceMin);
+
+            $scope.priceMax = $location.search().price_max;
+            $scope.priceMax = parseInt($scope.priceMax);
 
             $scope.loadList();
         }
