@@ -1,5 +1,5 @@
 <div>
-    <div class="row">
+    <div class="row" style="display: none">
         <div class="col-sm-4">
             <h2>Tags</h2>
             <label class="filter-checkbox" ng-repeat="tag in tags">
@@ -50,7 +50,9 @@
             ng-repeat="sneakers in sneakersListing"
             ng-click="$state.go('sneakers-details', {id: sneakers.id})">
            <img class="sneakers-main-image" ng-src="{{ sneakers.image }}">
-           <p><span class="sneakers-title">{{ sneakers.title }}</span></p>
+           <span class="sneakers-title">{{ sneakers.title }}</span>
+           <span class="product-price" ng-if="sneakers.prices.min !== sneakers.prices.max">${{ sneakers.prices.min }} - ${{ sneakers.prices.max }}</span>
+           <span class="product-price" ng-if="sneakers.prices.min === sneakers.prices.max">${{ sneakers.prices.min }}</span>
            <div class="tags">
                <span ng-repeat="tag in sneakers.tags"> <span class="label label-tag">{{ tag }}</span></span>
            </div>

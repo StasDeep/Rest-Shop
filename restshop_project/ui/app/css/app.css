@@ -60,6 +60,20 @@ a:focus {
     color: #d93740;
 }
 
+.sneakers-title {
+    display: block;
+    padding: 3px;
+}
+
+.product-price {
+    display: inline-block;
+    padding: 3px;
+}
+
+.tags {
+    padding: 3px;
+}
+
 .label-tag {
     background-color: #fff;
     border: solid #d93740 1px;

@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User, Group, Permission
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Max, Min
 from rest_framework import serializers
 
 from .models import Product, Unit, Seller, Order, Tag, Property
@@ -58,12 +59,19 @@ class ProductListSerializer(serializers.ModelSerializer):
         read_only=True,
         source='tag_set'
     )
-
+    prices = serializers.SerializerMethodField()
     image = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
-        fields = ('id', 'title', 'tags', 'image')
+        fields = ('id', 'title', 'tags', 'prices', 'image')
+
+    def get_prices(self, obj):
+        prices = obj.unit_set.aggregate(max=Max('price'), min=Min('price'))
+        return {
+            'min': prices['min'],
+            'max': prices['max']
+        }
 
     def get_image(self, obj):
         unit = obj.unit_set.filter(unitimage__isnull=False).first()
