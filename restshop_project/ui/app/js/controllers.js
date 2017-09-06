@@ -81,19 +81,6 @@ angular.module('restShopApp.controllers', [])
                 });
             };
 
-            $http.get(config.serverUrl + '/tags').then(function (response) {
-                var tagsFromUrl = $location.search().tags || '';
-                tagsFromUrl = tagsFromUrl.split(',').map(function (tag) { return tag.toLowerCase() });
-
-                $scope.tags = response.data.map(function (tag) {
-                    var isSelected = tagsFromUrl.includes(tag.toLowerCase());
-                    return {
-                        name: tag,
-                        selected: isSelected
-                    }
-                });
-            });
-
             $scope.refreshFilter = function () {
                 var selectedTags = $scope.tags
                     .filter(function (tagObj) {
@@ -106,6 +93,17 @@ angular.module('restShopApp.controllers', [])
                 var tagsParamValue = selectedTags.join(',') || null;
                 addUrlParameter('tags', tagsParamValue);
 
+                var selectedProperties = [];
+                for (var i = 0; i < $scope.properties.length; i++) {
+                    for (var j = 0; j < $scope.properties[i].values.length; j++) {
+                        if ($scope.properties[i].values[j].selected) {
+                            selectedProperties.push($scope.properties[i].values[j].id)
+                        }
+                    }
+                }
+                var propertiesParamValue = selectedProperties.join(',') || null;
+                addUrlParameter('properties', propertiesParamValue);
+
                 var inStockParamValue = $scope.inStock ? '1' : null;
                 addUrlParameter('in_stock', inStockParamValue);
 
@@ -117,6 +115,32 @@ angular.module('restShopApp.controllers', [])
 
                 $scope.loadList();
             };
+
+            $http.get(config.serverUrl + '/tags/').then(function (response) {
+                var tagsFromUrl = $location.search().tags || '';
+                tagsFromUrl = tagsFromUrl.split(',').map(function (tag) { return tag.toLowerCase() });
+
+                $scope.tags = response.data.map(function (tag) {
+                    var isSelected = tagsFromUrl.includes(tag.toLowerCase());
+                    return {
+                        name: tag,
+                        selected: isSelected
+                    }
+                });
+            });
+
+            $http.get(config.serverUrl + '/properties/').then(function (response) {
+                var propertiesFromUrl = $location.search().properties || '';
+                propertiesFromUrl = propertiesFromUrl.split(',');
+
+                $scope.properties = response.data.map(function (property) {
+                   property.values.map(function (value) {
+                       value.selected = propertiesFromUrl.includes(value.id.toString());
+                       return value;
+                   });
+                   return property;
+                });
+            });
 
             $scope.inStock = $location.search().in_stock === '1';
 
