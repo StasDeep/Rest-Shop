@@ -1,6 +1,6 @@
 <div>
     <div class="row">
-        <button class="btn collapse-filter-button"
+        <button class="btn collapse-filter-button text-uppercase"
                 data-toggle="collapse"
                 data-target="#filter-options"
                 ng-init="isCollapsed = true"
@@ -12,48 +12,50 @@
     <div id="filter-options" class="collapse">
         <div class="row">
             <div class="col-sm-4">
-                <h2>Tags</h2>
-                <div class="checkbox checkbox-danger checkbox-uppercase" ng-repeat="tag in tags">
+                <h2 class="text-uppercase">Tags</h2>
+                <div class="checkbox checkbox-danger" ng-repeat="tag in tags">
                     <input id="tag-checkbox{{ $index }}"
                            type="checkbox"
                            ng-model="tag.selected"
                            ng-change="refreshFilter()">
 
-                    <label for="tag-checkbox{{ $index }}">
+                    <label class="text-uppercase" for="tag-checkbox{{ $index }}">
                         {{ tag.name }}
                     </label>
                 </div>
             </div>
             <div class="col-sm-4">
-                <h2>Filter</h2>
+                <h2 class="text-uppercase">Filter</h2>
                 <div class="checkbox checkbox-danger checkbox-uppercase">
                     <input id="instock-checkbox"
                            type="checkbox"
                            ng-model="inStock"
                            ng-change="refreshFilter()">
 
-                    <label for="instock-checkbox">
+                    <label class="text-uppercase" for="instock-checkbox">
                         In stock
                     </label>
                 </div>
                 <div class="filter-text">
-                    Min $<input type="number"
+                    <span class="filter-title">Min $</span><input type="number"
                                 min="0"
                                 ng-model="priceMin"
                                 ng-change="refreshFilter()">
-                    <button ng-click="priceMin = null; refreshFilter()">Reset</button>
+                    <span class="glyphicon glyphicon-remove"
+                          ng-click="priceMin = null; refreshFilter()"></span>
                 </div>
                 <div class="filter-text">
-                    Max $<input type="number"
+                    <span class="filter-title">Min $</span><input type="number"
                                 min="1"
                                 ng-model="priceMax"
                                 ng-change="refreshFilter()">
-                    <button ng-click="priceMax = null; refreshFilter()">Reset</button>
+                    <span class="glyphicon glyphicon-remove"
+                          ng-click="priceMax = null; refreshFilter()"></span>
                 </div>
             </div>
             <div class="col-sm-4">
                 <div ng-repeat="property in properties">
-                    <h2 class="property-name"
+                    <h2 class="property-name text-uppercase"
                         data-toggle="collapse"
                         data-target="#property-value-{{ $index }}"
                         ng-init="isCollapsed = true"
@@ -61,7 +63,7 @@
                         {{ property.name }} <span class="glyphicon"
                                                   ng-class="{'glyphicon-chevron-down': isCollapsed, 'glyphicon-chevron-up': !isCollapsed}"></span>
                     </h2>
-                    <span class="num-of-options">{{ property.values.length }} options</span>
+                    <span class="num-of-options text-uppercase">{{ property.values.length }} options</span>
                     <div id="property-value-{{ $index }}" class="collapse">
                         <div class="checkbox checkbox-danger checkbox-uppercase" ng-repeat="value in property.values">
                             <!-- $parent.$index is used to make checkbox id unique -->
@@ -70,7 +72,7 @@
                                    ng-model="value.selected"
                                    ng-change="refreshFilter()">
 
-                            <label for="propvalue-checkbox{{ $parent.$index * 100 + $index }}">
+                            <label class="text-uppercase" for="propvalue-checkbox{{ $parent.$index * 100 + $index }}">
                                 {{ value.value }}
                             </label>
                         </div>

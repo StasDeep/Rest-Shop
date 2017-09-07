@@ -17,8 +17,8 @@
     left: 0;
     margin-left: -20px;
     border: 1px solid #cccccc;
-    border-radius: 3px;
-    background-color: #fff;
+    border-radius: 0;
+    background-color: #fcfcfc;
     -webkit-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
     -o-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
     transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
@@ -75,16 +75,16 @@
 }
 
 .checkbox-primary input[type="checkbox"]:checked + label::after {
-    color: #fff;
+    color: #fcfcfc;
 }
 
 .checkbox-danger input[type="checkbox"]:checked + label::before {
-    background-color: #d9534f;
-    border-color: #d9534f;
+    background-color: #d92a4f;
+    border-color: #d92a4f;
 }
 
 .checkbox-danger input[type="checkbox"]:checked + label::after {
-    color: #fff;
+    color: #fcfcfc;
 }
 
 .checkbox-info input[type="checkbox"]:checked + label::before {
@@ -93,7 +93,7 @@
 }
 
 .checkbox-info input[type="checkbox"]:checked + label::after {
-    color: #fff;
+    color: #fcfcfc;
 }
 
 .checkbox-warning input[type="checkbox"]:checked + label::before {
@@ -102,7 +102,7 @@
 }
 
 .checkbox-warning input[type="checkbox"]:checked + label::after {
-    color: #fff;
+    color: #fcfcfc;
 }
 
 .checkbox-success input[type="checkbox"]:checked + label::before {
@@ -111,7 +111,7 @@
 }
 
 .checkbox-success input[type="checkbox"]:checked + label::after {
-    color: #fff;
+    color: #fcfcfc;
 }
 
 .radio {
@@ -134,7 +134,7 @@
     margin-left: -20px;
     border: 1px solid #cccccc;
     border-radius: 50%;
-    background-color: #fff;
+    background-color: #fcfcfc;
     -webkit-transition: border 0.15s ease-in-out;
     -o-transition: border 0.15s ease-in-out;
     transition: border 0.15s ease-in-out;
@@ -203,15 +203,15 @@
 }
 
 .radio-danger input[type="radio"] + label::after {
-    background-color: #d9534f;
+    background-color: #d92a4f;
 }
 
 .radio-danger input[type="radio"]:checked + label::before {
-    border-color: #d9534f;
+    border-color: #d92a4f;
 }
 
 .radio-danger input[type="radio"]:checked + label::after {
-    background-color: #d9534f;
+    background-color: #d92a4f;
 }
 
 .radio-info input[type="radio"] + label::after {

@@ -1,3 +1,7 @@
+body {
+    overflow-y:scroll;
+}
+
 header {
     margin: 25px 0;
 }
@@ -22,16 +26,15 @@ a:focus {
 
 .collapse-filter-button {
     width: 100%;
-    text-transform: uppercase;
     font-size: 14pt;
-    background-color: #fff;
-    border: solid #d93740 1px;
-    color: #d93740;
+    background-color: #fcfcfc;
+    border: solid #d92a4f 1px;
+    color: #d92a4f;
 }
 
 .collapse-filter-button:hover, .collapse-filter-button:focus {
     background-color: #faf5f5;
-    color: #d93740;
+    color: #d92a4f;
     outline: none;
 }
 
@@ -46,7 +49,7 @@ a:focus {
 }
 
 .property-name:hover {
-    color: #d93740;
+    color: #d92a4f;
 }
 
 .property-name .glyphicon {
@@ -55,28 +58,47 @@ a:focus {
 
 .num-of-options {
     margin-left: 5px;
+    font-size: 8pt;
 }
 
 .unit {
     margin-bottom: 25px;
 }
 
-.checkbox-uppercase label {
-    text-transform: uppercase;
-}
-
 .filter-text {
-    display: block;
+    margin: 10px 0;
 }
 
 .filter-text input {
-    width: 80px;
+    width: 50px;
+    border: none;
+    background-color: #f3f3f3;
+}
+
+.filter-text input:focus {
+    outline: none
+}
+
+.filter-text .filter-title {
+    display: inline-block;
+    text-transform: uppercase;
+    width: 40px;
+}
+
+.filter-text .glyphicon {
+    color: #d6d6d6;
+    cursor: pointer;
+}
+
+.filter-text .glyphicon:hover {
+    color: #c5c5c5;
 }
 
 .sneakers-main-image {
     width: 240px;
     height: 240px;
     border: solid #f0f0f0 1px;
+    margin-bottom: 5px;
 }
 
 .sneakers-list-item {
@@ -88,18 +110,19 @@ a:focus {
 }
 
 .sneakers-list-item:hover {
-    border: #d93740 solid 2px;
+    border: #d92a4f solid 2px;
     padding: 13px;
     cursor: pointer;
 }
 
 .sneakers-list-item .sneakers-title {
-    color: #d93740;
+    color: #d92a4f;
 }
 
 .sneakers-title {
     display: block;
     padding: 3px;
+    text-transform: uppercase;
 }
 
 .product-price {
@@ -112,10 +135,12 @@ a:focus {
 }
 
 .label-tag {
-    background-color: #fff;
-    border: solid #d93740 1px;
-    color: #d93740;
+    background-color: #fcfcfc;
+    border: solid #d92a4f 1px;
+    color: #d92a4f;
     border-radius: 0;
+    text-transform: uppercase;
+    font-weight: normal;
 }
 
 .btn {
@@ -123,10 +148,14 @@ a:focus {
 }
 
 .btn-red {
-    color: #fff;
-    background-color: #d93740;
+    color: #fcfcfc;
+    background-color: #d92a4f;
 }
 
 .btn-red:hover {
-    background-color: #be2c36;
+    background-color: #c7294c;
+}
+
+.text-uppercase {
+    text-transform: uppercase;
 }
