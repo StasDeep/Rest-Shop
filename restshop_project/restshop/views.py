@@ -12,7 +12,7 @@ from .serializers import ProductListSerializer, ProductSerializer, UserSerialize
 
 
 class StandardResultsSetPagination(PageNumberPagination):
-    page_size = 25
+    page_size = 4
 
     def get_paginated_response(self, data):
         return Response({

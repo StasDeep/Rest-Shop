@@ -1,26 +1,21 @@
 'use strict';
 
-
-// Declare app level module which depends on filters, and services
-angular.module('restShopApp', [
-    'ui.router',
-    'restShopApp.filters',
-    'restShopApp.services',
-    'restShopApp.directives',
-    'restShopApp.controllers',
-    'ngAnimate'
-])
+angular
+    .module('restShopApp', [
+        'ui.router',
+        'ngAnimate'
+    ])
     .config(['$stateProvider',
         function ($stateProvider) {
             $stateProvider.state('sneakers', {
                 url: '/sneakers',
                 templateUrl: 'partials/sneakers.html',
-                controller: 'SneakersCtrl'
+                controller: 'SneakersListController'
             });
             $stateProvider.state('sneakers-details', {
                 url: '/sneakers/:id',
                 templateUrl: 'partials/sneakers-details.html',
-                controller: 'SneakersDetailsCtrl'
+                controller: 'SneakersDetailsController'
             });
         }
     ])
