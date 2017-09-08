@@ -13,24 +13,25 @@
         <div class="row">
             <div class="col-sm-4">
                 <h2 class="text-uppercase">Tags</h2>
-                <div class="checkbox checkbox-danger" ng-repeat="tag in tags">
+                <div class="checkbox checkbox-danger" ng-repeat="tag in vm.tags">
                     <input id="tag-checkbox{{ $index }}"
                            type="checkbox"
                            ng-model="tag.selected"
-                           ng-change="refreshFilter()">
+                           ng-change="vm.refreshFilter()">
 
                     <label class="text-uppercase" for="tag-checkbox{{ $index }}">
                         {{ tag.name }}
                     </label>
                 </div>
             </div>
+
             <div class="col-sm-4">
                 <h2 class="text-uppercase">Filter</h2>
                 <div class="checkbox checkbox-danger checkbox-uppercase">
                     <input id="instock-checkbox"
                            type="checkbox"
-                           ng-model="inStock"
-                           ng-change="refreshFilter()">
+                           ng-model="vm.inStock"
+                           ng-change="vm.refreshFilter()">
 
                     <label class="text-uppercase" for="instock-checkbox">
                         In stock
@@ -39,22 +40,23 @@
                 <div class="filter-text">
                     <span class="filter-title">Min $</span><input type="number"
                                 min="0"
-                                ng-model="priceMin"
-                                ng-change="refreshFilter()">
+                                ng-model="vm.priceMin"
+                                ng-change="vm.refreshFilter()">
                     <span class="glyphicon glyphicon-remove"
-                          ng-click="priceMin = null; refreshFilter()"></span>
+                          ng-click="vm.priceMin = null; vm.refreshFilter()"></span>
                 </div>
                 <div class="filter-text">
                     <span class="filter-title">Min $</span><input type="number"
                                 min="1"
-                                ng-model="priceMax"
-                                ng-change="refreshFilter()">
+                                ng-model="vm.priceMax"
+                                ng-change="vm.refreshFilter()">
                     <span class="glyphicon glyphicon-remove"
-                          ng-click="priceMax = null; refreshFilter()"></span>
+                          ng-click="vm.priceMax = null; vm.refreshFilter()"></span>
                 </div>
             </div>
+
             <div class="col-sm-4">
-                <div ng-repeat="property in properties">
+                <div ng-repeat="property in vm.properties">
                     <h2 class="property-name text-uppercase"
                         data-toggle="collapse"
                         data-target="#property-value-{{ $index }}"
@@ -70,7 +72,7 @@
                             <input id="propvalue-checkbox{{ $parent.$index * 100 + $index }}"
                                    type="checkbox"
                                    ng-model="value.selected"
-                                   ng-change="refreshFilter()">
+                                   ng-change="vm.refreshFilter()">
 
                             <label class="text-uppercase" for="propvalue-checkbox{{ $parent.$index * 100 + $index }}">
                                 {{ value.value }}
@@ -84,12 +86,21 @@
 
     <div class="row text-center">
        <div class="sneakers-list-item text-center"
-            ng-repeat="sneakers in sneakersListing"
+            ng-repeat="sneakers in vm.sneakersListing"
             ng-click="$state.go('sneakers-details', {id: sneakers.id})">
+
            <img class="sneakers-main-image" ng-src="{{ sneakers.image }}">
            <span class="sneakers-title">{{ sneakers.title }}</span>
-           <span class="product-price" ng-if="sneakers.prices.min !== sneakers.prices.max">${{ sneakers.prices.min }} - ${{ sneakers.prices.max }}</span>
-           <span class="product-price" ng-if="sneakers.prices.min === sneakers.prices.max">${{ sneakers.prices.min }}</span>
+
+           <span class="product-price"
+                 ng-if="sneakers.prices.min !== sneakers.prices.max">
+               ${{ sneakers.prices.min }} - ${{ sneakers.prices.max }}
+           </span>
+           <span class="product-price"
+                 ng-if="sneakers.prices.min === sneakers.prices.max">
+               ${{ sneakers.prices.min }}
+           </span>
+
            <div class="tags">
                <span ng-repeat="tag in sneakers.tags"> <span class="label label-tag">{{ tag }}</span></span>
            </div>
@@ -98,13 +109,13 @@
 
     <div class="row text-center">
        <button class="btn btn-red"
-               ng-class="{'disabled': !hasPrev}"
-               ng-click="addUrlParameterAndReloadList('page', page - 1)">
+               ng-class="{'disabled': !vm.hasPrev}"
+               ng-click="vm.pagePrev()">
            Prev
        </button>
        <button class="btn btn-red"
-               ng-class="{'disabled': !hasNext}"
-               ng-click="addUrlParameterAndReloadList('page', page + 1)">
+               ng-class="{'disabled': !vm.hasNext}"
+               ng-click="vm.pageNext()">
            Next
        </button>
     </div>

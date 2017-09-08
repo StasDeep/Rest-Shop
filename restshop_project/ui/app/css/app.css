@@ -24,15 +24,18 @@ a:focus {
     outline: none;
 }
 
-.collapse-filter-button {
+.collapse-filter-button,
+.collapse-filter-button:focus {
     width: 100%;
     font-size: 14pt;
     background-color: #fcfcfc;
     border: solid #d92a4f 1px;
     color: #d92a4f;
+    outline: none;
 }
 
-.collapse-filter-button:hover, .collapse-filter-button:focus {
+.collapse-filter-button:hover,
+.collapse-filter-button:active {
     background-color: #faf5f5;
     color: #d92a4f;
     outline: none;
@@ -91,7 +94,7 @@ a:focus {
 }
 
 .filter-text .glyphicon:hover {
-    color: #c5c5c5;
+    color: #d92a4f;
 }
 
 .sneakers-main-image {

@@ -1,6 +1,6 @@
-<h1>{{sneakers.title}}</h1>
+<h1>{{ vm.sneakers.title }}</h1>
 <div class="units">
-    <div class="unit" ng-repeat="unit in sneakers.units">
+    <div class="unit" ng-repeat="unit in vm.sneakers.units">
         <p>SKU: {{ unit.sku }}</p>
         <p>Price: ${{ unit.price }}</p>
         <p>In stock: {{ unit.num_in_stock }} pcs.</p>
