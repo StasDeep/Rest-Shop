@@ -18,6 +18,8 @@ function SneakersDetailsController($stateParams, sneakersDataService) {
     }
 
     function getSneakersDetails(id) {
-        sneakersDataService.getSneakersDetails(id);
+        sneakersDataService.getSneakersDetails(id).then(function (sneakers) {
+            vm.sneakers = sneakers;
+        });
     }
 }
