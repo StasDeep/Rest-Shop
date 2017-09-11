@@ -41,8 +41,16 @@ a:focus {
     outline: none;
 }
 
-.collapse-filter-button .glyphicon {
+.collapse-filter-button .collapse-chevron {
     font-size: 11pt;
+}
+
+.collapse-chevron {
+    -webkit-transition: transform 0.3s ease-in-out;
+}
+
+.collapse-chevron.flipped {
+    -webkit-transform: rotate(-180deg);
 }
 
 .property-name {
@@ -113,8 +121,8 @@ a:focus {
 }
 
 .sneakers-list-item:hover {
-    border: #d92a4f solid 2px;
-    padding: 13px;
+    border: #d92a4f solid 1px;
+    padding: 14px;
     cursor: pointer;
 }
 

@@ -5,8 +5,8 @@
                 data-target="#filter-options"
                 ng-init="isCollapsed = true"
                 ng-click="isCollapsed = !isCollapsed">
-            Filter Options <span class="glyphicon"
-                                 ng-class="{'glyphicon-chevron-down': isCollapsed, 'glyphicon-chevron-up': !isCollapsed}"></span>
+            Filter Options <span class="glyphicon glyphicon-chevron-down collapse-chevron"
+                                 ng-class="{'flipped': !isCollapsed}"></span>
         </button>
     </div>
     <div id="filter-options" class="collapse">
@@ -62,8 +62,8 @@
                         data-target="#property-value-{{ $index }}"
                         ng-init="isCollapsed = true"
                         ng-click="isCollapsed = !isCollapsed">
-                        {{ property.name }} <span class="glyphicon"
-                                                  ng-class="{'glyphicon-chevron-down': isCollapsed, 'glyphicon-chevron-up': !isCollapsed}"></span>
+                        {{ property.name }} <span class="glyphicon glyphicon-chevron-down collapse-chevron"
+                                                  ng-class="{'flipped': !isCollapsed}"></span>
                     </h2>
                     <span class="num-of-options text-uppercase">{{ property.values.length }} options</span>
                     <div id="property-value-{{ $index }}" class="collapse">
