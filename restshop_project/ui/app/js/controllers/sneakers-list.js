@@ -2,9 +2,9 @@ angular
     .module('restShopApp')
     .controller('SneakersListController', SneakersListController);
 
-SneakersListController.$inject = ['$http', '$location', '$anchorScroll', 'config', 'urlParamsService', 'sneakersDataService'];
+SneakersListController.$inject = ['$location', '$anchorScroll', 'urlParamsService', 'sneakersDataService'];
 
-function SneakersListController($http, $location, $anchorScroll, config, urlParamsService, sneakersDataService) {
+function SneakersListController($location, $anchorScroll, urlParamsService, sneakersDataService) {
     var vm = this;
 
     vm.addFilterParam = addFilterParam;
@@ -36,33 +36,45 @@ function SneakersListController($http, $location, $anchorScroll, config, urlPara
         urlParamsService.addParam(param, value);
     }
 
-    function initializeFilterValues() {
-        $http.get(config.serverUrl + '/tags/').then(function (response) {
-            var tagsFromUrl = $location.search().tags || '';
-            tagsFromUrl = tagsFromUrl.split(',').map(function (tag) {
-                return tag.toLowerCase()
-            });
-
-            vm.tags = response.data.map(function (tag) {
-                var isSelected = tagsFromUrl.includes(tag.toLowerCase());
-                return {
-                    name: tag,
-                    selected: isSelected
-                }
-            });
-        });
-
-        $http.get(config.serverUrl + '/properties/').then(function (response) {
+    function getInitializedProperties() {
+        return sneakersDataService.getProperties().then(function (properties) {
             var propertiesFromUrl = $location.search().properties || '';
             propertiesFromUrl = propertiesFromUrl.split(',');
 
-            vm.properties = response.data.map(function (property) {
+            return properties.map(function (property) {
                 property.values.map(function (value) {
                     value.selected = propertiesFromUrl.includes(value.id.toString());
                     return value;
                 });
                 return property;
             });
+        });
+    }
+
+    function getInitializedTags() {
+        return sneakersDataService.getTags().then(function (tags) {
+
+            var tagsFromUrl = $location.search().tags || '';
+            tagsFromUrl = tagsFromUrl.split(',').map(function (tag) {
+                return tag.toLowerCase()
+            });
+
+            return tags.map(function (tag) {
+                return {
+                    name: tag,
+                    selected: tagsFromUrl.includes(tag.toLowerCase())
+                }
+            });
+        });
+    }
+
+    function initializeFilterValues() {
+        getInitializedTags().then(function (tags) {
+            vm.tags = tags;
+        });
+
+        getInitializedProperties().then(function (properties) {
+            vm.properties = properties;
         });
 
         vm.inStock = $location.search().in_stock === '1';
@@ -75,7 +87,7 @@ function SneakersListController($http, $location, $anchorScroll, config, urlPara
     }
 
     function loadList() {
-        sneakersDataService.getList().then(function (data) {
+        sneakersDataService.getSneakers().then(function (data) {
             vm.hasNext = data.has_next;
             vm.hasPrev = data.has_prev;
             vm.page = data.page;

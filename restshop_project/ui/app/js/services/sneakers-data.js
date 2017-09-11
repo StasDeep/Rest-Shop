@@ -6,19 +6,28 @@ sneakersDataService.$inject = ['$http', 'urlParamsService', 'config'];
 
 function sneakersDataService($http, urlParamsService, config) {
     var service = {
-        getList: getList
+        getProperties: getProperties,
+        getSneakers: getSneakers,
+        getSneakersDetails: getSneakersDetails,
+        getTags: getTags
     };
 
     return service;
 
     ////////////
 
-    function getList() {
+    function getProperties() {
+        return $http.get(config.serverUrl + '/properties/').then(function (response) {
+            return response.data;
+        });
+    }
+
+    function getSneakers() {
         var apiPath = config.serverUrl + '/products/';
         var paramString = urlParamsService.getParamString(['tags', 'properties']);
         var url = apiPath + paramString;
 
-        var promise = $http.get(url).then(function (response) {
+        return $http.get(url).then(function (response) {
             var items = response.data.results;
 
             for (var i = 0; i < items.length; i++) {
@@ -33,7 +42,17 @@ function sneakersDataService($http, urlParamsService, config) {
 
             return response.data;
         });
+    }
 
-        return promise;
+    function getSneakersDetails(id) {
+        return $http.get(config.serverUrl + '/products/' + id).then(function (response) {
+            vm.sneakers = response.data;
+        });
+    }
+
+    function getTags() {
+        return $http.get(config.serverUrl + '/tags/').then(function (response) {
+            return response.data;
+        });
     }
 }

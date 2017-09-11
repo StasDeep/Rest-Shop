@@ -2,16 +2,22 @@ angular
     .module('restShopApp')
     .controller('SneakersDetailsController', SneakersDetailsController);
 
-SneakersDetailsController.$inject = ['$http', '$stateParams', 'config'];
+SneakersDetailsController.$inject = ['$stateParams', 'sneakersDataService'];
 
-function SneakersDetailsController($http, $stateParams, config) {
+function SneakersDetailsController($stateParams, sneakersDataService) {
     var vm = this;
 
     vm.sneakers = {};
 
     ////////////
 
-    $http.get(config.serverUrl + '/products/' + $stateParams.id).then(function (response) {
-        vm.sneakers = response.data;
-    });
+    activate();
+
+    function activate() {
+        getSneakersDetails($stateParams.id);
+    }
+
+    function getSneakersDetails(id) {
+        sneakersDataService.getSneakersDetails(id);
+    }
 }
