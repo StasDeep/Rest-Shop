@@ -159,6 +159,10 @@ a:focus {
     background-color: #c7294c;
 }
 
+.btn-red:hover, .btn-red:focus, .btn-red:active {
+    outline: none;
+}
+
 .text-uppercase {
     text-transform: uppercase;
 }
