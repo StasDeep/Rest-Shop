@@ -7,6 +7,7 @@ SneakersDetailsController.$inject = ['$stateParams', 'sneakersDataService'];
 function SneakersDetailsController($stateParams, sneakersDataService) {
     var vm = this;
 
+    vm.loading = true;
     vm.sneakers = {};
 
     ////////////
@@ -20,6 +21,7 @@ function SneakersDetailsController($stateParams, sneakersDataService) {
     function getSneakersDetails(id) {
         sneakersDataService.getSneakersDetails(id).then(function (sneakers) {
             vm.sneakers = sneakers;
+            vm.loading = false;
         });
     }
 }

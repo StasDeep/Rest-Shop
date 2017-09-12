@@ -84,7 +84,11 @@
         </div>
     </div>
 
-    <div class="row text-center">
+    <div class="row text-center" ng-show="vm.loading">
+        <img src="img/spinner.gif">
+    </div>
+
+    <div class="row text-center" ng-show="!vm.loading">
        <div class="sneakers-list-item text-center"
             ng-repeat="sneakers in vm.sneakersListing"
             ng-click="$state.go('sneakers-details', {id: sneakers.id})">

@@ -1,8 +1,16 @@
-<h1>{{ vm.sneakers.title }}</h1>
-<div class="units">
-    <div class="unit" ng-repeat="unit in vm.sneakers.units">
-        <p>SKU: {{ unit.sku }}</p>
-        <p>Price: ${{ unit.price }}</p>
-        <p>In stock: {{ unit.num_in_stock }} pcs.</p>
+<div class="row text-center" ng-show="vm.loading">
+    <img src="img/spinner.gif">
+</div>
+
+<div class="row"  ng-show="!vm.loading">
+    <div class="col-xs-12">
+        <h1>{{ vm.sneakers.title }}</h1>
+        <div class="units">
+            <div class="unit" ng-repeat="unit in vm.sneakers.units">
+                <p>SKU: {{ unit.sku }}</p>
+                <p>Price: ${{ unit.price }}</p>
+                <p>In stock: {{ unit.num_in_stock }} pcs.</p>
+            </div>
+        </div>
     </div>
 </div>

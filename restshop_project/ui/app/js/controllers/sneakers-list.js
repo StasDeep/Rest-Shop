@@ -10,7 +10,8 @@ function SneakersListController($location, $anchorScroll, urlParamsService, snea
     vm.addFilterParam = addFilterParam;
     vm.hasNext = false;
     vm.hasPrev = false;
-    vm.loadList = loadList;
+    vm.getSneakers = getSneakers;
+    vm.loading = true;
     vm.page = 1;
     vm.pageNext = pageNext;
     vm.pagePrev = pagePrev;
@@ -29,7 +30,7 @@ function SneakersListController($location, $anchorScroll, urlParamsService, snea
 
         initializeFilterValues();
 
-        loadList();
+        getSneakers();
     }
 
     function addFilterParam(param, value) {
@@ -68,6 +69,18 @@ function SneakersListController($location, $anchorScroll, urlParamsService, snea
         });
     }
 
+    function getSneakers() {
+        vm.loading = true;
+
+        sneakersDataService.getSneakers().then(function (data) {
+            vm.hasNext = data.has_next;
+            vm.hasPrev = data.has_prev;
+            vm.page = data.page;
+            vm.sneakersListing = data.results;
+            vm.loading = false;
+        });
+    }
+
     function initializeFilterValues() {
         getInitializedTags().then(function (tags) {
             vm.tags = tags;
@@ -86,18 +99,9 @@ function SneakersListController($location, $anchorScroll, urlParamsService, snea
         vm.priceMax = parseInt(vm.priceMax);
     }
 
-    function loadList() {
-        sneakersDataService.getSneakers().then(function (data) {
-            vm.hasNext = data.has_next;
-            vm.hasPrev = data.has_prev;
-            vm.page = data.page;
-            vm.sneakersListing = data.results;
-        });
-    }
-
     function pageNext() {
         addFilterParam('page', vm.page + 1);
-        loadList();
+        getSneakers();
 
         // Scroll to top of the page to show new results.
         $anchorScroll();
@@ -105,7 +109,7 @@ function SneakersListController($location, $anchorScroll, urlParamsService, snea
 
     function pagePrev() {
         addFilterParam('page', vm.page - 1);
-        loadList();
+        getSneakers();
 
         // Scroll to top of the page to show new results.
         $anchorScroll();
@@ -143,6 +147,6 @@ function SneakersListController($location, $anchorScroll, urlParamsService, snea
         var priceMaxParamValue = vm.priceMax ? vm.priceMax.toString() : null;
         addFilterParam('price_max', priceMaxParamValue);
 
-        loadList();
+        getSneakers();
     }
 }
