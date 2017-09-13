@@ -45,7 +45,7 @@ function sneakersDataService($http, urlParamsService, config) {
     }
 
     function getSneakersDetails(id) {
-        return $http.get(config.serverUrl + '/products/' + id).then(function (response) {
+        return $http.get(config.serverUrl + '/products/' + id + '/').then(function (response) {
             return response.data;
         });
     }

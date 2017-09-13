@@ -3,19 +3,30 @@ angular
         'ui.router',
         'ngAnimate'
     ])
-    .config(['$stateProvider',
-        function ($stateProvider) {
-            $stateProvider.state('sneakers', {
-                url: '/sneakers',
-                templateUrl: 'partials/sneakers-list.html',
-                controller: 'SneakersListController',
-                controllerAs: 'vm'
+    .config(['$stateProvider', '$locationProvider', '$urlRouterProvider', '$injector',
+        function ($stateProvider, $locationProvider, $urlRouterProvider, $injector) {
+            $stateProvider
+                .state('sneakers', {
+                    url: '/sneakers',
+                    templateUrl: '/static/partials/sneakers-list.html',
+                    controller: 'SneakersListController',
+                    controllerAs: 'vm'
+                })
+                .state('sneakers-details', {
+                    url: '/sneakers/:id',
+                    templateUrl: '/static/partials/sneakers-details.html',
+                    controller: 'SneakersDetailsController',
+                    controllerAs: 'vm'
+                });
+
+            $locationProvider.html5Mode({
+              enabled: true,
+              requireBase: false
             });
-            $stateProvider.state('sneakers-details', {
-                url: '/sneakers/:id',
-                templateUrl: 'partials/sneakers-details.html',
-                controller: 'SneakersDetailsController',
-                controllerAs: 'vm'
+
+            $urlRouterProvider.otherwise(function ($injector) {
+                var $state = $injector.get('$state');
+                $state.go('sneakers');
             });
         }
     ])

@@ -9,18 +9,18 @@
     <title>RestShop</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/3.1.1/simplex/bootstrap.min.css"/>
-    <link rel="stylesheet" href="bower_components/html5-boilerplate/css/normalize.css">
-    <link rel="stylesheet" href="bower_components/html5-boilerplate/css/main.css">
-    <link rel="stylesheet" href="css/checkboxes.css">
-    <link rel="stylesheet" href="css/app.css"/>
-    <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
+    <link rel="stylesheet" href="/static/bower_components/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/static/bower_components/html5-boilerplate/css/normalize.css">
+    <link rel="stylesheet" href="/static/bower_components/html5-boilerplate/css/main.css">
+    <link rel="stylesheet" href="/static/css/checkboxes.css">
+    <link rel="stylesheet" href="/static/css/app.css"/>
+    <script src="/static/bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
 </head>
 <body>
     <header>
         <div class="container text-center">
             <img class="img-responsive center-block restshop-logo"
-                 src="img/logo.png"
+                 src="/static/img/logo.png"
                  ng-click="$state.go('sneakers', {}, {reload: true})">
         </div>
     </header>
@@ -33,19 +33,15 @@
         <div ui-view></div>
     </div>
 
-    <!-- In production use:
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
-    -->
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/controllers/sneakers-list.js"></script>
-    <script src="js/controllers/sneakers-details.js"></script>
-    <script src="js/services/config.js"></script>
-    <script src="js/services/sneakers-data.js"></script>
-    <script src="js/services/url-params.js"></script>
+    <script src="/static/bower_components/angular/angular.js"></script>
+    <script src="/static/bower_components/angular-animate/angular-animate.js"></script>
+    <script src="/static/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="/static/bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+    <script src="/static/js/app.js"></script>
+    <script src="/static/js/controllers/sneakers-list.js"></script>
+    <script src="/static/js/controllers/sneakers-details.js"></script>
+    <script src="/static/js/services/config.js"></script>
+    <script src="/static/js/services/sneakers-data.js"></script>
+    <script src="/static/js/services/url-params.js"></script>
 </body>
 </html>
