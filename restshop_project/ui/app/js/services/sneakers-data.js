@@ -17,13 +17,13 @@ function sneakersDataService($http, urlParamsService, config) {
     ////////////
 
     function getProperties() {
-        return $http.get(config.serverUrl + '/properties/').then(function (response) {
+        return $http.get(config.apiUrl + '/properties/').then(function (response) {
             return response.data;
         });
     }
 
     function getSneakers() {
-        var apiPath = config.serverUrl + '/products/';
+        var apiPath = config.apiUrl + '/products/';
         var paramString = urlParamsService.getParamString(['tags', 'properties']);
         var url = apiPath + paramString;
 
@@ -33,8 +33,6 @@ function sneakersDataService($http, urlParamsService, config) {
             for (var i = 0; i < items.length; i++) {
                 if (items[i].image === null) {
                     items[i].image = config.emptyImageUrl;
-                } else {
-                    items[i].image = config.serverUrl + items[i].image;
                 }
             }
 
@@ -45,13 +43,13 @@ function sneakersDataService($http, urlParamsService, config) {
     }
 
     function getSneakersDetails(id) {
-        return $http.get(config.serverUrl + '/products/' + id + '/').then(function (response) {
+        return $http.get(config.apiUrl + '/products/' + id + '/').then(function (response) {
             return response.data;
         });
     }
 
     function getTags() {
-        return $http.get(config.serverUrl + '/tags/').then(function (response) {
+        return $http.get(config.apiUrl + '/tags/').then(function (response) {
             return response.data;
         });
     }

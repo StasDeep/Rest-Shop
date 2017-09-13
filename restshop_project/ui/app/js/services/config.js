@@ -3,6 +3,6 @@
 angular
     .module('restShopApp')
     .constant('config', {
-        serverUrl: 'http://localhost:8200',
-        emptyImageUrl: 'img/empty.jpg'
+        apiUrl: 'http://localhost:8000/api',
+        emptyImageUrl: '/static/img/empty.jpg'
     });
