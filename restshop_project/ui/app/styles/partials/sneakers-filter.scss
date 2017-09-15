@@ -1,16 +1,19 @@
+$clear-button-color: darken($light, 10%);
+$input-color: darken($light, 6%);
+
 .collapse-filter-button {
     &, &:focus {
         width: 100%;
         font-size: 14pt;
-        background-color: #fcfcfc;
-        border: solid #d92a4f 1px;
-        color: #d92a4f;
+        background-color: $light;
+        border: solid $crimson 1px;
+        color: $crimson;
         outline: none;
     }
 
     &:hover, &:active {
-        background-color: #faf5f5;
-        color: #d92a4f;
+        background-color: darken($light, 2%);
+        color: $crimson;
         outline: none;
     }
 
@@ -38,7 +41,7 @@
         input {
             width: 50px;
             border: none;
-            background-color: #f3f3f3;
+            background-color: $input-color;
 
             &:focus {
                 outline: none;
@@ -52,24 +55,23 @@
         }
 
         .clear-button {
-            color: #d6d6d6;
+            color: $clear-button-color;
             cursor: pointer;
 
             &:hover {
-                color: darken(#d6d6d6, 15%);
+                color: darken($clear-button-color, 15%);
             }
         }
     }
 
     .filter-property-block {
         .property-name {
-            margin: 0;
-            margin-top: 15px;
+            margin: 15px 0 0;
             display: inline-block;
             cursor: pointer;
 
             &:hover {
-                color: #d92a4f;
+                color: $crimson;
             }
 
             .collapse-chevron {

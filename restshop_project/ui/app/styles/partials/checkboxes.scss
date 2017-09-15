@@ -18,7 +18,7 @@
     margin-left: -20px;
     border: 1px solid #cccccc;
     border-radius: 0;
-    background-color: #fcfcfc;
+    background-color: $light;
     -webkit-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
     -o-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
     transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
@@ -48,7 +48,7 @@
 }
 
 .checkbox input[type="checkbox"]:checked + label::after {
-    font-family: 'Glyphicons Halflings';
+    font-family: 'Glyphicons Halflings', serif;
     content: "\e013";
 }
 
@@ -75,16 +75,16 @@
 }
 
 .checkbox-primary input[type="checkbox"]:checked + label::after {
-    color: #fcfcfc;
+    color: $light;
 }
 
 .checkbox-danger input[type="checkbox"]:checked + label::before {
-    background-color: #d92a4f;
-    border-color: #d92a4f;
+    background-color: $crimson;
+    border-color: $crimson;
 }
 
 .checkbox-danger input[type="checkbox"]:checked + label::after {
-    color: #fcfcfc;
+    color: $light;
 }
 
 .checkbox-info input[type="checkbox"]:checked + label::before {
@@ -93,7 +93,7 @@
 }
 
 .checkbox-info input[type="checkbox"]:checked + label::after {
-    color: #fcfcfc;
+    color: $light;
 }
 
 .checkbox-warning input[type="checkbox"]:checked + label::before {
@@ -102,7 +102,7 @@
 }
 
 .checkbox-warning input[type="checkbox"]:checked + label::after {
-    color: #fcfcfc;
+    color: $light;
 }
 
 .checkbox-success input[type="checkbox"]:checked + label::before {
@@ -111,7 +111,7 @@
 }
 
 .checkbox-success input[type="checkbox"]:checked + label::after {
-    color: #fcfcfc;
+    color: $light;
 }
 
 .radio {
@@ -134,7 +134,7 @@
     margin-left: -20px;
     border: 1px solid #cccccc;
     border-radius: 50%;
-    background-color: #fcfcfc;
+    background-color: $light;
     -webkit-transition: border 0.15s ease-in-out;
     -o-transition: border 0.15s ease-in-out;
     transition: border 0.15s ease-in-out;
@@ -203,15 +203,15 @@
 }
 
 .radio-danger input[type="radio"] + label::after {
-    background-color: #d92a4f;
+    background-color: $crimson;
 }
 
 .radio-danger input[type="radio"]:checked + label::before {
-    border-color: #d92a4f;
+    border-color: $crimson;
 }
 
 .radio-danger input[type="radio"]:checked + label::after {
-    background-color: #d92a4f;
+    background-color: $crimson;
 }
 
 .radio-info input[type="radio"] + label::after {

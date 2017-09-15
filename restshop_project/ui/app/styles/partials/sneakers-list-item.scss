@@ -1,3 +1,5 @@
+$image-border-color: darken($light, 8%);
+
 .sneakers-list-item {
     margin-bottom: 15px;
     margin-right: 15px;
@@ -6,7 +8,7 @@
     width: 270px;
 
     &:hover {
-        border: #d92a4f solid 1px;
+        border: $crimson solid 1px;
         padding: 14px;
         cursor: pointer;
     }
@@ -14,12 +16,12 @@
     .sneakers-main-image {
         width: 240px;
         height: 240px;
-        border: solid #f0f0f0 1px;
+        border: solid $image-border-color 1px;
         margin-bottom: 5px;
     }
 
     .sneakers-title {
-        color: #d92a4f;
+        color: $crimson;
         display: block;
         padding: 3px;
         text-transform: uppercase;
@@ -35,9 +37,9 @@
     }
 
     .label-tag {
-        background-color: #fcfcfc;
-        border: solid #d92a4f 1px;
-        color: #d92a4f;
+        background-color: $light;
+        border: solid $crimson 1px;
+        color: $crimson;
         border-radius: 0;
         text-transform: uppercase;
         font-weight: normal;

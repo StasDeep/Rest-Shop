@@ -1,5 +1,6 @@
 html, body {
     height: 100%;
+    background-color: $light;
 }
 
 body {
@@ -28,11 +29,11 @@ a:focus {
     border-radius: 0;
 
     &.btn-red {
-        color: #fcfcfc;
-        background-color: #d92a4f;
+        color: $light;
+        background-color: $crimson;
 
         &:hover {
-            background-color: darken(#d92a4f, 5%);
+            background-color: darken($crimson, 5%);
         }
 
         &:hover, &:focus, &:active {
