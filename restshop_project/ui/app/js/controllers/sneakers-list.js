@@ -2,8 +2,6 @@ angular
     .module('restShopApp')
     .controller('SneakersListController', SneakersListController);
 
-SneakersListController.$inject = ['$location', '$anchorScroll', 'urlParamsService', 'sneakersDataService'];
-
 function SneakersListController($location, $anchorScroll, urlParamsService, sneakersDataService) {
     var vm = this;
 
@@ -54,7 +52,6 @@ function SneakersListController($location, $anchorScroll, urlParamsService, snea
 
     function getInitializedTags() {
         return sneakersDataService.getTags().then(function (tags) {
-
             var tagsFromUrl = $location.search().tags || '';
             tagsFromUrl = tagsFromUrl.split(',').map(function (tag) {
                 return tag.toLowerCase()

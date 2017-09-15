@@ -2,8 +2,6 @@ angular
     .module('restShopApp')
     .factory('sneakersDataService', sneakersDataService);
 
-sneakersDataService.$inject = ['$http', 'urlParamsService', 'config'];
-
 function sneakersDataService($http, urlParamsService, config) {
     var service = {
         getProperties: getProperties,

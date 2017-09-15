@@ -2,8 +2,6 @@ angular
     .module('restShopApp')
     .controller('SneakersDetailsController', SneakersDetailsController);
 
-SneakersDetailsController.$inject = ['$stateParams', 'sneakersDataService'];
-
 function SneakersDetailsController($stateParams, sneakersDataService) {
     var vm = this;
 

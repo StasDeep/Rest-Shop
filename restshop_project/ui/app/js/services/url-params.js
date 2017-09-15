@@ -2,8 +2,6 @@ angular
     .module('restShopApp')
     .factory('urlParamsService', urlParamsService);
 
-urlParamsService.$inject = ['$location'];
-
 function urlParamsService($location) {
     var resetParamsList = [];
 
