@@ -1,0 +1,90 @@
+.collapse-filter-button {
+    &, &:focus {
+        width: 100%;
+        font-size: 14pt;
+        background-color: #fcfcfc;
+        border: solid #d92a4f 1px;
+        color: #d92a4f;
+        outline: none;
+    }
+
+    &:hover, &:active {
+        background-color: #faf5f5;
+        color: #d92a4f;
+        outline: none;
+    }
+
+    .collapse-chevron {
+        font-size: 11pt;
+    }
+}
+
+.collapse-chevron {
+    transition: transform 0.3s ease-in-out;
+
+    &.flipped {
+        transform: rotate(-180deg);
+    }
+}
+
+.filter-options-block {
+    .filter-title {
+        font-size: 14pt;
+    }
+
+    .filter-text {
+        margin: 10px 0;
+
+        input {
+            width: 50px;
+            border: none;
+            background-color: #f3f3f3;
+
+            &:focus {
+                outline: none;
+            }
+        }
+
+        .filter-input-title {
+            display: inline-block;
+            text-transform: uppercase;
+            width: 40px;
+        }
+
+        .clear-button {
+            color: #d6d6d6;
+            cursor: pointer;
+
+            &:hover {
+                color: darken(#d6d6d6, 15%);
+            }
+        }
+    }
+
+    .filter-property-block {
+        .property-name {
+            margin: 0;
+            margin-top: 15px;
+            display: inline-block;
+            cursor: pointer;
+
+            &:hover {
+                color: #d92a4f;
+            }
+
+            .collapse-chevron {
+                font-size: 10pt;
+            }
+        }
+
+        &:first-child .property-name {
+            margin: 0;
+        }
+
+        .num-of-options {
+            margin-left: 5px;
+            font-size: 8pt;
+        }
+    }
+
+}

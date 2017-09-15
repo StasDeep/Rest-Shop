@@ -1,16 +1,18 @@
 <div>
-    <div class="row">
-        <button class="btn collapse-filter-button text-uppercase"
-                ng-init="isCollapsed = true"
-                ng-click="isCollapsed = !isCollapsed">
-            Filter Options <span class="glyphicon glyphicon-chevron-down collapse-chevron"
-                                 ng-class="{'flipped': !isCollapsed}"></span>
-        </button>
+    <div class="row bottom-buffer">
+        <div class="col-xs-12">
+            <button class="btn collapse-filter-button text-uppercase"
+                    ng-init="isCollapsed = true"
+                    ng-click="isCollapsed = !isCollapsed">
+                Filter Options <span class="glyphicon glyphicon-chevron-down collapse-chevron"
+                                     ng-class="{'flipped': !isCollapsed}"></span>
+            </button>
+        </div>
     </div>
     <div uib-collapse="isCollapsed">
-        <div class="row">
+        <div class="row bottom-buffer filter-options-block">
             <div class="col-sm-4">
-                <h2 class="text-uppercase">Tags</h2>
+                <p class="filter-title text-uppercase">Tags</p>
                 <div class="checkbox checkbox-danger" ng-repeat="tag in vm.tags">
                     <input id="tag-checkbox{{ $index }}"
                            type="checkbox"
@@ -24,7 +26,7 @@
             </div>
 
             <div class="col-sm-4">
-                <h2 class="text-uppercase">Filter</h2>
+                <p class="filter-title text-uppercase">Filter</p>
                 <div class="checkbox checkbox-danger checkbox-uppercase">
                     <input id="instock-checkbox"
                            type="checkbox"
@@ -36,31 +38,31 @@
                     </label>
                 </div>
                 <div class="filter-text">
-                    <span class="filter-title">Min $</span><input type="number"
+                    <span class="filter-input-title">Min $</span><input type="number"
                                 min="0"
                                 ng-model="vm.priceMin"
                                 ng-change="vm.refreshFilter()">
-                    <span class="glyphicon glyphicon-remove"
+                    <span class="glyphicon glyphicon-remove clear-button"
                           ng-click="vm.priceMin = null; vm.refreshFilter()"></span>
                 </div>
                 <div class="filter-text">
-                    <span class="filter-title">Min $</span><input type="number"
+                    <span class="filter-input-title">Min $</span><input type="number"
                                 min="1"
                                 ng-model="vm.priceMax"
                                 ng-change="vm.refreshFilter()">
-                    <span class="glyphicon glyphicon-remove"
+                    <span class="glyphicon glyphicon-remove clear-button"
                           ng-click="vm.priceMax = null; vm.refreshFilter()"></span>
                 </div>
             </div>
 
             <div class="col-sm-4">
-                <div ng-repeat="property in vm.properties">
-                    <h2 class="property-name text-uppercase"
+                <div class="filter-property-block" ng-repeat="property in vm.properties">
+                    <p class="filter-title property-name text-uppercase"
                         ng-init="isCollapsed = true"
                         ng-click="isCollapsed = !isCollapsed">
                         {{ property.name }} <span class="glyphicon glyphicon-chevron-down collapse-chevron"
                                                   ng-class="{'flipped': !isCollapsed}"></span>
-                    </h2>
+                    </p>
                     <span class="num-of-options text-uppercase">{{ property.values.length }} options</span>
                     <div uib-collapse="isCollapsed">
                         <div class="checkbox checkbox-danger" ng-repeat="value in property.values">
@@ -107,7 +109,7 @@
        </div>
     </div>
 
-    <div class="row text-center">
+    <div class="row text-center bottom-buffer">
        <button class="btn btn-red"
                ng-class="{'disabled': !vm.hasPrev}"
                ng-click="vm.pagePrev()">

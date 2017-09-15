@@ -9,6 +9,7 @@ import iife from 'gulp-iife';
 import imagemin from 'gulp-imagemin';
 import ngAnnotate from 'gulp-ng-annotate';
 import sass from 'gulp-sass';
+import bulkSass from 'gulp-sass-bulk-import';
 import uglify from 'gulp-uglify';
 import watch from 'gulp-watch';
 import merge from 'merge-stream';
@@ -42,7 +43,7 @@ const path = {
             'bower_components/bootstrap/dist/css/bootstrap.css'
         ],
         srcStyles: [
-            'styles/app.scss'
+            'styles/main.scss'
         ],
         fonts: [
             'bower_components/bootstrap/dist/fonts/*'
@@ -58,7 +59,7 @@ const path = {
         img: 'img/'
     },
     watch: {  // Which files changes to watch.
-        html: ['index.html', 'partials/**/*.html'],
+        html: '**/*.html',
         styles: 'styles/**/*.scss',
         js: 'js/**/*.js',
         img: 'img/**/*'
@@ -107,6 +108,7 @@ gulp.task('styles:build', () => {
     let cssStream = take('vendorStyles');
 
     let scssStream = take('srcStyles')
+        .pipe(bulkSass())
         .pipe(sass())
         .pipe(autoprefixer())
         .pipe(csso());

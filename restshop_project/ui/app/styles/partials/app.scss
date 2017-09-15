@@ -1,0 +1,42 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    overflow-y:scroll;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+a:focus {
+    outline: none;
+}
+
+.top-buffer {
+    margin-top: 20px;
+}
+
+.bottom-buffer {
+    margin-bottom: 20px;
+}
+
+.btn {
+    border-radius: 0;
+
+    &.btn-red {
+        color: #fcfcfc;
+        background-color: #d92a4f;
+
+        &:hover {
+            background-color: darken(#d92a4f, 5%);
+        }
+
+        &:hover, &:focus, &:active {
+            outline: none;
+        }
+    }
+}

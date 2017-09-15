@@ -1,0 +1,45 @@
+.sneakers-list-item {
+    margin-bottom: 15px;
+    margin-right: 15px;
+    padding: 15px;
+    display: inline-block;
+    width: 270px;
+
+    &:hover {
+        border: #d92a4f solid 1px;
+        padding: 14px;
+        cursor: pointer;
+    }
+
+    .sneakers-main-image {
+        width: 240px;
+        height: 240px;
+        border: solid #f0f0f0 1px;
+        margin-bottom: 5px;
+    }
+
+    .sneakers-title {
+        color: #d92a4f;
+        display: block;
+        padding: 3px;
+        text-transform: uppercase;
+    }
+
+    .product-price {
+        display: inline-block;
+        padding: 3px;
+    }
+
+    .tags {
+        padding: 3px;
+    }
+
+    .label-tag {
+        background-color: #fcfcfc;
+        border: solid #d92a4f 1px;
+        color: #d92a4f;
+        border-radius: 0;
+        text-transform: uppercase;
+        font-weight: normal;
+    }
+}
