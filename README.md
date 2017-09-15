@@ -4,6 +4,11 @@ Sneakers shop test site with Python 3 and Angular.
 
 ## Installation
 
+Create [virtual environment](https://virtualenv.pypa.io/en/stable/) (preferably):
+```
+virtualenv -p python3 restshop
+```
+
 Install dependencies:
 ```
 pip install -r requirements.txt
@@ -29,6 +34,12 @@ python manage.py createsuperuser
 ```
 
 ## Frontend Setting
+
+Install Node.js:
+```
+curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+sudo apt-get install -y nodejs
+```
 
 Go to `ui` folder:
 ```
