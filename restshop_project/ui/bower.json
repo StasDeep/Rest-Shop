@@ -1,12 +1,10 @@
 {
-  "name": "rest-shop",
+  "name": "restshop",
   "dependencies": {
-    "angular": "1.2.x",
-    "angular-ui-router": "0.2.10",
-    "angular-animate": "1.2.x",
-    "angular-facebook": "",
-    "angular-loader": "1.2.x",
-    "angular-mocks": "~1.2.x",
-    "html5-boilerplate": "~4.3.0"
+    "angular": "^1.6.4",
+    "angular-animate": "^1.6.4",
+    "angular-bootstrap": "^2.5.0",
+    "angular-ui-router": "^0.4.2",
+    "bootstrap": "^3.3.7"
   }
 }

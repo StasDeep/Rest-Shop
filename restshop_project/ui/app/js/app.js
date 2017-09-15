@@ -1,7 +1,8 @@
 angular
     .module('restShopApp', [
         'ui.router',
-        'ngAnimate'
+        'ngAnimate',
+        'ui.bootstrap'
     ])
     .config(routeConfig)
     .run(addStateToRootScope);

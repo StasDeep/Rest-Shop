@@ -1,15 +1,13 @@
 <div>
     <div class="row">
         <button class="btn collapse-filter-button text-uppercase"
-                data-toggle="collapse"
-                data-target="#filter-options"
                 ng-init="isCollapsed = true"
                 ng-click="isCollapsed = !isCollapsed">
             Filter Options <span class="glyphicon glyphicon-chevron-down collapse-chevron"
                                  ng-class="{'flipped': !isCollapsed}"></span>
         </button>
     </div>
-    <div id="filter-options" class="collapse">
+    <div uib-collapse="isCollapsed">
         <div class="row">
             <div class="col-sm-4">
                 <h2 class="text-uppercase">Tags</h2>
@@ -58,16 +56,14 @@
             <div class="col-sm-4">
                 <div ng-repeat="property in vm.properties">
                     <h2 class="property-name text-uppercase"
-                        data-toggle="collapse"
-                        data-target="#property-value-{{ $index }}"
                         ng-init="isCollapsed = true"
                         ng-click="isCollapsed = !isCollapsed">
                         {{ property.name }} <span class="glyphicon glyphicon-chevron-down collapse-chevron"
                                                   ng-class="{'flipped': !isCollapsed}"></span>
                     </h2>
                     <span class="num-of-options text-uppercase">{{ property.values.length }} options</span>
-                    <div id="property-value-{{ $index }}" class="collapse">
-                        <div class="checkbox checkbox-danger checkbox-uppercase" ng-repeat="value in property.values">
+                    <div uib-collapse="isCollapsed">
+                        <div class="checkbox checkbox-danger" ng-repeat="value in property.values">
                             <!-- $parent.$index is used to make checkbox id unique -->
                             <input id="propvalue-checkbox{{ $parent.$index * 100 + $index }}"
                                    type="checkbox"
