@@ -6,9 +6,10 @@ function SneakersListController($location, $anchorScroll, urlParamsService, snea
     let vm = this;
 
     vm.addFilterParam = addFilterParam;
+    vm.applyTag = applyTag;
+    vm.getSneakers = getSneakers;
     vm.hasNext = false;
     vm.hasPrev = false;
-    vm.getSneakers = getSneakers;
     vm.loading = true;
     vm.page = 1;
     vm.pageNext = pageNext;
@@ -33,6 +34,16 @@ function SneakersListController($location, $anchorScroll, urlParamsService, snea
 
     function addFilterParam(param, value) {
         urlParamsService.addParam(param, value);
+    }
+
+    function applyTag($event, tagName) {
+        $event.stopPropagation();
+
+        for (let i = 0; i < vm.tags.length; i++) {
+            vm.tags[i].selected = vm.tags[i].name.toLowerCase() === tagName.toLowerCase();
+        }
+
+        refreshFilter();
     }
 
     function getInitializedProperties() {
