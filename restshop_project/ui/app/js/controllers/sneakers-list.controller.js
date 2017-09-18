@@ -3,7 +3,7 @@ angular
     .controller('SneakersListController', SneakersListController);
 
 function SneakersListController($location, $anchorScroll, urlParamsService, sneakersDataService) {
-    var vm = this;
+    let vm = this;
 
     vm.addFilterParam = addFilterParam;
     vm.hasNext = false;
@@ -37,7 +37,7 @@ function SneakersListController($location, $anchorScroll, urlParamsService, snea
 
     function getInitializedProperties() {
         return sneakersDataService.getProperties().then(function (properties) {
-            var propertiesFromUrl = $location.search().properties || '';
+            let propertiesFromUrl = $location.search().properties || '';
             propertiesFromUrl = propertiesFromUrl.split(',');
 
             return properties.map(function (property) {
@@ -52,7 +52,7 @@ function SneakersListController($location, $anchorScroll, urlParamsService, snea
 
     function getInitializedTags() {
         return sneakersDataService.getTags().then(function (tags) {
-            var tagsFromUrl = $location.search().tags || '';
+            let tagsFromUrl = $location.search().tags || '';
             tagsFromUrl = tagsFromUrl.split(',').map(function (tag) {
                 return tag.toLowerCase()
             });
@@ -113,7 +113,7 @@ function SneakersListController($location, $anchorScroll, urlParamsService, snea
     }
 
     function refreshFilter() {
-        var selectedTags = vm.tags
+        let selectedTags = vm.tags
             .filter(function (tagObj) {
                 return tagObj.selected;
             })
@@ -121,27 +121,27 @@ function SneakersListController($location, $anchorScroll, urlParamsService, snea
                 return tagObj.name;
             });
 
-        var tagsParamValue = selectedTags.join(',') || null;
+        let tagsParamValue = selectedTags.join(',') || null;
         addFilterParam('tags', tagsParamValue);
 
-        var selectedProperties = [];
-        for (var i = 0; i < vm.properties.length; i++) {
-            for (var j = 0; j < vm.properties[i].values.length; j++) {
+        let selectedProperties = [];
+        for (let i = 0; i < vm.properties.length; i++) {
+            for (let j = 0; j < vm.properties[i].values.length; j++) {
                 if (vm.properties[i].values[j].selected) {
                     selectedProperties.push(vm.properties[i].values[j].id)
                 }
             }
         }
-        var propertiesParamValue = selectedProperties.join(',') || null;
+        let propertiesParamValue = selectedProperties.join(',') || null;
         addFilterParam('properties', propertiesParamValue);
 
-        var inStockParamValue = vm.inStock ? '1' : null;
+        let inStockParamValue = vm.inStock ? '1' : null;
         addFilterParam('in_stock', inStockParamValue);
 
-        var priceMinParamValue = vm.priceMin ? vm.priceMin.toString() : null;
+        let priceMinParamValue = vm.priceMin ? vm.priceMin.toString() : null;
         addFilterParam('price_min', priceMinParamValue);
 
-        var priceMaxParamValue = vm.priceMax ? vm.priceMax.toString() : null;
+        let priceMaxParamValue = vm.priceMax ? vm.priceMax.toString() : null;
         addFilterParam('price_max', priceMaxParamValue);
 
         getSneakers();

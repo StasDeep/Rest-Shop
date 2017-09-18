@@ -3,9 +3,9 @@ angular
     .factory('urlParamsService', urlParamsService);
 
 function urlParamsService($location) {
-    var resetParamsList = [];
+    let resetParamsList = [];
 
-    var service = {
+    let service = {
         addParam: addParam,
         getParamString: getParamString,
         setResetParams: setResetParams
@@ -20,7 +20,7 @@ function urlParamsService($location) {
         reset = typeof a !== 'undefined' ? a : true;
 
         if (reset) {
-            for (var i = 0; i < resetParamsList.length; i++) {
+            for (let i = 0; i < resetParamsList.length; i++) {
                 $location.search(resetParamsList[i], null);
             }
         }
@@ -30,23 +30,23 @@ function urlParamsService($location) {
 
     // listParams stores names of parameters which are represented as comma separated lists.
     function getParamString(listParams) {
-        var paramString = '?';
+        let paramString = '?';
 
-        var params = $location.search();
+        let params = $location.search();
 
-        for (var name in params) {
+        for (let name in params) {
             if (!params.hasOwnProperty(name)) {
                 // Current property is not a direct property of params.
                 continue;
             }
 
-            var value = params[name];
+            let value = params[name];
 
             if (listParams.includes(name)) {
                 // If param is in listParams, then it's likely to be comma separated.
-                var values = value.split(',');
+                let values = value.split(',');
 
-                for (var i = 0; i < values.length; i++) {
+                for (let i = 0; i < values.length; i++) {
                     paramString += name + '=' + values[i] + ';';
                 }
             } else {

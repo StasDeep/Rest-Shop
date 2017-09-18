@@ -28,7 +28,7 @@ function routeConfig($stateProvider, $locationProvider, $urlRouterProvider, $inj
     });
 
     $urlRouterProvider.otherwise(function ($injector) {
-        var $state = $injector.get('$state');
+        let $state = $injector.get('$state');
         $state.go('sneakers');
     });
 }

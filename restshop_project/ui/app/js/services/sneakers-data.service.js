@@ -3,7 +3,7 @@ angular
     .factory('sneakersDataService', sneakersDataService);
 
 function sneakersDataService($http, urlParamsService, config) {
-    var service = {
+    let service = {
         getProperties: getProperties,
         getSneakers: getSneakers,
         getSneakersDetails: getSneakersDetails,
@@ -21,14 +21,14 @@ function sneakersDataService($http, urlParamsService, config) {
     }
 
     function getSneakers() {
-        var apiPath = config.apiUrl + '/products/';
-        var paramString = urlParamsService.getParamString(['tags', 'properties']);
-        var url = apiPath + paramString;
+        let apiPath = config.apiUrl + '/products/';
+        let paramString = urlParamsService.getParamString(['tags', 'properties']);
+        let url = apiPath + paramString;
 
         return $http.get(url).then(function (response) {
-            var items = response.data.results;
+            let items = response.data.results;
 
-            for (var i = 0; i < items.length; i++) {
+            for (let i = 0; i < items.length; i++) {
                 if (items[i].image === null) {
                     items[i].image = config.emptyImageUrl;
                 }

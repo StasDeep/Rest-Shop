@@ -3,7 +3,7 @@ angular
     .controller('SneakersDetailsController', SneakersDetailsController);
 
 function SneakersDetailsController($stateParams, sneakersDataService) {
-    var vm = this;
+    let vm = this;
 
     vm.loading = true;
     vm.sneakers = {};

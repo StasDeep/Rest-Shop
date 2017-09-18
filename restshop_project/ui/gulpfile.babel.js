@@ -3,6 +3,7 @@
 import del from 'del';
 import gulp from 'gulp';
 import autoprefixer from 'gulp-autoprefixer';
+import babel from 'gulp-babel';
 import concat from 'gulp-concat';
 import csso from 'gulp-csso';
 import iife from 'gulp-iife';
@@ -129,8 +130,9 @@ gulp.task('vendorJs:build', () => {
 
 gulp.task('srcJs:build', () => {
     return take('srcJs')
+        .pipe(babel())
         .pipe(ngAnnotate())
-        .pipe(iife())
+        .pipe(iife({useStrict: false}))
         .pipe(concat('app.js'))
         .pipe(uglify())
         .pipe(put('js'));
@@ -168,10 +170,10 @@ const watchFiles = (pathKey) => {
 };
 
 gulp.task('watch', () => {
-    watchFiles('html');
-    watchFiles('styles');
-    watchFiles('js');
-    watchFiles('img');
+    const keys = ['html', 'styles', 'js', 'img'];
+    for (let i = 0; i < keys.length; i++) {
+        watchFiles(keys[i]);
+    }
 });
 
 
