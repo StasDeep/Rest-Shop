@@ -2,20 +2,19 @@ $image-border-color: darken($light, 8%);
 
 .sneakers-list-item {
     margin-bottom: 15px;
-    margin-right: 15px;
-    padding: 15px;
+    padding: 20px;
     display: inline-block;
-    width: 270px;
+    width: 285px;
 
     &:hover {
         border: $crimson solid 1px;
-        padding: 14px;
+        padding: 19px;
         cursor: pointer;
     }
 
     .sneakers-main-image {
-        width: 240px;
-        height: 240px;
+        width: 245px;
+        height: 245px;
         border: solid $image-border-color 1px;
         margin-bottom: 5px;
     }
@@ -43,5 +42,10 @@ $image-border-color: darken($light, 8%);
         border-radius: 0;
         text-transform: uppercase;
         font-weight: normal;
+
+        &:hover {
+            background-color: $crimson;
+            color: $light;
+        }
     }
 }
