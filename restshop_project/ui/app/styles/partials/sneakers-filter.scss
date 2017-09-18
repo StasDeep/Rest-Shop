@@ -3,18 +3,19 @@ $input-color: darken($light, 6%);
 $filter-text-color: #7a7a7a;
 
 .collapse-filter-button {
-    &, &:focus {
-        width: 100%;
-        font-size: 14pt;
-        background-color: $light;
-        border: solid $crimson 1px;
-        color: $crimson;
-        outline: none;
+    transition: opacity 0.4s ease;
+    background-color: $crimson;
+    color: $light;
+    width: 100%;
+    font-size: 14pt;
+    opacity: 0.5;
+
+    &:hover {
+        opacity: 1;
     }
 
-    &:hover, &:active {
-        background-color: darken($light, 2%);
-        color: $crimson;
+    &:hover, &:active, &:focus {
+        color: $light;
         outline: none;
     }
 
@@ -32,6 +33,8 @@ $filter-text-color: #7a7a7a;
 }
 
 .filter-options-block {
+    @include collapse-transition();
+
     .checkbox, .filter-text {
         color: $filter-text-color;
     }
@@ -74,6 +77,7 @@ $filter-text-color: #7a7a7a;
             margin: 15px 0 0;
             display: inline-block;
             cursor: pointer;
+            transition: color 0.3s ease-in-out;
 
             &:hover {
                 color: $crimson;
@@ -91,7 +95,11 @@ $filter-text-color: #7a7a7a;
         .num-of-options {
             margin-left: 5px;
             font-size: 8pt;
+            color: $filter-text-color;
+        }
+
+        .property-collapsing-block {
+            @include collapse-transition();
         }
     }
-
 }

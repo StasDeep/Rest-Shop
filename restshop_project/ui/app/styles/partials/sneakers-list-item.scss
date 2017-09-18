@@ -1,14 +1,22 @@
 $image-border-color: darken($light, 8%);
 
 .sneakers-list-item {
+    transition: border-color 0.3s ease;
+    margin-right: -1px;
     margin-bottom: 15px;
     padding: 20px;
     display: inline-block;
     width: 285px;
+    border: transparent solid 1px;
+
+    &.ng-enter,
+    &.ng-leave,
+    &.ng-animate {
+        transition: none !important;
+    }
 
     &:hover {
-        border: $crimson solid 1px;
-        padding: 19px;
+        border-color: $crimson;
         cursor: pointer;
     }
 
@@ -36,6 +44,8 @@ $image-border-color: darken($light, 8%);
     }
 
     .label-tag {
+        transition: background-color 0.4s ease,
+                    color 0.4s ease;
         background-color: $light;
         border: solid $crimson 1px;
         color: $crimson;

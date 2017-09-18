@@ -9,8 +9,8 @@
             </button>
         </div>
     </div>
-    <div uib-collapse="isCollapsed">
-        <div class="row bottom-buffer filter-options-block">
+    <div uib-collapse="isCollapsed" class="filter-options-block">
+        <div class="row bottom-buffer">
             <div class="col-sm-4">
                 <p class="filter-title text-uppercase">Tags</p>
                 <div class="checkbox checkbox-danger" ng-repeat="tag in vm.tags">
@@ -64,7 +64,7 @@
                                                   ng-class="{'flipped': !isCollapsed}"></span>
                     </p>
                     <span class="num-of-options text-uppercase">{{ property.values.length }} options</span>
-                    <div uib-collapse="isCollapsed">
+                    <div uib-collapse="isCollapsed" class="property-collapsing-block">
                         <div class="checkbox checkbox-danger" ng-repeat="value in property.values">
                             <!-- $parent.$index is used to make checkbox id unique -->
                             <input id="propvalue-checkbox{{ $parent.$index * 100 + $index }}"
