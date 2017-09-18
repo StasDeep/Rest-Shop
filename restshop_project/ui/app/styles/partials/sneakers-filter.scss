@@ -1,5 +1,6 @@
 $clear-button-color: darken($light, 10%);
 $input-color: darken($light, 6%);
+$filter-text-color: #7a7a7a;
 
 .collapse-filter-button {
     &, &:focus {
@@ -31,6 +32,10 @@ $input-color: darken($light, 6%);
 }
 
 .filter-options-block {
+    .checkbox, .filter-text {
+        color: $filter-text-color;
+    }
+
     .filter-title {
         font-size: 14pt;
     }
