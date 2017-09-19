@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.db.models import Q
+from django.db.models import Q, Min, Max
 from rest_framework import generics, status
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -15,10 +15,13 @@ class StandardResultsSetPagination(PageNumberPagination):
     page_size = 4
 
     def get_paginated_response(self, data):
+        prices = Unit.objects.aggregate(max=Max('price'), min=Min('price'))
         return Response({
             'page': self.page.number,
             'has_prev': self.page.has_previous(),
             'has_next': self.page.has_next(),
+            'min_price': prices['min'],
+            'max_price': prices['max'],
             'results': data
         })
 
