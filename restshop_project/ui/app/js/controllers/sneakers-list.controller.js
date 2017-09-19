@@ -2,7 +2,7 @@ angular
     .module('restShopApp')
     .controller('SneakersListController', SneakersListController);
 
-function SneakersListController($location, $anchorScroll, $state, $window, urlParamsService, sneakersDataService) {
+function SneakersListController($scope, $location, $anchorScroll, $state, $window, $timeout, urlParamsService, sneakersDataService) {
     let vm = this;
 
     vm.addFilterParam = addFilterParam;
@@ -16,6 +16,8 @@ function SneakersListController($location, $anchorScroll, $state, $window, urlPa
     vm.pagePrev = pagePrev;
     vm.properties = [];
     vm.refreshFilter = refreshFilter;
+    vm.showSlider = showSlider;
+    vm.slider = {};
     vm.sneakersListing = [];
     vm.tags = [];
 
@@ -81,6 +83,8 @@ function SneakersListController($location, $anchorScroll, $state, $window, urlPa
             vm.page = data.page;
             vm.sneakersListing = data.results;
             vm.loading = false;
+
+            initializeSlider(data.min_price, data.max_price);
         });
     }
 
@@ -94,12 +98,42 @@ function SneakersListController($location, $anchorScroll, $state, $window, urlPa
         });
 
         vm.inStock = $location.search().in_stock === '1';
+    }
 
-        vm.priceMin = $location.search().price_min;
-        vm.priceMin = parseInt(vm.priceMin);
+    function initializeSlider(floor, ceil) {
+        let min = parseInt($location.search().price_min) || 0;
+        if (min < floor || min > ceil) {
+            min = floor;
+        }
 
-        vm.priceMax = $location.search().price_max;
-        vm.priceMax = parseInt(vm.priceMax);
+        let max = parseInt($location.search().price_max) || 1000;
+        if (max < floor || max > ceil) {
+            max = ceil;
+        }
+
+        vm.slider = {
+            min: min,
+            max: max,
+            options: {
+                floor: floor,
+                ceil: ceil,
+                noSwitching: true,
+                step: 5,
+                translate: function (value, sliderId, label) {
+                    switch (label) {
+                        case 'model':
+                            return 'Min: $' + value;
+                        case 'high':
+                            return 'Max: $' + value;
+                        default:
+                            return '$' + value
+                    }
+                },
+                onEnd: function () {
+                    refreshFilter();
+                }
+            }
+        };
     }
 
     function pageNext() {
@@ -144,12 +178,22 @@ function SneakersListController($location, $anchorScroll, $state, $window, urlPa
         let inStockParamValue = vm.inStock ? '1' : null;
         addFilterParam('in_stock', inStockParamValue);
 
-        let priceMinParamValue = vm.priceMin ? vm.priceMin.toString() : null;
-        addFilterParam('price_min', priceMinParamValue);
+        if (vm.slider.min === vm.slider.options.floor) {
+            addFilterParam('price_min', null);
+        } else {
+            addFilterParam('price_min', vm.slider.min.toString())
+        }
 
-        let priceMaxParamValue = vm.priceMax ? vm.priceMax.toString() : null;
-        addFilterParam('price_max', priceMaxParamValue);
+        if (vm.slider.max === vm.slider.options.ceil) {
+            addFilterParam('price_max', null);
+        } else {
+            addFilterParam('price_max', vm.slider.max.toString())
+        }
 
         getSneakers();
+    }
+
+    function showSlider() {
+        $timeout(function () { $scope.$broadcast('rzSliderForceRender'); });
     }
 }

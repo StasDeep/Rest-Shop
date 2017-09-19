@@ -2,7 +2,8 @@ angular
     .module('restShopApp', [
         'ui.router',
         'ngAnimate',
-        'ui.bootstrap'
+        'ui.bootstrap',
+        'rzModule'
     ])
     .config(routeConfig)
     .run(addStateToRootScope);

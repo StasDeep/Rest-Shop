@@ -1,9 +1,9 @@
 <div>
     <div class="row bottom-buffer">
-        <div class="col-xs-12">
-            <button class="btn collapse-filter-button text-uppercase"
+        <div class="col-xs-12 text-center">
+            <button class="btn btn-red collapse-filter-button text-uppercase"
                     ng-init="isCollapsed = true"
-                    ng-click="isCollapsed = !isCollapsed">
+                    ng-click="isCollapsed = !isCollapsed; vm.showSlider();">
                 Filter Options <span class="glyphicon glyphicon-chevron-down collapse-chevron"
                                      ng-class="{'flipped': !isCollapsed}"></span>
             </button>
@@ -37,22 +37,11 @@
                         In stock
                     </label>
                 </div>
-                <div class="filter-text">
-                    <span class="filter-input-title">Min $</span><input type="number"
-                                min="0"
-                                ng-model="vm.priceMin"
-                                ng-change="vm.refreshFilter()">
-                    <span class="glyphicon glyphicon-remove clear-button"
-                          ng-click="vm.priceMin = null; vm.refreshFilter()"></span>
-                </div>
-                <div class="filter-text">
-                    <span class="filter-input-title">Min $</span><input type="number"
-                                min="1"
-                                ng-model="vm.priceMax"
-                                ng-change="vm.refreshFilter()">
-                    <span class="glyphicon glyphicon-remove clear-button"
-                          ng-click="vm.priceMax = null; vm.refreshFilter()"></span>
-                </div>
+                <p class="filter-title text-uppercase">Price</p>
+                <rzslider class="price-slider"
+                          rz-slider-model="vm.slider.min"
+                          rz-slider-high="vm.slider.max"
+                          rz-slider-options="vm.slider.options"></rzslider>
             </div>
 
             <div class="col-sm-4">
