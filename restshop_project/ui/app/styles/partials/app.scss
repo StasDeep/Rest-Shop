@@ -29,6 +29,10 @@ a:focus {
     transition: background-color 0.4s ease;
     border-radius: 0;
 
+    &.disabled {
+        pointer-events: none;
+    }
+
     &.btn-red {
         color: $light;
         background-color: $crimson;
@@ -40,5 +44,18 @@ a:focus {
         &:hover, &:focus, &:active {
             outline: none;
         }
+    }
+}
+
+.form-control {
+    border-radius: 0;
+    border: #cccccc solid 1px;
+
+    &:focus {
+        border-color: $crimson;
+    }
+
+    &:hover, &:active, &:focus {
+        box-shadow: none;
     }
 }

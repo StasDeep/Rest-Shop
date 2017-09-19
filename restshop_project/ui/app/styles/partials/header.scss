@@ -1,13 +1,28 @@
 header {
-    margin: 25px 0;
-}
+    margin-top: 25px;
 
-.restshop-logo {
-    cursor: pointer;
-    @media screen and (min-width: 630px) {
-        & {
-            width: 600px;
+    .restshop-logo {
+        cursor: pointer;
+
+        @media screen and (min-width: 630px) {
+            & {
+                width: 600px;
+            }
+        }
+    }
+
+    .input-group {
+        width: 100%;
+        display: table;  /* Instead of display:block */
+        margin-left: auto;
+        margin-right: auto;
+
+        @media screen and (min-width: 630px) {
+            & {
+                width: 600px;
+            }
         }
     }
 }
+
 
