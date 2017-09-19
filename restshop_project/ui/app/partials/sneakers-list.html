@@ -94,10 +94,9 @@
                </span>
 
                <div class="tags">
-                   <span ng-repeat="tag in sneakers.tags"
-                         ng-click="vm.applyTag($event, tag)">
-                       <span class="label label-tag">{{ tag }}</span>
-                   </span>
+                   <span class="label label-tag"
+                         ng-repeat="tag in sneakers.tags"
+                         ng-click="vm.applyTag($event, tag)">{{ tag }}</span>
                </div>
             </div>
 

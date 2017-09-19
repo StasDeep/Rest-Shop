@@ -40,7 +40,9 @@ $image-border-color: darken($light, 8%);
     }
 
     .tags {
-        padding: 3px;
+        width: 245px;
+        height: 25px;
+        overflow-x: hidden;
     }
 
     .label-tag {
@@ -52,6 +54,7 @@ $image-border-color: darken($light, 8%);
         border-radius: 0;
         text-transform: uppercase;
         font-weight: normal;
+        margin-left: 3px;
 
         &:hover {
             background-color: $crimson;
