@@ -2,7 +2,7 @@ angular
     .module('restShopApp')
     .controller('SneakersListController', SneakersListController);
 
-function SneakersListController($location, $anchorScroll, urlParamsService, sneakersDataService) {
+function SneakersListController($location, $anchorScroll, $state, $window, urlParamsService, sneakersDataService) {
     let vm = this;
 
     vm.addFilterParam = addFilterParam;
@@ -38,12 +38,7 @@ function SneakersListController($location, $anchorScroll, urlParamsService, snea
 
     function applyTag($event, tagName) {
         $event.stopPropagation();
-
-        for (let i = 0; i < vm.tags.length; i++) {
-            vm.tags[i].selected = vm.tags[i].name.toLowerCase() === tagName.toLowerCase();
-        }
-
-        refreshFilter();
+        $window.location.href = $state.href('sneakers', {}, {absolute: true}) + '?tags=' + tagName;
     }
 
     function getInitializedProperties() {
