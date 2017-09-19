@@ -59,3 +59,18 @@ $image-border-color: darken($light, 8%);
         }
     }
 }
+
+.sneakers-not-found {
+    padding: 20px;
+    color: darken($crimson, 10%);
+
+    .main-msg {
+        font-size: 20pt;
+        font-weight: bold;
+        margin-bottom: 0;
+    }
+
+    .secondary-msg {
+        font-size: 10pt;
+    }
+}
