@@ -1,0 +1,17 @@
+<img class="sneakers-main-image" ng-src="{{ sneakers.image }}">
+<span class="sneakers-title">{{ sneakers.title }}</span>
+
+<span class="product-price"
+      ng-if="sneakers.prices.min !== sneakers.prices.max">
+    ${{ sneakers.prices.min }} - ${{ sneakers.prices.max }}
+</span>
+<span class="product-price"
+      ng-if="sneakers.prices.min === sneakers.prices.max">
+    ${{ sneakers.prices.min }}
+</span>
+
+<div class="tags">
+    <span class="label label-tag"
+          ng-repeat="tag in sneakers.tags"
+          ng-click="applyTag($event, tag)">{{ tag }}</span>
+</div>

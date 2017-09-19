@@ -6,7 +6,6 @@ function SneakersListController($scope, $location, $anchorScroll, $state, $windo
     let vm = this;
 
     vm.addFilterParam = addFilterParam;
-    vm.applyTag = applyTag;
     vm.getSneakers = getSneakers;
     vm.hasNext = false;
     vm.hasPrev = false;
@@ -36,11 +35,6 @@ function SneakersListController($scope, $location, $anchorScroll, $state, $windo
 
     function addFilterParam(param, value) {
         urlParamsService.addParam(param, value);
-    }
-
-    function applyTag($event, tagName) {
-        $event.stopPropagation();
-        $window.location.href = $state.href('sneakers', {}, {absolute: true}) + '?tags=' + tagName;
     }
 
     function getInitializedProperties() {

@@ -77,28 +77,9 @@
 
     <div class="row text-center bottom-buffer" ng-show="!vm.loading">
         <div class="col-xs-12">
-            <div class="sneakers-list-item text-center"
-                ng-repeat="sneakers in vm.sneakersListing"
-                ng-click="$state.go('sneakers-details', {id: sneakers.id})">
-
-               <img class="sneakers-main-image" ng-src="{{ sneakers.image }}">
-               <span class="sneakers-title">{{ sneakers.title }}</span>
-
-               <span class="product-price"
-                     ng-if="sneakers.prices.min !== sneakers.prices.max">
-                   ${{ sneakers.prices.min }} - ${{ sneakers.prices.max }}
-               </span>
-               <span class="product-price"
-                     ng-if="sneakers.prices.min === sneakers.prices.max">
-                   ${{ sneakers.prices.min }}
-               </span>
-
-               <div class="tags">
-                   <span class="label label-tag"
-                         ng-repeat="tag in sneakers.tags"
-                         ng-click="vm.applyTag($event, tag)">{{ tag }}</span>
-               </div>
-            </div>
+            <rs-sneakers-list-item ng-repeat="sneakers in vm.sneakersListing"
+                                   ng-click="$state.go('sneakers-details', {id: sneakers.id})"
+                                   sneakers="sneakers"></rs-sneakers-list-item>
 
             <div class="sneakers-not-found text-center" ng-hide="vm.sneakersListing.length">
                 <p class="main-msg text-uppercase">No matches found</p>
