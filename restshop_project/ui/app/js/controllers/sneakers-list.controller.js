@@ -2,7 +2,7 @@ angular
     .module('restShopApp')
     .controller('SneakersListController', SneakersListController);
 
-function SneakersListController($scope, $location, $anchorScroll, $state, $window, $timeout, urlParamsService, sneakersDataService) {
+function SneakersListController($location, $anchorScroll, urlParamsService, sneakersDataService) {
     let vm = this;
 
     vm.addFilterParam = addFilterParam;
