@@ -9,19 +9,24 @@ function sneakersListItem($state, $window) {
         scope: {
             sneakers: '='
         },
-        link: link
+        controller: sneakersListItemController,
+        controllerAs: 'vm',
+        bindToController: true
     };
 
     return directive;
+}
+
+/* @ngInject */
+function sneakersListItemController($state, $window) {
+    let vm = this;
+
+    vm.applyTag = applyTag;
 
     ////////////
 
-    function link(scope, elem, attrs) {
-         scope.applyTag = applyTag;
-
-         function applyTag($event, tagName) {
-             $event.stopPropagation();
-             $window.location.href = $state.href('sneakers', {}, {absolute: true}) + '?tags=' + tagName;
-         }
+    function applyTag($event, tagName) {
+        $event.stopPropagation();
+        $window.location.href = $state.href('sneakers', {}, {absolute: true}) + '?tags=' + tagName;
     }
 }
