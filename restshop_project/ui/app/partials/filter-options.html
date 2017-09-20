@@ -1,0 +1,59 @@
+<div class="row bottom-buffer">
+    <div class="col-sm-4">
+        <p class="filter-title text-uppercase">Tags</p>
+        <div class="checkbox checkbox-danger" ng-repeat="tag in vm.tags">
+            <input id="tag-checkbox{{ $index }}"
+                   type="checkbox"
+                   ng-model="tag.selected"
+                   ng-change="vm.filterChangeWrapper()">
+
+            <label class="text-uppercase" for="tag-checkbox{{ $index }}">
+                {{ tag.name }}
+            </label>
+        </div>
+    </div>
+
+    <div class="col-sm-4">
+        <p class="filter-title text-uppercase">Filter</p>
+        <div class="checkbox checkbox-danger checkbox-uppercase">
+            <input id="instock-checkbox"
+                   type="checkbox"
+                   ng-model="vm.inStock"
+                   ng-change="vm.filterChangeWrapper()">
+
+            <label class="text-uppercase" for="instock-checkbox">
+                In stock
+            </label>
+        </div>
+        <p class="filter-title text-uppercase">Price</p>
+        <rzslider class="price-slider"
+                  rz-slider-model="vm.slider.min"
+                  rz-slider-high="vm.slider.max"
+                  rz-slider-options="vm.slider.options"></rzslider>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="filter-property-block" ng-repeat="property in vm.properties">
+            <p class="filter-title property-name text-uppercase"
+                ng-init="isCollapsed = true"
+                ng-click="isCollapsed = !isCollapsed">
+                {{ property.name }} <span class="glyphicon glyphicon-chevron-down collapse-chevron"
+                                          ng-class="{'flipped': !isCollapsed}"></span>
+            </p>
+            <span class="num-of-options text-uppercase">{{ property.values.length }} options</span>
+            <div uib-collapse="isCollapsed" class="property-collapsing-block">
+                <div class="checkbox checkbox-danger" ng-repeat="value in property.values">
+                    <!-- $parent.$index is used to make checkbox id unique -->
+                    <input id="propvalue-checkbox{{ $parent.$index * 100 + $index }}"
+                           type="checkbox"
+                           ng-model="value.selected"
+                           ng-change="vm.filterChangeWrapper()">
+
+                    <label class="text-uppercase" for="propvalue-checkbox{{ $parent.$index * 100 + $index }}">
+                        {{ value.value }}
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

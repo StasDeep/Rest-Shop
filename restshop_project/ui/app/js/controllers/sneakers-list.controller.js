@@ -15,7 +15,6 @@ function SneakersListController($scope, $location, $anchorScroll, $state, $windo
     vm.pagePrev = pagePrev;
     vm.properties = [];
     vm.refreshFilter = refreshFilter;
-    vm.showSlider = showSlider;
     vm.slider = {};
     vm.sneakersListing = [];
     vm.tags = [];
@@ -185,9 +184,5 @@ function SneakersListController($scope, $location, $anchorScroll, $state, $windo
         }
 
         getSneakers();
-    }
-
-    function showSlider() {
-        $timeout(function () { $scope.$broadcast('rzSliderForceRender'); });
     }
 }
