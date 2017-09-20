@@ -15,7 +15,8 @@ function SneakersListController($scope, $location, $anchorScroll, $state, $windo
     vm.pagePrev = pagePrev;
     vm.properties = [];
     vm.refreshFilter = refreshFilter;
-    vm.slider = {};
+    vm.slider = getSliderOptions();
+
     vm.sneakersListing = [];
     vm.tags = [];
 
@@ -81,6 +82,32 @@ function SneakersListController($scope, $location, $anchorScroll, $state, $windo
         });
     }
 
+    function getSliderOptions() {
+        return {
+            min: 0,
+            max: 995,
+            options: {
+                floor: 0,
+                ceil: 995,
+                noSwitching: true,
+                step: 5,
+                translate: function (value, sliderId, label) {
+                    switch (label) {
+                        case 'model':
+                            return 'Min: $' + value;
+                        case 'high':
+                            return 'Max: $' + value;
+                        default:
+                            return '$' + value
+                    }
+                },
+                onEnd: function () {
+                    refreshFilter();
+                }
+            }
+        };
+    }
+
     function initializeFilterValues() {
         getInitializedTags().then(function (tags) {
             vm.tags = tags;
@@ -104,29 +131,10 @@ function SneakersListController($scope, $location, $anchorScroll, $state, $windo
             max = ceil;
         }
 
-        vm.slider = {
-            min: min,
-            max: max,
-            options: {
-                floor: floor,
-                ceil: ceil,
-                noSwitching: true,
-                step: 5,
-                translate: function (value, sliderId, label) {
-                    switch (label) {
-                        case 'model':
-                            return 'Min: $' + value;
-                        case 'high':
-                            return 'Max: $' + value;
-                        default:
-                            return '$' + value
-                    }
-                },
-                onEnd: function () {
-                    refreshFilter();
-                }
-            }
-        };
+        vm.slider.min = min;
+        vm.slider.max = max;
+        vm.slider.options.floor = floor;
+        vm.slider.options.ceil = ceil;
     }
 
     function pageNext() {
