@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from django.contrib.auth.models import User
 from django.db.models import Q, Min, Max
 from rest_framework import generics, status
@@ -58,8 +60,15 @@ class ProductListView(generics.ListAPIView):
                 queryset = queryset.filter(tag_set__name__iexact=tag).distinct()
 
         if criteria:
-            for criterium in criteria:
-                queryset = queryset.filter(unit__value_set__in=[criterium]).distinct()
+            values = PropertyValue.objects.filter(id__in=criteria)
+            grouped_values = defaultdict(list)
+
+            for value in values:
+                grouped_values[value.property_id].append(value.id)
+
+            for key in grouped_values:
+                values = grouped_values[key]
+                queryset = queryset.filter(unit__value_set__in=values).distinct()
 
         if in_stock == '1':
             queryset = queryset.filter(unit__num_in_stock__gt=0).distinct()
