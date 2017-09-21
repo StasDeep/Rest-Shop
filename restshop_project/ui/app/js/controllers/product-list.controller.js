@@ -1,8 +1,8 @@
 angular
     .module('restShopApp')
-    .controller('SneakersListController', SneakersListController);
+    .controller('ProductListController', ProductListController);
 
-function SneakersListController($location, sneakersDataService) {
+function ProductListController($location, productDataService) {
     let vm = this;
 
     vm.hasNext = false;
@@ -14,7 +14,7 @@ function SneakersListController($location, sneakersDataService) {
     vm.properties = [];
     vm.refreshFilter = refreshFilter;
     vm.slider = getDefaultSlider();
-    vm.sneakersListing = [];
+    vm.products = [];
     vm.tags = [];
 
     ////////////
@@ -23,7 +23,7 @@ function SneakersListController($location, sneakersDataService) {
 
     function activate() {
         initializeFilterValues();
-        getSneakers();
+        getProducts();
     }
 
     function addFilterParam(param, value) {
@@ -57,7 +57,7 @@ function SneakersListController($location, sneakersDataService) {
     }
 
     function getInitializedProperties() {
-        return sneakersDataService.getProperties().then(function (properties) {
+        return productDataService.getProperties().then(function (properties) {
             let propertiesFromUrl = $location.search().properties || '';
             propertiesFromUrl = propertiesFromUrl.split(',');
 
@@ -72,7 +72,7 @@ function SneakersListController($location, sneakersDataService) {
     }
 
     function getInitializedTags() {
-        return sneakersDataService.getTags().then(function (tags) {
+        return productDataService.getTags().then(function (tags) {
             let tagsFromUrl = $location.search().tags || '';
             tagsFromUrl = tagsFromUrl.split(',').map(function (tag) {
                 return tag.toLowerCase()
@@ -87,18 +87,18 @@ function SneakersListController($location, sneakersDataService) {
         });
     }
 
-    function getSneakers() {
+    function getProducts() {
         vm.loading = true;
 
         // Query parameters in URL are the same as parameters for API request
         // that is why we can request API with this query string.
         let paramString = $location.url().split('?')[1] || '';
 
-        sneakersDataService.getSneakers(paramString).then(function (data) {
+        productDataService.getProducts(paramString).then(function (data) {
             vm.hasNext = data.has_next;
             vm.hasPrev = data.has_prev;
             vm.page = data.page;
-            vm.sneakersListing = data.results;
+            vm.products = data.results;
             vm.loading = false;
 
             initializeSlider(data.min_price, data.max_price);
@@ -136,12 +136,12 @@ function SneakersListController($location, sneakersDataService) {
 
     function pageNext() {
         addFilterParam('page', vm.page + 1);
-        getSneakers();
+        getProducts();
     }
 
     function pagePrev() {
         addFilterParam('page', vm.page - 1);
-        getSneakers();
+        getProducts();
     }
 
     function refreshFilter() {
@@ -186,6 +186,6 @@ function SneakersListController($location, sneakersDataService) {
         // and current page number can become invalid.
         addFilterParam('page', null);
 
-        getSneakers();
+        getProducts();
     }
 }

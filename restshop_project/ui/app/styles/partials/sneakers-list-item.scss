@@ -1,6 +1,6 @@
 $image-border-color: darken($light, 8%);
 
-rs-sneakers-list-item {
+rs-product-list-item {
     transition: border-color 0.3s ease;
     margin-right: -1px;
     margin-bottom: 15px;
@@ -20,14 +20,14 @@ rs-sneakers-list-item {
         cursor: pointer;
     }
 
-    .sneakers-main-image {
+    .product-image {
         width: 245px;
         height: 245px;
         border: solid $image-border-color 1px;
         margin-bottom: 5px;
     }
 
-    .sneakers-title {
+    .product-title {
         color: $crimson;
         display: block;
         padding: 3px;
@@ -63,7 +63,7 @@ rs-sneakers-list-item {
     }
 }
 
-.sneakers-not-found {
+.products-not-found {
     padding: 20px;
     color: darken($crimson, 10%);
 

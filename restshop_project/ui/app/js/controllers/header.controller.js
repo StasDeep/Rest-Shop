@@ -5,7 +5,7 @@ angular
 function HeaderController($location, $state, $window) {
     let vm = this;
 
-    vm.navigateToSneakers = navigateToSneakers;
+    vm.searchProducts = searchProducts;
     vm.query = '';
 
     ////////////
@@ -16,7 +16,7 @@ function HeaderController($location, $state, $window) {
         vm.query = $location.search().q || '';
     }
 
-    function navigateToSneakers() {
-        $window.location.href = $state.href('sneakers', {}, {absolute: true}) + '?q=' + vm.query;
+    function searchProducts() {
+        $window.location.href = $state.href('product-list', {}, {absolute: true}) + '?q=' + vm.query;
     }
 }

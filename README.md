@@ -1,6 +1,6 @@
 # Rest-Shop
 
-Sneakers shop test site with Python 3 and Angular.
+Training e-commerce with Python 3 and Angular.
 
 ## Installation
 

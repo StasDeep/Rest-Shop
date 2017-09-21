@@ -18,7 +18,7 @@
                 <div class="col-xs-12">
                     <img class="img-responsive center-block restshop-logo"
                          src="/static/img/logo.png"
-                         ng-click="$state.go('sneakers', {}, {reload: true})">
+                         ng-click="$state.go('product-list', {}, {reload: true})">
                 </div>
             </div>
 
@@ -26,7 +26,7 @@
                 <div class="col-xs-12">
                     <form class="navbar-search"
                           role="search"
-                          ng-submit="vm.navigateToSneakers()">
+                          ng-submit="vm.searchProducts()">
                         <div class="input-group center-block">
                             <input type="search" class="form-control"
                                    placeholder="Search"

@@ -1,6 +1,6 @@
 {
   "name": "restshop",
-  "description": "Sneakers shop test site with Python 3 and Angular",
+  "description": "Training e-commerce with Python 3 and Angular",
   "repository": "https://github.com/StasDeep/Rest-Shop/projects/1",
   "devDependencies": {
     "babel-core": "^6.26.0",

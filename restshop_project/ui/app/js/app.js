@@ -8,18 +8,18 @@ angular
     .config(routeConfig)
     .run(addStateToRootScope);
 
-function routeConfig($stateProvider, $locationProvider, $urlRouterProvider, $injector) {
+function routeConfig($stateProvider, $locationProvider, $urlRouterProvider) {
     $stateProvider
-        .state('sneakers', {
-            url: '/sneakers',
-            templateUrl: '/static/partials/sneakers-list.html',
-            controller: 'SneakersListController',
+        .state('product-list', {
+            url: '/products',
+            templateUrl: '/static/partials/product-list.html',
+            controller: 'ProductListController',
             controllerAs: 'vm'
         })
-        .state('sneakers-details', {
-            url: '/sneakers/:id',
-            templateUrl: '/static/partials/sneakers-details.html',
-            controller: 'SneakersDetailsController',
+        .state('product-details', {
+            url: '/products/:id',
+            templateUrl: '/static/partials/product-details.html',
+            controller: 'ProductDetailsController',
             controllerAs: 'vm'
         });
 
@@ -30,7 +30,7 @@ function routeConfig($stateProvider, $locationProvider, $urlRouterProvider, $inj
 
     $urlRouterProvider.otherwise(function ($injector) {
         let $state = $injector.get('$state');
-        $state.go('sneakers');
+        $state.go('product-list');
     });
 }
 

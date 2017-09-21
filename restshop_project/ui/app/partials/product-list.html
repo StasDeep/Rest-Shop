@@ -11,11 +11,11 @@
 
     <div class="row text-center bottom-buffer" ng-show="!vm.loading">
         <div class="col-xs-12">
-            <rs-sneakers-list-item ng-repeat="sneakers in vm.sneakersListing"
-                                   ng-click="$state.go('sneakers-details', {id: sneakers.id})"
-                                   sneakers="sneakers"></rs-sneakers-list-item>
+            <rs-product-list-item ng-repeat="product in vm.products"
+                                  ng-click="$state.go('product-details', {id: product.id})"
+                                  product="product"></rs-product-list-item>
 
-            <div class="sneakers-not-found text-center" ng-hide="vm.sneakersListing.length">
+            <div class="products-not-found text-center" ng-hide="vm.products.length">
                 <p class="main-msg text-uppercase">No matches found</p>
                 <p class="secondary-msg text-uppercase">Please, try another search</p>
             </div>

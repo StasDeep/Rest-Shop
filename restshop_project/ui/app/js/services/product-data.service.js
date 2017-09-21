@@ -1,12 +1,12 @@
 angular
     .module('restShopApp')
-    .factory('sneakersDataService', sneakersDataService);
+    .factory('productDataService', productDataService);
 
-function sneakersDataService($http, config) {
+function productDataService($http, config) {
     let service = {
+        getProduct: getProduct,
+        getProducts: getProducts,
         getProperties: getProperties,
-        getSneakers: getSneakers,
-        getSneakersDetails: getSneakersDetails,
         getTags: getTags
     };
 
@@ -14,13 +14,13 @@ function sneakersDataService($http, config) {
 
     ////////////
 
-    function getProperties() {
-        return $http.get(config.apiUrl + '/properties/').then(function (response) {
+    function getProduct(id) {
+        return $http.get(config.apiUrl + '/products/' + id + '/').then(function (response) {
             return response.data;
         });
     }
 
-    function getSneakers(paramString) {
+    function getProducts(paramString) {
         let apiPath = config.apiUrl + '/products/';
         let url = apiPath + '?' + paramString;
 
@@ -39,8 +39,8 @@ function sneakersDataService($http, config) {
         });
     }
 
-    function getSneakersDetails(id) {
-        return $http.get(config.apiUrl + '/products/' + id + '/').then(function (response) {
+    function getProperties() {
+        return $http.get(config.apiUrl + '/properties/').then(function (response) {
             return response.data;
         });
     }
