@@ -25,11 +25,7 @@ function SneakersListController($location, $anchorScroll, urlParamsService, snea
     activate();
 
     function activate() {
-        // Reset page on each param adding.
-        urlParamsService.setResetParams(['page']);
-
         initializeFilterValues();
-
         getSneakers();
     }
 
@@ -190,6 +186,10 @@ function SneakersListController($location, $anchorScroll, urlParamsService, snea
         } else {
             addFilterParam('price_max', vm.slider.max.toString())
         }
+
+        // Reset page, because filtering can decrease num of pages
+        // and current page number can become invalid.
+        addFilterParam('page', null);
 
         getSneakers();
     }

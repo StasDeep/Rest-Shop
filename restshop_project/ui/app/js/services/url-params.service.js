@@ -3,28 +3,16 @@ angular
     .factory('urlParamsService', urlParamsService);
 
 function urlParamsService($location) {
-    let resetParamsList = [];
-
     let service = {
         addParam: addParam,
-        getParamString: getParamString,
-        setResetParams: setResetParams
+        getParamString: getParamString
     };
 
     return service;
 
     ////////////
 
-    function addParam(param, value, reset) {
-        // reset is true by default.
-        reset = typeof a !== 'undefined' ? a : true;
-
-        if (reset) {
-            for (let i = 0; i < resetParamsList.length; i++) {
-                $location.search(resetParamsList[i], null);
-            }
-        }
-
+    function addParam(param, value) {
         $location.search(param, value);
     }
 
@@ -55,11 +43,6 @@ function urlParamsService($location) {
         }
 
         return paramString;
-    }
-
-    // These parameters will be set to null in addParam function.
-    function setResetParams(params) {
-        resetParamsList = params;
     }
 }
 
