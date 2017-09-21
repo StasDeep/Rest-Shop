@@ -46,8 +46,8 @@ class ProductListView(generics.ListAPIView):
         queryset = Product.objects.all()
 
         q = self.request.query_params.get('q', None)
-        tags = self.request.GET.getlist('tags')
-        criteria = self.request.GET.getlist('properties')
+        tags = self.request.query_params.get('tags')
+        criteria = self.request.query_params.get('properties')
         in_stock = self.request.query_params.get('in_stock', None)
         price_min = self.request.query_params.get('price_min', None)
         price_max = self.request.query_params.get('price_max', None)
@@ -56,13 +56,16 @@ class ProductListView(generics.ListAPIView):
             queryset = queryset.filter(title__icontains=q)
 
         if tags:
+            tags = tags.split(',')
+
             for tag in tags:
                 queryset = queryset.filter(tag_set__name__iexact=tag).distinct()
 
         if criteria:
+            criteria = criteria.split(',')
             values = PropertyValue.objects.filter(id__in=criteria)
-            grouped_values = defaultdict(list)
 
+            grouped_values = defaultdict(list)
             for value in values:
                 grouped_values[value.property_id].append(value.id)
 
