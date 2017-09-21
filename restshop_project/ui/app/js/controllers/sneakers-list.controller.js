@@ -2,11 +2,9 @@ angular
     .module('restShopApp')
     .controller('SneakersListController', SneakersListController);
 
-function SneakersListController($location, $anchorScroll, urlParamsService, sneakersDataService) {
+function SneakersListController($location, $anchorScroll, $window, sneakersDataService) {
     let vm = this;
 
-    vm.addFilterParam = addFilterParam;
-    vm.getSneakers = getSneakers;
     vm.hasNext = false;
     vm.hasPrev = false;
     vm.loading = true;
@@ -15,7 +13,7 @@ function SneakersListController($location, $anchorScroll, urlParamsService, snea
     vm.pagePrev = pagePrev;
     vm.properties = [];
     vm.refreshFilter = refreshFilter;
-    vm.slider = getSliderOptions();
+    vm.slider = getDefaultSlider();
 
     vm.sneakersListing = [];
     vm.tags = [];
@@ -30,7 +28,33 @@ function SneakersListController($location, $anchorScroll, urlParamsService, snea
     }
 
     function addFilterParam(param, value) {
-        urlParamsService.addParam(param, value);
+        $location.search(param, value);
+    }
+
+    function getDefaultSlider() {
+        return {
+            min: 0,
+            max: 995,
+            options: {
+                floor: 0,
+                ceil: 995,
+                noSwitching: true,
+                step: 5,
+                translate: function (value, sliderId, label) {
+                    switch (label) {
+                        case 'model':
+                            return 'Min: $' + value;
+                        case 'high':
+                            return 'Max: $' + value;
+                        default:
+                            return '$' + value
+                    }
+                },
+                onEnd: function () {
+                    refreshFilter();
+                }
+            }
+        };
     }
 
     function getInitializedProperties() {
@@ -67,7 +91,10 @@ function SneakersListController($location, $anchorScroll, urlParamsService, snea
     function getSneakers() {
         vm.loading = true;
 
-        sneakersDataService.getSneakers().then(function (data) {
+        // Query parameters in URL are the same as parameters for API request
+        // that is why we can request API with this query string.
+        let paramString = $window.location.search;
+        sneakersDataService.getSneakers(paramString).then(function (data) {
             vm.hasNext = data.has_next;
             vm.hasPrev = data.has_prev;
             vm.page = data.page;
@@ -76,32 +103,6 @@ function SneakersListController($location, $anchorScroll, urlParamsService, snea
 
             initializeSlider(data.min_price, data.max_price);
         });
-    }
-
-    function getSliderOptions() {
-        return {
-            min: 0,
-            max: 995,
-            options: {
-                floor: 0,
-                ceil: 995,
-                noSwitching: true,
-                step: 5,
-                translate: function (value, sliderId, label) {
-                    switch (label) {
-                        case 'model':
-                            return 'Min: $' + value;
-                        case 'high':
-                            return 'Max: $' + value;
-                        default:
-                            return '$' + value
-                    }
-                },
-                onEnd: function () {
-                    refreshFilter();
-                }
-            }
-        };
     }
 
     function initializeFilterValues() {

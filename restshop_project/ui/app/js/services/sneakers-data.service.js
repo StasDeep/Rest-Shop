@@ -2,7 +2,7 @@ angular
     .module('restShopApp')
     .factory('sneakersDataService', sneakersDataService);
 
-function sneakersDataService($http, urlParamsService, config) {
+function sneakersDataService($http, config) {
     let service = {
         getProperties: getProperties,
         getSneakers: getSneakers,
@@ -20,9 +20,8 @@ function sneakersDataService($http, urlParamsService, config) {
         });
     }
 
-    function getSneakers() {
+    function getSneakers(paramString) {
         let apiPath = config.apiUrl + '/products/';
-        let paramString = urlParamsService.getParamString(['tags', 'properties']);
         let url = apiPath + paramString;
 
         return $http.get(url).then(function (response) {
