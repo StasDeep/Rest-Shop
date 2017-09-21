@@ -2,7 +2,7 @@ angular
     .module('restShopApp')
     .controller('SneakersListController', SneakersListController);
 
-function SneakersListController($location, $anchorScroll, sneakersDataService) {
+function SneakersListController($location, sneakersDataService) {
     let vm = this;
 
     vm.hasNext = false;
@@ -14,7 +14,6 @@ function SneakersListController($location, $anchorScroll, sneakersDataService) {
     vm.properties = [];
     vm.refreshFilter = refreshFilter;
     vm.slider = getDefaultSlider();
-
     vm.sneakersListing = [];
     vm.tags = [];
 
@@ -138,17 +137,11 @@ function SneakersListController($location, $anchorScroll, sneakersDataService) {
     function pageNext() {
         addFilterParam('page', vm.page + 1);
         getSneakers();
-
-        // Scroll to top of the page to show new results.
-        $anchorScroll();
     }
 
     function pagePrev() {
         addFilterParam('page', vm.page - 1);
         getSneakers();
-
-        // Scroll to top of the page to show new results.
-        $anchorScroll();
     }
 
     function refreshFilter() {
