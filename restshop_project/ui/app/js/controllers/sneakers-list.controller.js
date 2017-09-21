@@ -2,7 +2,7 @@ angular
     .module('restShopApp')
     .controller('SneakersListController', SneakersListController);
 
-function SneakersListController($location, $anchorScroll, $window, sneakersDataService) {
+function SneakersListController($location, $anchorScroll, sneakersDataService) {
     let vm = this;
 
     vm.hasNext = false;
@@ -93,7 +93,8 @@ function SneakersListController($location, $anchorScroll, $window, sneakersDataS
 
         // Query parameters in URL are the same as parameters for API request
         // that is why we can request API with this query string.
-        let paramString = $window.location.search;
+        let paramString = $location.url().split('?')[1] || '';
+
         sneakersDataService.getSneakers(paramString).then(function (data) {
             vm.hasNext = data.has_next;
             vm.hasPrev = data.has_prev;

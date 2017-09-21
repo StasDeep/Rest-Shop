@@ -22,7 +22,7 @@ function sneakersDataService($http, config) {
 
     function getSneakers(paramString) {
         let apiPath = config.apiUrl + '/products/';
-        let url = apiPath + paramString;
+        let url = apiPath + '?' + paramString;
 
         return $http.get(url).then(function (response) {
             let items = response.data.results;
