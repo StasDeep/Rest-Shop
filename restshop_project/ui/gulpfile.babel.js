@@ -6,10 +6,12 @@ import autoprefixer from 'gulp-autoprefixer';
 import babel from 'gulp-babel';
 import concat from 'gulp-concat';
 import csso from 'gulp-csso';
+import env from 'gulp-environment';
 import iife from 'gulp-iife';
 import imagemin from 'gulp-imagemin';
 import ngAnnotate from 'gulp-ng-annotate';
 import sass from 'gulp-sass';
+import sourcemaps from 'gulp-sourcemaps';
 import bulkSass from 'gulp-sass-bulk-import';
 import uglify from 'gulp-uglify';
 import watch from 'gulp-watch';
@@ -92,17 +94,13 @@ const put = (pathKey) => {
 
 // HTML
 
-gulp.task('htmlIndex:build', () => {
-    return take('htmlIndex')
+gulp.task('html:build', () => {
+    take('htmlIndex')
         .pipe(put('htmlIndex'));
-});
 
-gulp.task('htmlPartials:build', () => {
     return take('htmlPartials')
         .pipe(put('htmlPartials'));
 });
-
-gulp.task('html:build', ['htmlIndex:build', 'htmlPartials:build']);
 
 
 // Styles
@@ -111,36 +109,40 @@ gulp.task('styles:build', () => {
     let cssStream = take('vendorStyles');
 
     let scssStream = take('srcStyles')
+        .pipe(env.if.not.production(sourcemaps.init()))
         .pipe(bulkSass())
         .pipe(sass())
         .pipe(autoprefixer())
-        .pipe(csso());
+        .pipe(env.if.production(csso()))
+        .pipe(env.if.not.production(sourcemaps.write()));
 
     return merge(cssStream, scssStream)
+        .pipe(env.if.not.production(sourcemaps.init()))
         .pipe(concat('app.css'))
+        .pipe(env.if.not.production(sourcemaps.write()))
         .pipe(put('styles'));
 });
 
 
 // JavaScript
 
-gulp.task('vendorJs:build', () => {
-    return take('vendorJs')
+gulp.task('js:build', () => {
+    take('vendorJs')
+        .pipe(env.if.not.production(sourcemaps.init()))
         .pipe(concat('vendor.js'))
+        .pipe(env.if.not.production(sourcemaps.write()))
         .pipe(put('js'));
-});
 
-gulp.task('srcJs:build', () => {
     return take('srcJs')
         .pipe(babel())
         .pipe(ngAnnotate())
-        .pipe(iife({useStrict: false}))
+        .pipe(env.if.not.production(sourcemaps.init()))
+        .pipe(env.if.production(iife({useStrict: false})))
         .pipe(concat('app.js'))
-        .pipe(uglify())
+        .pipe(env.if.production(uglify()))
+        .pipe(env.if.not.production(sourcemaps.write()))
         .pipe(put('js'));
 });
-
-gulp.task('js:build', ['vendorJs:build', 'srcJs:build']);
 
 
 // Images
@@ -185,4 +187,4 @@ gulp.task('clean', () => del(dirs.build));
 
 gulp.task('build', ['html:build', 'styles:build', 'js:build', 'img:build', 'fonts:build']);
 
-gulp.task('default', ['build', 'watch']);
+gulp.task('default', env.is.development() ? ['build', 'watch'] : ['build']);

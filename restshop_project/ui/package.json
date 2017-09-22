@@ -12,11 +12,13 @@
     "gulp-babel": "^7.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-csso": "^3.0.0",
+    "gulp-environment": "^1.5.1",
     "gulp-iife": "^0.3.0",
     "gulp-imagemin": "^3.3.0",
     "gulp-ng-annotate": "^2.0.0",
     "gulp-sass": "^3.1.0",
     "gulp-sass-bulk-import": "^1.0.1",
+    "gulp-sourcemaps": "^2.6.1",
     "gulp-uglify": "^3.0.0",
     "gulp-watch": "^4.3.11",
     "merge-stream": "^1.0.1"
