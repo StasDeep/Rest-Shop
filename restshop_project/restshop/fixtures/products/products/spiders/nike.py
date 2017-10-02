@@ -7,7 +7,7 @@ import scrapy
 
 class NikeSpider(scrapy.Spider):
     name = 'nike'
-    images_dir = 'images'
+    images_dir = 'product_images'
     urls = [{
         'url': 'https://store.nike.com/us/en_us/pw/mens-lifestyle-shoes/7puZoneZoi3',
         'tags': ['men', 'lifestyle']
