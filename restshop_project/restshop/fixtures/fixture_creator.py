@@ -12,7 +12,7 @@ class FixtureCreator:
     UNIT = 'restshop.Unit'
     UNIT_IMAGE = 'restshop.UnitImage'
 
-    def __init__(self, data):
+    def __init__(self, data, seller_name='nike'):
         """Initialize fixtures.
 
         Fixtures for each model are stored in self._fixtures dict,
@@ -21,10 +21,12 @@ class FixtureCreator:
         self._data = data
         self._fixtures = defaultdict(list)
         self._auto_ids = defaultdict(int)
+        self._seller = seller_name
 
         self._init_properties()
         self._init_property_values()
         self._init_tags()
+        self._init_seller()
 
     def get_fixtures(self):
         """Return valid Django fixtures list."""
@@ -127,3 +129,21 @@ class FixtureCreator:
                 self._add_if_not_exists(self.TAG, {
                     'name': tag
                 })
+
+    def _init_seller(self):
+        # Initialize with 2, because 1 can be hold by superuser.
+        user_id = 2
+        user_email = '{s}@{s}.com'.format(s=self._seller)
+
+        self._add_record(self.USER, {
+            'password': 'pbkdf2_sha256$36000$WCWdPeKfXD1J$pPuQAp5UR2f3MSptf4/F5sakvZyiJLH93WKgP2Tv/wg=',
+            'username': user_email,
+            'email': user_email,
+            'is_staff': True
+        }, pk=user_id)
+
+        self._add_record(self.SELLER, {
+            'user': user_id,
+            'name': self._seller,
+            'address': '{} str., 22'.format(self._seller)
+        })
