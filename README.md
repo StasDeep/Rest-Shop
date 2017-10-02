@@ -66,6 +66,39 @@ Build frontend:
 gulp
 ```
 
+For development, run with `--env=dev`:
+```
+gulp --env=dev
+```
+
+## Populating database
+
+If you want to automatically populate database with data,
+you need to get it from a website with a scraper.
+
+I've programmed a spider for Nike website, so you can use it:
+```
+cd restshop/fixtures/products/
+scrapy crawl nike -o nike.json
+```
+
+Convert spider output to Django fixture:
+```
+cd restshop/fixtures/
+python process_raw.py -i products/nike.json -o nike.json
+```
+
+Copy scraped images to media folder:
+```
+cd restshop_project/
+mv restshop/fixtures/products/product_images media/product_images
+```
+
+Load data from Django fixture (it may take several minutes):
+```
+python manage.py loaddata nike
+```
+
 ## Running
 
 Run server:
