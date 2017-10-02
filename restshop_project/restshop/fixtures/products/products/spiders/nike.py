@@ -41,7 +41,7 @@ class NikeSpider(scrapy.Spider):
                                           callback=self.parse_item,
                                           meta={'tags': response.meta['tags']})
             else:
-                yield response.follow(item.css('.grid-item-image-wrapper a'),
+                yield response.follow(item.css('.grid-item-image-wrapper a')[0],
                                       callback=self.parse_item,
                                       meta={'tags': response.meta['tags']})
 
@@ -67,6 +67,7 @@ class NikeSpider(scrapy.Spider):
             sizes = [size.strip() for size in sizes]
 
         yield {
+            'sku': sku,
             'title': title,
             'price': price,
             'sizes': sizes,
