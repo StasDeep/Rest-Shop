@@ -120,4 +120,10 @@ class FixtureCreator:
                     'value': size,
                     'property': size_property
                 })
+
+    def _init_tags(self):
+        for item in self._data:
+            for tag in item['tags']:
+                self._add_if_not_exists(self.TAG, {
+                    'name': tag
                 })
