@@ -1,4 +1,6 @@
 from collections import defaultdict
+from random import randint
+from os.path import join, basename
 
 
 class FixtureCreator:
@@ -28,6 +30,8 @@ class FixtureCreator:
         self._init_tags()
         self._init_seller()
         self._init_products()
+        self._init_units()
+        self._init_unit_images()
 
     def get_fixtures(self):
         """Return valid Django fixtures list."""
@@ -160,3 +164,44 @@ class FixtureCreator:
                 'tag_set': [tag_map[tag] for tag in item['tags']],
                 'seller': seller_id
             })
+
+    def _init_units(self):
+        for item in self._data:
+            product_id = self._get_id(self.PRODUCT, 'title', item['title'])
+            color_id = self._get_id(self.PROPERTY_VALUE, 'value', item['color'])
+
+            for size in item['sizes']:
+                sku = self.get_sku(item['sku'], size)
+                size_id = self._get_id(self.PROPERTY_VALUE, 'value', size)
+
+                self._add_record(self.UNIT, {
+                    'product': product_id,
+                    'value_set': [color_id, size_id],
+                    'price': item['price'],
+                    'num_in_stock': self.get_random_stock_num()
+                }, sku)
+
+    def _init_unit_images(self):
+        for item in self._data:
+            sku_set = [self.get_sku(item['sku'], size)
+                       for size in item['sizes']]
+
+            for i, image in enumerate(item['images']):
+                # First image is always main.
+                is_main = True if i == 0 else False
+
+                self._add_record(self.UNIT_IMAGE, {
+                    'unit_set': sku_set,
+                    'image': join('product_images', basename(image)),
+                    'is_main': is_main
+                })
+
+    @staticmethod
+    def get_sku(sku, size):
+        return '{}-{}'.format(sku, size)
+
+    @staticmethod
+    def get_random_stock_num():
+        n = randint(0, 110)
+
+        return n if n >= 20 else 0

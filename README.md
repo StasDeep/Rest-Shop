@@ -9,7 +9,7 @@ Create [virtual environment](https://virtualenv.pypa.io/en/stable/) (preferably)
 virtualenv -p python3 restshop
 ```
 
-Install dependencies:
+Install dependencies (make sure you are inside your virtual environment):
 ```
 pip install -r requirements.txt
 ```

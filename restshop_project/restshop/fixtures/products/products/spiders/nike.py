@@ -27,7 +27,7 @@ class NikeSpider(scrapy.Spider):
                                  meta={'tags': x['tags']})
 
     def parse(self, response):
-        for item in response.css('.grid-item')[:2]:
+        for item in response.css('.grid-item'):
 
             # Skip customizable items.
             if item.css('.customize-it'):
