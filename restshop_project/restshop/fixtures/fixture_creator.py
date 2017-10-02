@@ -24,6 +24,7 @@ class FixtureCreator:
 
         self._init_properties()
         self._init_property_values()
+        self._init_tags()
 
     def get_fixtures(self):
         """Return valid Django fixtures list."""
@@ -89,6 +90,13 @@ class FixtureCreator:
                 'fields': fields
         })
 
+    def _add_if_not_exists(self, model_name, fields):
+        keys = list(fields.keys())
+        vals = list(fields.values())
+
+        if not self._exists(model_name, keys, vals):
+            self._add_record(model_name, fields)
+
     def _init_properties(self):
         for property_name in ['Size', 'Color']:
             self._add_record(self.PROPERTY, {
@@ -102,15 +110,14 @@ class FixtureCreator:
         for item in self._data:
             color = item['color']
 
-            if not self._exists(self.PROPERTY_VALUE, 'value', color):
-                self._add_record(self.PROPERTY_VALUE, {
-                    'value': color,
-                    'property': color_property
-                })
+            self._add_if_not_exists(self.PROPERTY_VALUE, {
+                'value': color,
+                'property': color_property
+            })
 
             for size in item['sizes']:
-                if not self._exists(self.PROPERTY_VALUE, 'value', size):
-                    self._add_record(self.PROPERTY_VALUE, {
-                        'value': size,
-                        'property': size_property
-                    })
+                self._add_if_not_exists(self.PROPERTY_VALUE, {
+                    'value': size,
+                    'property': size_property
+                })
+                })
