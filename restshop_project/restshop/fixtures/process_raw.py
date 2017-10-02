@@ -17,6 +17,10 @@ def get_args():
                         dest='outfile',
                         required=True,
                         help='target JSON')
+    parser.add_argument('-s',
+                        metavar='SELLER',
+                        dest='seller',
+                        help='seller name')
 
     return parser.parse_args()
 
@@ -27,7 +31,7 @@ def main():
     with open(args.infile) as infile:
         data = load(infile)
 
-    fm = FixtureCreator(data)
+    fm = FixtureCreator(data, args.seller)
     fixtures = fm.get_fixtures()
 
     with open(args.outfile, 'w') as outfile:

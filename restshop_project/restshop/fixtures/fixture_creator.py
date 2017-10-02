@@ -12,7 +12,7 @@ class FixtureCreator:
     UNIT = 'restshop.Unit'
     UNIT_IMAGE = 'restshop.UnitImage'
 
-    def __init__(self, data, seller_name='nike'):
+    def __init__(self, data, seller_name=None):
         """Initialize fixtures.
 
         Fixtures for each model are stored in self._fixtures dict,
@@ -21,12 +21,13 @@ class FixtureCreator:
         self._data = data
         self._fixtures = defaultdict(list)
         self._auto_ids = defaultdict(int)
-        self._seller = seller_name
+        self._seller = seller_name if seller_name is not None else 'Seller'
 
         self._init_properties()
         self._init_property_values()
         self._init_tags()
         self._init_seller()
+        self._init_products()
 
     def get_fixtures(self):
         """Return valid Django fixtures list."""
@@ -147,3 +148,15 @@ class FixtureCreator:
             'name': self._seller,
             'address': '{} str., 22'.format(self._seller)
         })
+
+    def _init_products(self):
+        tag_map = {tag['fields']['name']: tag['pk']
+                   for tag in self._fixtures[self.TAG]}
+        seller_id = self._get_id(self.SELLER, 'name', self._seller)
+
+        for item in self._data:
+            self._add_if_not_exists(self.PRODUCT, {
+                'title': item['title'],
+                'tag_set': [tag_map[tag] for tag in item['tags']],
+                'seller': seller_id
+            })
