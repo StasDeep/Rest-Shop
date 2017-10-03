@@ -1,5 +1,7 @@
 <img class="product-image" ng-src="{{ vm.product.image }}">
-<span class="product-title">{{ vm.product.title }}</span>
+<div class="product-title-container">
+    <span class="product-title">{{ vm.product.title }}</span>
+</div>
 
 <span class="product-price"
       ng-if="vm.product.prices.min !== vm.product.prices.max">
