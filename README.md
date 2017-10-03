@@ -76,7 +76,7 @@ gulp --env=dev
 If you want to automatically populate database with data,
 you need to get it from a website with a scraper.
 
-I've programmed a spider for Nike website, so you can use it:
+I've programmed a spider for Nike website, so you can use it (it may take up to an hour):
 ```
 cd restshop/fixtures/products/
 scrapy crawl nike -o nike.json
