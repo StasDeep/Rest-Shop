@@ -9,14 +9,11 @@ class NikeSpider(scrapy.Spider):
     name = 'nike'
     images_dir = 'product_images'
     urls = [{
-        'url': 'https://store.nike.com/us/en_us/pw/mens-lifestyle-shoes/7puZoneZoi3',
-        'tags': ['men', 'lifestyle']
+        'url': 'https://store.nike.com/us/en_us/pw/mens-shoes/7puZoi3',
+        'gender': 'Men'
     }, {
-        'url': 'https://store.nike.com/us/en_us/pw/mens-running-shoes/7puZ8yzZoi3',
-        'tags': ['men', 'running']
-    }, {
-        'url': 'https://store.nike.com/us/en_us/pw/mens-basketball-shoes/7puZ8r1Zoi3',
-        'tags': ['men', 'basketball']
+        'url': 'https://store.nike.com/us/en_us/pw/womens-shoes/7ptZoi3',
+        'gender': 'Women'
     }]
 
     def start_requests(self):
@@ -24,10 +21,21 @@ class NikeSpider(scrapy.Spider):
             url = x['url']
             yield scrapy.Request(url,
                                  callback=self.parse,
-                                 meta={'tags': x['tags']})
+                                 meta={'gender': x['gender']})
 
     def parse(self, response):
-        for item in response.css('.grid-item'):
+        for a_tag in response.css('.exp-left-nav-category-list li:not(.exp-left-nav-more) a'):
+            category = a_tag.css('::text').extract_first().split(' (')[0]
+
+            yield response.follow(a_tag,
+                                  callback=self.parse_category,
+                                  meta={'tags': [
+                                      response.meta['gender'],
+                                      category
+                                  ]})
+
+    def parse_category(self, response):
+        for item in response.css('.grid-item')[:1]:
 
             # Skip customizable items.
             if item.css('.customize-it'):
@@ -52,8 +60,9 @@ class NikeSpider(scrapy.Spider):
         title = content.css('.exp-product-title::text').extract_first()
         price = content.css('.exp-product-info .exp-pdp-local-price::text').re_first(r'\$(.*)')
         sizes = content.css('select[name=skuAndSize] option:not(.selectBox-disabled)::text').extract()
-        color = content.css('.colorText::text').extract_first().split('/')[0]
+        color = content.css('.colorText::text').extract_first()
         links = content.css('.exp-pdp-alt-images-carousel img::attr(src)').extract()
+        description = response.css('.pi-pdpmainbody p::text').extract_first()
 
         # Replace PDP_THUMB with PDP_HERO to get 620x620 image instead of 60x60 thumbnail
         links = [link.replace('PDP_THUMB', 'PDP_HERO') for link in links]
@@ -73,7 +82,8 @@ class NikeSpider(scrapy.Spider):
             'sizes': sizes,
             'color': color,
             'images': images,
-            'tags': response.meta['tags']
+            'description': description,
+            'tags': response.meta['tags'],
         }
 
     def download_and_get(self, links, sku):

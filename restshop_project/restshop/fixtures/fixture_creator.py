@@ -110,6 +110,12 @@ class FixtureCreator:
                 'name': property_name
             })
 
+    def _get_tag_set(self, t):
+        tag_map = {tag['fields']['name']: tag['pk']
+                   for tag in self._fixtures[self.TAG]}
+
+        return [tag_map[tag] for tag in t]
+
     def _init_property_values(self):
         color_property = self._get_id(self.PROPERTY, 'name', 'Color')
         size_property = self._get_id(self.PROPERTY, 'name', 'Size')
@@ -154,20 +160,22 @@ class FixtureCreator:
         })
 
     def _init_products(self):
-        tag_map = {tag['fields']['name']: tag['pk']
-                   for tag in self._fixtures[self.TAG]}
         seller_id = self._get_id(self.SELLER, 'name', self._seller)
 
         for item in self._data:
             self._add_if_not_exists(self.PRODUCT, {
                 'title': item['title'],
-                'tag_set': [tag_map[tag] for tag in item['tags']],
-                'seller': seller_id
+                'tag_set': self._get_tag_set(item['tags']),
+                'seller': seller_id,
+                'description': item['description']
             })
 
     def _init_units(self):
         for item in self._data:
-            product_id = self._get_id(self.PRODUCT, 'title', item['title'])
+            product_id = self._get_id(self.PRODUCT,
+                                      fields=['title', 'tag_set'],
+                                      values=[item['title'], self._get_tag_set(item['tags'])])
+
             color_id = self._get_id(self.PROPERTY_VALUE, 'value', item['color'])
 
             for size in item['sizes']:

@@ -76,28 +76,11 @@ gulp --env=dev
 If you want to automatically populate database with data,
 you need to get it from a website with a scraper.
 
-I've programmed a spider for Nike website, so you can use it (it may take up to an hour):
+You can use a small bash script for that purpose:
 ```
-cd restshop/fixtures/products/
-scrapy crawl nike -o nike.json
-```
-
-Convert spider output to Django fixture:
-```
-cd restshop/fixtures/
-python process_raw.py -i products/nike.json -o nike.json
+./scrape_nike.sh
 ```
 
-Copy scraped images to media folder:
-```
-cd restshop_project/
-mv restshop/fixtures/products/product_images media/product_images
-```
-
-Load data from Django fixture (it may take several minutes):
-```
-python manage.py loaddata nike
-```
 
 ## Running
 
