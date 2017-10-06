@@ -14,7 +14,7 @@ from .serializers import ProductListSerializer, ProductSerializer, UserSerialize
 
 
 class StandardResultsSetPagination(PageNumberPagination):
-    page_size = 4
+    page_size = 32
 
     def get_paginated_response(self, data):
         prices = Unit.objects.aggregate(max=Max('price'), min=Min('price'))

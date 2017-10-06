@@ -54,9 +54,11 @@ class UnitForm(forms.ModelForm):
                 if value.property.id not in properties:
                     properties.append(value.property.id)
                 else:
-                    raise ValidationError(
-                        'Unit property {} has multiple values'.format(value.property.name)
-                    )
+                    # Make an exclusion for Color, because a unit can have multiple.
+                    if value.property.name != 'Color':
+                        raise ValidationError(
+                            'Unit property {} has multiple values'.format(value.property.name)
+                        )
         return values
 
 
