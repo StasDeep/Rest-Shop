@@ -2,14 +2,41 @@
     <img src="/static/img/spinner.gif">
 </div>
 
-<div class="row"  ng-show="!vm.loading">
-    <div class="col-xs-12">
-        <h1>{{ vm.product.title }}</h1>
-        <div class="units">
-            <div class="unit" ng-repeat="unit in vm.product.units">
-                <p>SKU: {{ unit.sku }}</p>
-                <p>Price: ${{ unit.price }}</p>
-                <p>In stock: {{ unit.num_in_stock }} pcs.</p>
+<div class="row product-details-container"  ng-show="!vm.loading">
+    <div class="col-xs-2 thumbnails-container">
+        <div class="thumbnail-image-container text-right"
+             ng-repeat="image in vm.selectedUnit.images">
+            <img ng-src="{{ image }}"
+                 ng-click="vm.setSelectedImage(image)">
+        </div>
+    </div>
+
+    <div class="col-xs-5 selected-image-container">
+        <img ng-src="{{ vm.selectedUnit.img }}">
+    </div>
+
+    <div class="col-xs-5">
+        <h1 class="title text-uppercase">{{ vm.product.title }}</h1>
+
+        <div class="tags-container">
+            <span class="label label-tag"
+                  ng-repeat="tag in vm.product.tags"
+                  ng-click="vm.applyTag($event, tag)">{{ tag }}</span>
+        </div>
+
+        <p class="description text-muted">
+            {{ vm.product.description }}
+        </p>
+
+        <div class="color-options">
+            <h3 class="text-uppercase">Colors:</h3>
+            <div class="color-image-container"
+                 ng-repeat="colorItem in vm.colorItems">
+                <img ng-src="{{ colorItem.image }}"
+                     alt="{{ colorItem.color }}"
+                     title="{{ colorItem.color }}"
+                     ng-class="{selected: colorItem.isSelected}"
+                     ng-click="vm.setSelectedUnit(colorItem.color)">
             </div>
         </div>
     </div>

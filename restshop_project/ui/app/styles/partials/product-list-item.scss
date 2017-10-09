@@ -1,5 +1,3 @@
-$image-border-color: darken($light, 8%);
-
 rs-product-list-item {
     transition: border-color 0.3s ease;
     margin-right: -1px;
@@ -45,27 +43,9 @@ rs-product-list-item {
         overflow-y: hidden;
     }
 
-    .tags {
-        width: 100%;
+    .tags-container {
         height: 25px;
         overflow-x: hidden;
-    }
-
-    .label-tag {
-        transition: background-color 0.4s ease,
-                    color 0.4s ease;
-        background-color: $light;
-        border: solid $crimson 1px;
-        color: $crimson;
-        border-radius: 0;
-        text-transform: uppercase;
-        font-weight: normal;
-        margin-left: 3px;
-
-        &:hover {
-            background-color: $crimson;
-            color: $light;
-        }
     }
 }
 
