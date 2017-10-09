@@ -6,6 +6,7 @@
     "angular-bootstrap": "^2.5.0",
     "angular-ui-router": "^0.4.2",
     "bootstrap": "^3.3.7",
-    "angularjs-slider": "^6.4.0"
+    "angularjs-slider": "^6.4.0",
+    "lodash": "^4.17.4"
   }
 }

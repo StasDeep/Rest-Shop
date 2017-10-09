@@ -28,6 +28,7 @@ const dirs = {
 const path = {
     src: {  // Where to take files from.
         vendorJs: [
+            'bower_components/lodash/dist/lodash.min.js',
             'bower_components/angular/angular.min.js',
             'bower_components/angular-animate/angular-animate.min.js',
             'bower_components/angular-ui-router/release/angular-ui-router.min.js',
