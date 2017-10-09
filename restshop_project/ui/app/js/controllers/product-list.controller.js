@@ -12,9 +12,9 @@ function ProductListController($location, productDataService) {
     vm.pageNext = pageNext;
     vm.pagePrev = pagePrev;
     vm.properties = [];
+    vm.products = [];
     vm.refreshFilter = refreshFilter;
     vm.slider = getDefaultSlider();
-    vm.products = [];
     vm.tags = [];
 
     ////////////

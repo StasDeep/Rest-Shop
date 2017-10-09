@@ -1,39 +1,68 @@
 <div class="row bottom-buffer">
-    <div class="col-sm-4">
-        <p class="filter-title text-uppercase">Tags</p>
-        <div class="checkbox checkbox-danger" ng-repeat="tag in vm.tags">
-            <input id="tag-checkbox{{ $index }}"
-                   type="checkbox"
-                   ng-model="tag.selected"
-                   ng-change="vm.filterChangeWrapper()">
+    <div class="col-sm-offset-3 col-sm-4">
+        <div class="filter-property-block">
+            <p class="filter-title property-name text-uppercase"
+               ng-init="isTagsCollapsed = true"
+               ng-click="isTagsCollapsed = !isTagsCollapsed;">
+                Tags <span class="glyphicon glyphicon-chevron-down collapse-chevron"
+                           ng-class="{'flipped': !isTagsCollapsed}"></span>
+            </p>
 
-            <label class="text-uppercase" for="tag-checkbox{{ $index }}">
-                {{ tag.name }}
-            </label>
+            <div uib-collapse="isTagsCollapsed" class="property-collapsing-block">
+                <div class="checkbox checkbox-danger" ng-repeat="tag in vm.tags">
+                    <input id="tag-checkbox{{ $index }}"
+                           type="checkbox"
+                           ng-model="tag.selected"
+                           ng-change="vm.filterChangeWrapper()">
+
+                    <label class="text-uppercase" for="tag-checkbox{{ $index }}">
+                        {{ tag.name }}
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-property-block">
+            <p class="filter-title property-name text-uppercase"
+               ng-init="isFilterCollapsed = true"
+               ng-click="isFilterCollapsed = !isFilterCollapsed">
+                Filter <span class="glyphicon glyphicon-chevron-down collapse-chevron"
+                             ng-class="{'flipped': !isFilterCollapsed}"></span>
+            </p>
+            <div uib-collapse="isFilterCollapsed" class="property-collapsing-block">
+                <div class="checkbox checkbox-danger checkbox-uppercase">
+                    <input id="instock-checkbox"
+                           type="checkbox"
+                           ng-model="vm.inStock"
+                           ng-change="vm.filterChangeWrapper()">
+
+                    <label class="text-uppercase" for="instock-checkbox">
+                        In stock
+                    </label>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="col-sm-4">
-        <p class="filter-title text-uppercase">Filter</p>
-        <div class="checkbox checkbox-danger checkbox-uppercase">
-            <input id="instock-checkbox"
-                   type="checkbox"
-                   ng-model="vm.inStock"
-                   ng-change="vm.filterChangeWrapper()">
-
-            <label class="text-uppercase" for="instock-checkbox">
-                In stock
-            </label>
+        <div class="filter-property-block">
+            <p class="filter-title property-name text-uppercase"
+               ng-init="isPriceCollapsed = true"
+               ng-click="isPriceCollapsed = !isPriceCollapsed; vm.showSlider();">
+                Price <span class="glyphicon glyphicon-chevron-down collapse-chevron"
+                            ng-class="{'flipped': !isPriceCollapsed}"></span>
+            </p>
+            <div uib-collapse="isPriceCollapsed" class="property-collapsing-block">
+                <rzslider class="price-slider"
+                          rz-slider-model="vm.slider.min"
+                          rz-slider-high="vm.slider.max"
+                          rz-slider-options="vm.slider.options"></rzslider>
+            </div>
         </div>
-        <p class="filter-title text-uppercase">Price</p>
-        <rzslider class="price-slider"
-                  rz-slider-model="vm.slider.min"
-                  rz-slider-high="vm.slider.max"
-                  rz-slider-options="vm.slider.options"></rzslider>
-    </div>
 
-    <div class="col-sm-4">
-        <div class="filter-property-block" ng-repeat="property in vm.properties">
+        <div class="filter-property-block"
+             ng-repeat="property in vm.properties"
+             ng-if="property.name !== 'Color'">
             <p class="filter-title property-name text-uppercase"
                 ng-init="isCollapsed = true"
                 ng-click="isCollapsed = !isCollapsed">

@@ -22,15 +22,21 @@ function filterOptions() {
 }
 
 /* @ngInject */
-function filterOptionsController($timeout) {
+function filterOptionsController($scope, $timeout) {
     let vm = this;
 
     vm.filterChangeWrapper = filterChangeWrapper;
+    vm.showSlider = showSlider;
+
 
     ////////////
 
     function filterChangeWrapper() {
         // Wrap filterChange function to wait for $digest cycle to complete.
         $timeout(vm.filterChange, 0, false);
+    }
+
+    function showSlider() {
+        $timeout(() => { $scope.$broadcast('rzSliderForceRender');});
     }
 }
