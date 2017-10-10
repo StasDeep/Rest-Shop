@@ -58,36 +58,22 @@ class FixtureCreator:
         self._auto_ids[model_name] += 1
         return self._auto_ids[model_name]
 
-    def _get_id(self, model_name, fields, values):
+    def _get_id(self, model_name, fields):
         """Get id of a specific record.
 
-        Argument 'fields' can be either string or list of strings.
-        Arguments 'values' can be any type, if 'fields' is a string.
-        Otherwise, 'values' must be a list, too.
-
-        Returns the first record in 'model_name' model,
-        where all 'fields' values equal to corresponding 'values'.
+        Returns the first matching record in 'model_name' model.
         """
-        if isinstance(fields, str):
-            fields = [fields]
-            values = [values]
-        elif isinstance(fields, (list, tuple)) and isinstance(values, (list, tuple)):
-            if len(fields) != len(values):
-                raise AttributeError('Arguments fields and values must be the same length')
-        else:
-            raise AttributeError('Argument fields must be one of one of: str, list, tuple')
+        if not isinstance(fields, dict):
+            raise AttributeError('Argument fields must be a dict')
 
         for model in self._fixtures[model_name]:
-            if all(model['fields'][fields[i]] == values[i]
-                   for i in range(len(fields))):
+            if all(model['fields'][field] == fields[field]
+                   for field in fields):
                 return model['pk']
 
-    def _exists(self, model_name, fields, values):
-        """Check if a specific record exists.
-
-        Arguments 'fields' and 'values' can be either strings or lists of strings.
-        """
-        return self._get_id(model_name, fields, values) is not None
+    def _exists(self, model_name, fields):
+        """Check if a specific record exists."""
+        return self._get_id(model_name, fields) is not None
 
     def _add_record(self, model_name, fields, pk=None):
         """Add a record to fixtures list."""
@@ -98,10 +84,7 @@ class FixtureCreator:
         })
 
     def _add_if_not_exists(self, model_name, fields):
-        keys = list(fields.keys())
-        vals = list(fields.values())
-
-        if not self._exists(model_name, keys, vals):
+        if not self._exists(model_name, fields):
             self._add_record(model_name, fields)
 
     def _init_properties(self):
@@ -117,8 +100,8 @@ class FixtureCreator:
         return [tag_map[tag] for tag in t]
 
     def _init_property_values(self):
-        color_property = self._get_id(self.PROPERTY, 'name', 'Color')
-        size_property = self._get_id(self.PROPERTY, 'name', 'Size')
+        color_property = self._get_id(self.PROPERTY, {'name': 'Color'})
+        size_property = self._get_id(self.PROPERTY, {'name': 'Size'})
 
         for item in self._data:
             color = item['color']
@@ -160,7 +143,7 @@ class FixtureCreator:
         })
 
     def _init_products(self):
-        seller_id = self._get_id(self.SELLER, 'name', self._seller)
+        seller_id = self._get_id(self.SELLER, {'name': self._seller})
 
         for item in self._data:
             self._add_if_not_exists(self.PRODUCT, {
@@ -172,15 +155,17 @@ class FixtureCreator:
 
     def _init_units(self):
         for item in self._data:
-            product_id = self._get_id(self.PRODUCT,
-                                      fields=['title', 'tag_set'],
-                                      values=[item['title'], self._get_tag_set(item['tags'])])
+            product_id = self._get_id(self.PRODUCT, {
+                                          'title': item['title'],
+                                          'tag_set': self._get_tag_set(item['tags']),
+                                          'description': item['description']
+                                      })
 
-            color_id = self._get_id(self.PROPERTY_VALUE, 'value', item['color'])
+            color_id = self._get_id(self.PROPERTY_VALUE, {'value': item['color']})
 
             for size in item['sizes']:
                 sku = self.get_sku(item['sku'], size)
-                size_id = self._get_id(self.PROPERTY_VALUE, 'value', size)
+                size_id = self._get_id(self.PROPERTY_VALUE, {'value': size})
 
                 self._add_record(self.UNIT, {
                     'product': product_id,
@@ -210,6 +195,6 @@ class FixtureCreator:
 
     @staticmethod
     def get_random_stock_num():
-        n = randint(0, 110)
+        n = randint(0, 15)
 
-        return n if n >= 20 else 0
+        return n if n >= 8 else 0
