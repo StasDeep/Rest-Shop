@@ -35,7 +35,7 @@ class NikeSpider(scrapy.Spider):
                                   ]})
 
     def parse_category(self, response):
-        for item in response.css('.grid-item')[:1]:
+        for item in response.css('.grid-item'):
 
             # Skip customizable items.
             if item.css('.customize-it'):
@@ -63,6 +63,9 @@ class NikeSpider(scrapy.Spider):
         color = content.css('.colorText::text').extract_first()
         links = content.css('.exp-pdp-alt-images-carousel img::attr(src)').extract()
         description = response.css('.pi-pdpmainbody p::text').extract_first()
+
+        if description is None:
+            description = ''
 
         # Replace PDP_THUMB with PDP_HERO to get 620x620 image instead of 60x60 thumbnail
         links = [link.replace('PDP_THUMB', 'PDP_HERO') for link in links]
