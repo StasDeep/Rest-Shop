@@ -16,6 +16,12 @@ function productDataService($http, config) {
 
     function getProduct(id) {
         return $http.get(config.apiUrl + '/products/' + id + '/').then(function (response) {
+            for (let unit of response.data.units) {
+                if (unit.images.length === 0) {
+                    unit.images.push(config.emptyImageUrl);
+                }
+            }
+
             return response.data;
         });
     }

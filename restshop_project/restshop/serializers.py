@@ -50,7 +50,7 @@ class UnitSerializer(serializers.ModelSerializer):
         if images.exists():
             return [image.image.url for image in images.all()]
         else:
-            return [None]
+            return []
 
 
 class ProductListSerializer(serializers.ModelSerializer):
