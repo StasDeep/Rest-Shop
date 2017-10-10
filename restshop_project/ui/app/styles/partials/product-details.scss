@@ -1,4 +1,4 @@
-$color-option-size: 70px;
+$color-option-size: 68px;
 $thumbnail-size: 60px;
 
 .product-details-container {
@@ -34,23 +34,31 @@ $thumbnail-size: 60px;
         }
     }
 
-    .color-image-container {
+    .option-container {
         display: inline-block;
         margin-right: 6px;
+        margin-bottom: 6px;
+        border: solid $image-border-color 1px;
+        text-align: center;
 
-        img {
+        &:hover {
+            cursor: pointer;
+            border-color: $crimson;
+        }
+
+        &.selected {
+            border-color: $crimson;
+        }
+
+        img.color-option {
             width: $color-option-size;
             height: $color-option-size;
-            border: solid $image-border-color 1px;
+        }
 
-            &:hover {
-                cursor: pointer;
-                border-color: $crimson;
-            }
-
-            &.selected {
-                border-color: $crimson;
-            }
+        span.option {
+            display: inline-block;
+            padding: 8px 12px;
+            font-size: 12pt;
         }
     }
 

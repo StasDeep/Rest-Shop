@@ -2,24 +2,34 @@ angular
     .module('restShopApp')
     .controller('ProductDetailsController', ProductDetailsController);
 
-function ProductDetailsController($stateParams, $state, $window, productDataService, config, _) {
+function ProductDetailsController($stateParams, $state, $window, $timeout, productDataService, _) {
     let vm = this;
 
+    vm.applyOption = applyOption;
     vm.applyTag = applyTag;
-    vm.colorItems = [];
+    vm.colorMap = {};
     vm.loading = true;
-    vm.options = [];
+    vm.selectedOptions = [];
     vm.product = {};
-    vm.selectedUnit = {};
+    vm.selectedImage = null;
+    vm.thumbnails = [];
     vm.setSelectedImage = setSelectedImage;
-    vm.setSelectedUnit = setSelectedUnit;
 
     ////////////
 
     activate();
 
     function activate() {
-        getProduct($stateParams.id);
+        getProduct($stateParams.id).then(() => {
+            initColorMap();
+            setSelectedUnit();
+            initOptions();
+            setOptionsWidth();
+        });
+    }
+
+    function applyOption(property, value) {
+
     }
 
     function applyTag($event, tagName) {
@@ -28,58 +38,80 @@ function ProductDetailsController($stateParams, $state, $window, productDataServ
     }
 
     function getProduct(id) {
-        productDataService.getProduct(id).then(function (product) {
+        return productDataService.getProduct(id).then(function (product) {
             vm.product = product;
             vm.loading = false;
-            setColorItems();
-            setSelectedUnit(vm.colorItems[0].color);
         });
     }
 
-    function setColorItems() {
-        let colors = [];
-        for (let i = 0; i < vm.product.units.length; i++) {
-            let color;
-            for (let j = 0; j < vm.product.units[i].properties.length; j++) {
-                if (vm.product.units[i].properties[j].name == 'Color') {
-                    color = vm.product.units[i].properties[j].value;
-                    break;
+    function initColorMap() {
+        for (let unit of vm.product.units) {
+            let color = getPropertyValue(unit, 'Color');
+
+            if (!_.keys(vm.colorMap).includes(color)) {
+                vm.colorMap[color] = unit.images[0];
+            }
+        }
+    }
+
+    function getPropertyValue(unit, propertyName) {
+        return unit.properties.find((p) => p.name === propertyName).value;
+    }
+
+    function initOptions() {
+        for (let prop of vm.product.units[0].properties) {
+            let options = [];
+
+            for (let unit of vm.product.units) {
+                let value = getPropertyValue(unit, prop.name);
+                if (!options.map((opt) => opt.value).includes(value)) {
+                    options.push({
+                        value: value,
+                        allowed: true
+                    });
                 }
             }
 
-            if (!colors.includes(color)) {
-                colors.push(color);
-                vm.colorItems.push({
-                    color: color,
-                    image: vm.product.units[i].images[0] || config.emptyImageUrl,
-                    isSelected: false
+            vm.selectedOptions.push({
+                name: prop.name,
+                selected: null,
+                options: options
+            })
+        }
+    }
+
+    function setOptionsWidth() {
+        $timeout(() => {
+            angular.forEach(document.querySelectorAll('.options-row'), (row) => {
+                let maxWidth = 0;
+                let optionElements = row.querySelectorAll('.option-container');
+
+                angular.forEach(optionElements, (elem) => {
+                    let width = elem.clientWidth;
+                    let border = angular.element(elem).css('border-width');
+
+                    if (width > maxWidth) {
+                        maxWidth = width + 2 * border;
+                    }
                 });
-            }
-        }
+
+                maxWidth += 2; // For a border
+
+                angular.forEach(optionElements, (elem) => {
+                    angular.element(elem).css('width', maxWidth + 'px');
+                });
+            });
+        });
     }
 
-    function setOptions() {
+    function setSelectedUnit(unit) {
+        unit = unit || vm.product.units[0];
 
-    }
-
-    function setSelectedUnit(color) {
-        for (let i = 0; i < vm.colorItems.length; i++) {
-            vm.colorItems[i].isSelected = vm.colorItems[i].color === color;
-        }
-
-        let unitsWithColor = vm.product.units.filter(unit =>
-            unit.properties.find(property =>
-                property.name === 'Color'
-            ).value === color
-        );
-
-        vm.selectedUnit = unitsWithColor[0];
-
-        setSelectedImage(vm.selectedUnit.images[0]);
-        setOptions();
+        vm.thumbnails = unit.images;
+        setSelectedImage(vm.thumbnails[0]);
     }
 
     function setSelectedImage(img) {
-        vm.selectedUnit.img = img;
+        vm.selectedImage = img;
     }
 }

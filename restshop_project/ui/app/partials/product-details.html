@@ -5,14 +5,14 @@
 <div class="row product-details-container"  ng-show="!vm.loading">
     <div class="col-xs-2 thumbnails-container">
         <div class="thumbnail-image-container text-right"
-             ng-repeat="image in vm.selectedUnit.images">
+             ng-repeat="image in vm.thumbnails">
             <img ng-src="{{ image }}"
                  ng-click="vm.setSelectedImage(image)">
         </div>
     </div>
 
     <div class="col-xs-5 selected-image-container">
-        <img ng-src="{{ vm.selectedUnit.img }}">
+        <img ng-src="{{ vm.selectedImage }}">
     </div>
 
     <div class="col-xs-5">
@@ -28,16 +28,30 @@
             {{ vm.product.description }}
         </p>
 
-        <div class="color-options">
-            <h3 class="text-uppercase">Colors:</h3>
-            <div class="color-image-container"
-                 ng-repeat="colorItem in vm.colorItems">
-                <img ng-src="{{ colorItem.image }}"
-                     alt="{{ colorItem.color }}"
-                     title="{{ colorItem.color }}"
-                     ng-class="{selected: colorItem.isSelected}"
-                     ng-click="vm.setSelectedUnit(colorItem.color)">
+        <div ng-repeat="optionsGroup in vm.selectedOptions">
+            <div class="options-row">
+                <h3 class="text-uppercase">{{ optionsGroup.name }}:</h3>
+
+                <div class="option-container"
+                     ng-class="{
+                        selected: optionsGroup.selected === option.value,
+                        allowed: option.allowed
+                     }"
+                     ng-repeat="option in optionsGroup.options"
+                     ng-click="vm.applyOption(optionsGroup.name, option.name)">
+                    <img class="color-option"
+                         ng-if="optionsGroup.name === 'Color'"
+                         ng-src="{{ vm.colorMap[option.value] }}"
+                         alt="{{ option.value }}"
+                         title="{{ option.value }}">
+
+                    <span class="option"
+                          ng-if="optionsGroup.name !== 'Color'">
+                        {{ option.value }}
+                    </span>
+                </div>
             </div>
+
         </div>
     </div>
 </div>
