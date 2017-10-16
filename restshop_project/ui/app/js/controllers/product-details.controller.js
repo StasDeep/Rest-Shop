@@ -29,7 +29,12 @@ function ProductDetailsController($stateParams, $state, $window, $timeout, produ
     }
 
     function applyOption(property, value) {
+        // Set value to property, if not set. Otherwise, reset value.
+        let option = vm.selectedOptions.find(p => p.name == property);
+        option.selected = option.selected != value ? value : null;
 
+        setAllowedOptions();
+        setSelectedUnit(getMatchingUnit());
     }
 
     function applyTag($event, tagName) {
@@ -37,8 +42,38 @@ function ProductDetailsController($stateParams, $state, $window, $timeout, produ
         $window.location.href = $state.href('product-list', {}, {absolute: true}) + '?tags=' + tagName;
     }
 
+    function getMatchingUnit() {
+        let selectedProperties = vm.selectedOptions.filter(p => p.selected != null);
+
+        return vm.product.units.find(unit => {
+            for (let selectedProp of selectedProperties) {
+                let unitProp = unit.properties.find(p => p.name == selectedProp.name);
+
+                if (unitProp.value != selectedProp.selected) {
+                    return false;
+                }
+            }
+
+            return true;
+        });
+    }
+
+    function getMatchingUnits(filterProperties) {
+        return vm.product.units.filter(unit => {
+            for (let selectedProp of filterProperties) {
+                let unitProp = unit.properties.find(p => p.name == selectedProp.name);
+
+                if (unitProp.value != selectedProp.selected) {
+                    return false;
+                }
+            }
+
+            return true;
+        });
+    }
+
     function getProduct(id) {
-        return productDataService.getProduct(id).then(function (product) {
+        return productDataService.getProduct(id).then(product => {
             vm.product = product;
             vm.loading = false;
         });
@@ -55,7 +90,7 @@ function ProductDetailsController($stateParams, $state, $window, $timeout, produ
     }
 
     function getPropertyValue(unit, propertyName) {
-        return unit.properties.find((p) => p.name === propertyName).value;
+        return unit.properties.find((p) => p.name == propertyName).value;
     }
 
     function initOptions() {
@@ -80,13 +115,27 @@ function ProductDetailsController($stateParams, $state, $window, $timeout, produ
         }
     }
 
+    function setAllowedOptions() {
+        let selectedProperties = vm.selectedOptions.filter(p => p.selected != null);
+
+        for (let prop of vm.selectedOptions) {
+            let filterProperties = selectedProperties.filter(p => p.name != prop.name);
+            let allowedValues = _.uniq(getMatchingUnits(filterProperties)
+                                       .map(unit => getPropertyValue(unit, prop.name)));
+
+            for (let option of prop.options) {
+                option.allowed = allowedValues.includes(option.value);
+            }
+        }
+    }
+
     function setOptionsWidth() {
         $timeout(() => {
-            angular.forEach(document.querySelectorAll('.options-row'), (row) => {
+            angular.forEach(document.querySelectorAll('.options-row'), row => {
                 let maxWidth = 0;
                 let optionElements = row.querySelectorAll('.option-container');
 
-                angular.forEach(optionElements, (elem) => {
+                angular.forEach(optionElements, elem => {
                     let width = elem.clientWidth;
                     let border = angular.element(elem).css('border-width');
 
@@ -97,7 +146,7 @@ function ProductDetailsController($stateParams, $state, $window, $timeout, produ
 
                 maxWidth += 2; // For a border
 
-                angular.forEach(optionElements, (elem) => {
+                angular.forEach(optionElements, elem => {
                     angular.element(elem).css('width', maxWidth + 'px');
                 });
             });

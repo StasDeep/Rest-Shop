@@ -114,7 +114,7 @@ function ProductListController($location, productDataService) {
             vm.properties = properties;
         });
 
-        vm.inStock = $location.search().in_stock === '1';
+        vm.inStock = $location.search().in_stock == '1';
     }
 
     function initializeSlider(floor, ceil) {
@@ -170,13 +170,13 @@ function ProductListController($location, productDataService) {
         let inStockParamValue = vm.inStock ? '1' : null;
         addFilterParam('in_stock', inStockParamValue);
 
-        if (vm.slider.min === vm.slider.options.floor) {
+        if (vm.slider.min == vm.slider.options.floor) {
             addFilterParam('price_min', null);
         } else {
             addFilterParam('price_min', vm.slider.min.toString())
         }
 
-        if (vm.slider.max === vm.slider.options.ceil) {
+        if (vm.slider.max == vm.slider.options.ceil) {
             addFilterParam('price_max', null);
         } else {
             addFilterParam('price_max', vm.slider.max.toString())

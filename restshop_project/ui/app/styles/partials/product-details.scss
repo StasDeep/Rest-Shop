@@ -50,6 +50,11 @@ $thumbnail-size: 60px;
             border-color: $crimson;
         }
 
+        &:not(.allowed) {
+            pointer-events: none;
+            cursor: not-allowed;
+        }
+
         img.color-option {
             width: $color-option-size;
             height: $color-option-size;

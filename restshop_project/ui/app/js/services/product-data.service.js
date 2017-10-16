@@ -17,7 +17,7 @@ function productDataService($http, config) {
     function getProduct(id) {
         return $http.get(config.apiUrl + '/products/' + id + '/').then(function (response) {
             for (let unit of response.data.units) {
-                if (unit.images.length === 0) {
+                if (unit.images.length == 0) {
                     unit.images.push(config.emptyImageUrl);
                 }
             }
@@ -34,7 +34,7 @@ function productDataService($http, config) {
             let items = response.data.results;
 
             for (let i = 0; i < items.length; i++) {
-                if (items[i].image === null) {
+                if (items[i].image == null) {
                     items[i].image = config.emptyImageUrl;
                 }
             }

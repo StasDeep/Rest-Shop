@@ -38,7 +38,7 @@
                         allowed: option.allowed
                      }"
                      ng-repeat="option in optionsGroup.options"
-                     ng-click="vm.applyOption(optionsGroup.name, option.name)">
+                     ng-click="vm.applyOption(optionsGroup.name, option.value)">
                     <img class="color-option"
                          ng-if="optionsGroup.name === 'Color'"
                          ng-src="{{ vm.colorMap[option.value] }}"
