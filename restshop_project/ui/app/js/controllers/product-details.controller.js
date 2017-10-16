@@ -8,10 +8,12 @@ function ProductDetailsController($stateParams, $state, $window, $timeout, produ
     vm.applyOption = applyOption;
     vm.applyTag = applyTag;
     vm.colorMap = {};
+    vm.price = undefined;
+    vm.isChosen = isChosen;
     vm.loading = true;
-    vm.selectedOptions = [];
     vm.product = {};
     vm.selectedImage = null;
+    vm.selectedOptions = [];
     vm.thumbnails = [];
     vm.setSelectedImage = setSelectedImage;
 
@@ -25,6 +27,8 @@ function ProductDetailsController($stateParams, $state, $window, $timeout, produ
             setSelectedUnit();
             initOptions();
             setOptionsWidth();
+            setAllowedOptions();
+            setPrice();
         });
     }
 
@@ -35,6 +39,7 @@ function ProductDetailsController($stateParams, $state, $window, $timeout, produ
 
         setAllowedOptions();
         setSelectedUnit(getMatchingUnit());
+        setPrice();
     }
 
     function applyTag($event, tagName) {
@@ -59,7 +64,15 @@ function ProductDetailsController($stateParams, $state, $window, $timeout, produ
     }
 
     function getMatchingUnits(filterProperties) {
+        if (_.isUndefined(filterProperties)) {
+            filterProperties = vm.selectedOptions.filter(p => p.selected != null);
+        }
+
         return vm.product.units.filter(unit => {
+            if (unit.num_in_stock == 0) {
+                return false;
+            }
+
             for (let selectedProp of filterProperties) {
                 let unitProp = unit.properties.find(p => p.name == selectedProp.name);
 
@@ -79,6 +92,22 @@ function ProductDetailsController($stateParams, $state, $window, $timeout, produ
         });
     }
 
+    function getPropertyValue(unit, propertyName) {
+        return unit.properties.find((p) => p.name == propertyName).value;
+    }
+
+    function getUnitPrice() {
+        let prices = getMatchingUnits().map(unit => unit.price);
+        let minPrice = Math.min(...prices);
+        let maxPrice = Math.max(...prices);
+
+        if (minPrice == maxPrice) {
+            return '$' + minPrice;
+        } else {
+            return '$' + minPrice + ' - ' + '$' + maxPrice;
+        }
+    }
+
     function initColorMap() {
         for (let unit of vm.product.units) {
             let color = getPropertyValue(unit, 'Color');
@@ -87,10 +116,6 @@ function ProductDetailsController($stateParams, $state, $window, $timeout, produ
                 vm.colorMap[color] = unit.images[0];
             }
         }
-    }
-
-    function getPropertyValue(unit, propertyName) {
-        return unit.properties.find((p) => p.name == propertyName).value;
     }
 
     function initOptions() {
@@ -113,6 +138,10 @@ function ProductDetailsController($stateParams, $state, $window, $timeout, produ
                 options: options
             })
         }
+    }
+
+    function isChosen() {
+        return vm.selectedOptions.filter(p => p.selected == null).length == 0;
     }
 
     function setAllowedOptions() {
@@ -151,6 +180,10 @@ function ProductDetailsController($stateParams, $state, $window, $timeout, produ
                 });
             });
         });
+    }
+
+    function setPrice() {
+        vm.price = getUnitPrice();
     }
 
     function setSelectedUnit(unit) {

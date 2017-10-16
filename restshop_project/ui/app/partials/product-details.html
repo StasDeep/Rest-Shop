@@ -35,7 +35,7 @@
                 <div class="option-container"
                      ng-class="{
                         selected: optionsGroup.selected === option.value,
-                        allowed: option.allowed
+                        'not-allowed': !option.allowed
                      }"
                      ng-repeat="option in optionsGroup.options"
                      ng-click="vm.applyOption(optionsGroup.name, option.value)">
@@ -51,7 +51,11 @@
                     </span>
                 </div>
             </div>
-
         </div>
+
+        <div class="unit-price">{{ vm.price }}</div>
+
+        <button class="btn btn-red text-uppercase"
+                ng-class="{disabled: !vm.isChosen()}">Add to cart</button>
     </div>
 </div>
