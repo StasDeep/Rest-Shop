@@ -3,7 +3,7 @@
 </div>
 
 <div class="row product-details-container"  ng-show="!vm.loading">
-    <div class="col-xs-2 thumbnails-container">
+    <div class="col-xs-1 thumbnails-container">
         <div class="thumbnail-image-container text-right"
              ng-repeat="image in vm.thumbnails">
             <img ng-src="{{ image }}"
@@ -15,7 +15,7 @@
         <img ng-src="{{ vm.selectedImage }}">
     </div>
 
-    <div class="col-xs-5">
+    <div class="col-xs-6">
         <h1 class="title text-uppercase">{{ vm.product.title }}</h1>
 
         <div class="tags-container">

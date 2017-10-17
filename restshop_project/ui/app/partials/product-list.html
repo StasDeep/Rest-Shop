@@ -11,9 +11,11 @@
 
     <div class="row text-center bottom-buffer" ng-show="!vm.loading">
         <div class="col-xs-12">
-            <rs-product-list-item ng-repeat="product in vm.products"
-                                  ng-click="$state.go('product-details', {id: product.id})"
-                                  product="product"></rs-product-list-item>
+            <a class="product-item-container"
+               ui-sref="product-details({id: product.id})"
+               ng-repeat="product in vm.products">
+                <rs-product-list-item product="product"></rs-product-list-item>
+            </a>
 
             <div class="products-not-found text-center" ng-hide="vm.products.length">
                 <p class="main-msg text-uppercase">No matches found</p>
