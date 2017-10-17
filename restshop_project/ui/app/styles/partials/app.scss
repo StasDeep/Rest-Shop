@@ -45,6 +45,14 @@ a:focus {
             outline: none;
         }
     }
+
+    &.btn-large {
+        font-size: 16pt;
+    }
+
+    &.btn-top-margin {
+        margin-top: 10px;
+    }
 }
 
 .form-control {
