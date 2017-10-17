@@ -2,7 +2,7 @@ angular
     .module('restShopApp')
     .controller('ProductDetailsController', ProductDetailsController);
 
-function ProductDetailsController($stateParams, $state, $window, $timeout, productDataService, _) {
+function ProductDetailsController($stateParams, $state, $window, $timeout, productDataService, orderingService, _) {
     let vm = this;
 
     vm.applyOption = applyOption;
@@ -138,6 +138,8 @@ function ProductDetailsController($stateParams, $state, $window, $timeout, produ
                 options: options
             })
         }
+
+        vm.selectedOptions = orderingService.orderProperties(vm.selectedOptions, 'options');
     }
 
     function isChosen() {

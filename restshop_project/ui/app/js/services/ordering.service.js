@@ -13,10 +13,12 @@ function orderingService(_) {
 
     ////////////
 
-    function orderProperties(properties) {
+    function orderProperties(properties, valuesKey) {
+        valuesKey = valuesKey || 'values';
+
         for (let prop of properties) {
             if (prop.name.toLowerCase() == 'size') {
-                prop.values = orderSizes(prop.values);
+                prop[valuesKey] = orderSizes(prop[valuesKey]);
             }
         }
 
