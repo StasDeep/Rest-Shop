@@ -168,7 +168,8 @@ class OrderViewSet(ViewSet):
                 OrderUnit.objects.create(
                     order=get_order_by_seller(unit_seller),
                     unit=unit,
-                    quantity=quantity
+                    quantity=quantity,
+                    unit_price=unit.price
                 )
                 unit.num_in_stock -= quantity
                 unit.save()

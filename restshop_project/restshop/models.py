@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.contrib.sessions.models import Session
 from django.db import models
 
 
@@ -103,7 +104,7 @@ class Order(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     unit_set = models.ManyToManyField(to=Unit, through='OrderUnit')
-    user = models.ForeignKey(to=User)
+    user = models.ForeignKey(to=User, null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
     phone = models.CharField(max_length=31)
@@ -118,9 +119,17 @@ class Order(models.Model):
 
 
 class OrderUnit(models.Model):
-    order = models.ForeignKey(to=Order)
+    order = models.ForeignKey(to=Order, on_delete=models.CASCADE)
     unit = models.ForeignKey(to=Unit)
     quantity = models.PositiveIntegerField()
+    unit_price = models.PositiveIntegerField()
 
     def __str__(self):
         return '{} pcs of {} by {}'.format(self.quantity, self.unit.product, self.order.name)
+
+
+class CartUnit(models.Model):
+    user = models.ForeignKey(to=User, null=True, on_delete=models.CASCADE)
+    session = models.ForeignKey(to=Session, null=True, on_delete=models.CASCADE)
+    unit = models.ForeignKey(to=Unit)
+    quantity = models.PositiveIntegerField()
