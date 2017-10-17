@@ -44,7 +44,7 @@ function ProductDetailsController($stateParams, $state, $window, $timeout, produ
 
     function applyTag($event, tagName) {
         $event.stopPropagation();
-        $window.location.href = $state.href('product-list', {}, {absolute: true}) + '?tags=' + tagName;
+        $window.location.href = $state.href('product-list', {}, {absolute: true}) + '?tags=' + encodeURIComponent(tagName);
     }
 
     function getMatchingUnit() {

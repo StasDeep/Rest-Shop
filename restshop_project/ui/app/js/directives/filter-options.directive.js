@@ -28,7 +28,6 @@ function filterOptionsController($scope, $timeout) {
     vm.filterChangeWrapper = filterChangeWrapper;
     vm.showSlider = showSlider;
 
-
     ////////////
 
     function filterChangeWrapper() {

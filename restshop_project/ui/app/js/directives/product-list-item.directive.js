@@ -27,6 +27,6 @@ function productListItemController($state, $window) {
 
     function applyTag($event, tagName) {
         $event.stopPropagation();
-        $window.location.href = $state.href('product-list', {}, {absolute: true}) + '?tags=' + tagName;
+        $window.location.href = $state.href('product-list', {}, {absolute: true}) + '?tags=' + encodeURIComponent(tagName);
     }
 }
