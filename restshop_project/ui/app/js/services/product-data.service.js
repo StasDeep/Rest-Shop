@@ -2,7 +2,8 @@ angular
     .module('restShopApp')
     .factory('productDataService', productDataService);
 
-function productDataService($http, config) {
+/* @ngInject */
+function productDataService($http, orderingService, config) {
     let service = {
         getProduct: getProduct,
         getProducts: getProducts,
@@ -47,13 +48,13 @@ function productDataService($http, config) {
 
     function getProperties() {
         return $http.get(config.apiUrl + '/properties/').then(function (response) {
-            return response.data;
+            return orderingService.orderProperties(response.data);
         });
     }
 
     function getTags() {
         return $http.get(config.apiUrl + '/tags/').then(function (response) {
-            return response.data;
+            return orderingService.orderTags(response.data);
         });
     }
 }
