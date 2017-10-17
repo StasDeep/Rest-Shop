@@ -189,8 +189,10 @@ function ProductDetailsController($stateParams, $state, $window, $timeout, produ
     function setSelectedUnit(unit) {
         unit = unit || vm.product.units[0];
 
+        let imgIndex = vm.thumbnails.indexOf(vm.selectedImage);
+
         vm.thumbnails = unit.images;
-        setSelectedImage(vm.thumbnails[0]);
+        setSelectedImage(vm.thumbnails[imgIndex] || vm.thumbnails[0]);
     }
 
     function setSelectedImage(img) {
