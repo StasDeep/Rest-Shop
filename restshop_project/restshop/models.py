@@ -93,22 +93,12 @@ class UnitImage(models.Model):
 
 
 class Order(models.Model):
-    PENDING = 'PE'
-    REJECTED = 'RE'
-    COMPLETED = 'CO'
-    STATUSES = (
-        (PENDING, 'Pending'),
-        (REJECTED, 'Rejected'),
-        (COMPLETED, 'Completed'),
-    )
-
     created_at = models.DateTimeField(auto_now_add=True)
     unit_set = models.ManyToManyField(to=Unit, through='OrderUnit')
     user = models.ForeignKey(to=User, null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
     phone = models.CharField(max_length=31)
-    status = models.CharField(max_length=2, choices=STATUSES, default=PENDING)
 
     class Meta:
         ordering = ['-created_at']
@@ -119,17 +109,27 @@ class Order(models.Model):
 
 
 class OrderUnit(models.Model):
+    PENDING = 'PE'
+    REJECTED = 'RE'
+    COMPLETED = 'CO'
+    STATUSES = (
+        (PENDING, 'Pending'),
+        (REJECTED, 'Rejected'),
+        (COMPLETED, 'Completed'),
+    )
+
     order = models.ForeignKey(to=Order, on_delete=models.CASCADE)
     unit = models.ForeignKey(to=Unit)
     quantity = models.PositiveIntegerField()
     unit_price = models.PositiveIntegerField()
+    status = models.CharField(max_length=2, choices=STATUSES, default=PENDING)
 
     def __str__(self):
         return '{} pcs of {} by {}'.format(self.quantity, self.unit.product, self.order.name)
 
 
 class CartUnit(models.Model):
-    user = models.ForeignKey(to=User, null=True, on_delete=models.CASCADE)
-    session = models.ForeignKey(to=Session, null=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(to=User, null=True, on_delete=models.CASCADE, related_name='cart_units')
+    session = models.ForeignKey(to=Session, null=True, on_delete=models.CASCADE, related_name='cart_units')
     unit = models.ForeignKey(to=Unit)
     quantity = models.PositiveIntegerField()

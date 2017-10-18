@@ -5,6 +5,7 @@ angular
 /* @ngInject */
 function productDataService($http, orderingService, config) {
     let service = {
+        addUnitToCart: addUnitToCart,
         getProduct: getProduct,
         getProducts: getProducts,
         getProperties: getProperties,
@@ -14,6 +15,10 @@ function productDataService($http, orderingService, config) {
     return service;
 
     ////////////
+
+    function addUnitToCart(sku) {
+        return $http.post(config.apiUrl + '/cart/', {sku: sku});
+    }
 
     function getProduct(id) {
         return $http.get(config.apiUrl + '/products/' + id + '/').then(function (response) {

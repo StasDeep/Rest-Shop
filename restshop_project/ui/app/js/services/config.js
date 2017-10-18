@@ -4,4 +4,12 @@ angular
         apiUrl: 'http://localhost:8000/api',
         emptyImageUrl: '/static/img/empty.png'
     })
-    .constant('_', window._);
+    .constant('_', window._)
+    .config(configCsrf);
+
+/* @ngInject */
+function configCsrf($httpProvider) {
+    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+}
+

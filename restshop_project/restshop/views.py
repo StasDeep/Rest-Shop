@@ -1,16 +1,19 @@
 from collections import defaultdict
 
 from django.contrib.auth.models import User
+from django.contrib.sessions.models import Session
 from django.db.models import Q, Min, Max
 from rest_framework import generics, status
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework.viewsets import ViewSet
 
-from .models import Product, Order, Unit, OrderUnit, PropertyValue, Tag, Property
+from .models import Product, Order, Unit, OrderUnit, PropertyValue, Tag, Property, CartUnit
 from .serializers import ProductListSerializer, ProductSerializer, UserSerializer, SellerSerializer, \
-    OrderUnitSerializer, OrderListSerializer, OrderDetailSerializer, TagSerializer, PropertySerializer
+    OrderUnitSerializer, OrderListSerializer, OrderDetailSerializer, TagSerializer, PropertySerializer, \
+    CartUnitSerializer
 
 
 class StandardResultsSetPagination(PageNumberPagination):
@@ -122,56 +125,97 @@ class OrderViewSet(ViewSet):
         return Response(serializer.data)
 
     def create(self, request):
-        serializer = OrderUnitSerializer(data=request.data)
+        pass
+
+
+class CartAddView(APIView):
+    permission_classes = (AllowAny,)
+
+    def post(self, request):
+        serializer = CartUnitSerializer(data=request.data)
 
         if not serializer.is_valid():
             return Response({'errors': serializer.error_messages}, status=status.HTTP_400_BAD_REQUEST)
 
         data = serializer.data
 
-        user = request.user
-        name = data['name']
-        address = data['address']
-        phone = data['phone']
+        unit = Unit.objects.get(sku=data['sku'])
 
-        # One order is broken into several ones: one for each seller.
-        # It's done to prevent ambiguous statuses.
-        # While iterating through units,
-        # their sellers are pushed to sellers list
-        # and corresponding orders are pushed to orders list by the same index.
-        sellers = []
-        orders = []
+        cart_unit_data = {
+            'unit': unit,
+            'user': None,
+            'session': None
+        }
 
-        def get_order_by_seller(seller):
-            if seller in sellers:
-                order_index = sellers.index(seller)
-                return orders[order_index]
-            else:
-                order = Order.objects.create(
-                    user=user,
-                    name=name,
-                    address=address,
-                    phone=phone
-                )
+        if not bool(request.user.is_anonymous):
+            cart_unit_data['user'] = request.user
+        else:
+            if request.session.session_key is None:
+                request.session.save()
 
-                sellers.append(seller)
-                orders.append(order)
+            cart_unit_data['session'] = Session.objects.get(session_key=request.session.session_key)
 
-                return order
+        cart_unit = CartUnit.objects.filter(**cart_unit_data).first()
 
-        for unit_order in data['units']:
-            unit = Unit.objects.get(sku=unit_order['sku'])
-            unit_seller = unit.product.seller
-            quantity = unit_order['quantity']
+        if cart_unit is None:
+            cart_unit = CartUnit(**cart_unit_data)
 
-            if unit.num_in_stock >= quantity:
-                OrderUnit.objects.create(
-                    order=get_order_by_seller(unit_seller),
-                    unit=unit,
-                    quantity=quantity,
-                    unit_price=unit.price
-                )
-                unit.num_in_stock -= quantity
-                unit.save()
+        cart_unit.quantity = data['quantity']
+        cart_unit.save()
 
-        return Response({'status': 'success'}, status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_201_CREATED)
+
+    # def create(self, request):
+    #     serializer = OrderUnitSerializer(data=request.data)
+    #
+    #     if not serializer.is_valid():
+    #         return Response({'errors': serializer.error_messages}, status=status.HTTP_400_BAD_REQUEST)
+    #
+    #     data = serializer.data
+    #
+    #     user = request.user
+    #     name = data['name']
+    #     address = data['address']
+    #     phone = data['phone']
+    #
+    #     # One order is broken into several ones: one for each seller.
+    #     # It's done to prevent ambiguous statuses.
+    #     # While iterating through units,
+    #     # their sellers are pushed to sellers list
+    #     # and corresponding orders are pushed to orders list by the same index.
+    #     sellers = []
+    #     orders = []
+    #
+    #     def get_order_by_seller(seller):
+    #         if seller in sellers:
+    #             order_index = sellers.index(seller)
+    #             return orders[order_index]
+    #         else:
+    #             order = Order.objects.create(
+    #                 user=user,
+    #                 name=name,
+    #                 address=address,
+    #                 phone=phone
+    #             )
+    #
+    #             sellers.append(seller)
+    #             orders.append(order)
+    #
+    #             return order
+    #
+    #     for unit_order in data['units']:
+    #         unit = Unit.objects.get(sku=unit_order['sku'])
+    #         unit_seller = unit.product.seller
+    #         quantity = unit_order['quantity']
+    #
+    #         if unit.num_in_stock >= quantity:
+    #             OrderUnit.objects.create(
+    #                 order=get_order_by_seller(unit_seller),
+    #                 unit=unit,
+    #                 quantity=quantity,
+    #                 unit_price=unit.price
+    #             )
+    #             unit.num_in_stock -= quantity
+    #             unit.save()
+    #
+    #     return Response({'status': 'success'}, status=status.HTTP_201_CREATED)

@@ -56,6 +56,7 @@
         <div class="unit-price">{{ vm.price }}</div>
 
         <button class="btn btn-red btn-large text-uppercase btn-top-margin"
-                ng-class="{disabled: !vm.isChosen()}">Add to cart</button>
+                ng-class="{disabled: !vm.isChosen()}"
+                ng-click="vm.addToCart()">Add to cart</button>
     </div>
 </div>

@@ -5,6 +5,7 @@ angular
 function ProductDetailsController($stateParams, $state, $window, $timeout, productDataService, orderingService, _) {
     let vm = this;
 
+    vm.addToCart = addToCart;
     vm.applyOption = applyOption;
     vm.applyTag = applyTag;
     vm.colorMap = {};
@@ -30,6 +31,11 @@ function ProductDetailsController($stateParams, $state, $window, $timeout, produ
             setAllowedOptions();
             setPrice();
         });
+    }
+
+    function addToCart() {
+        let selectedSku = getMatchingUnit().sku;
+        productDataService.addUnitToCart(selectedSku);
     }
 
     function applyOption(property, value) {
