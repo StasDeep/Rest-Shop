@@ -3,7 +3,7 @@ from collections import defaultdict
 from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
 from django.db.models import Q, Min, Max
-from rest_framework import generics, status
+from rest_framework import generics, status, serializers
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
@@ -13,7 +13,7 @@ from rest_framework.viewsets import ViewSet
 from .models import Product, Order, Unit, OrderUnit, PropertyValue, Tag, Property, CartUnit
 from .serializers import ProductListSerializer, ProductSerializer, UserSerializer, SellerSerializer, \
     OrderUnitSerializer, OrderListSerializer, OrderDetailSerializer, TagSerializer, PropertySerializer, \
-    CartUnitSerializer
+    CartUnitSerializer, OrderSerializer
 
 
 class StandardResultsSetPagination(PageNumberPagination):
@@ -106,7 +106,7 @@ class SellerCreateView(generics.CreateAPIView):
 
 
 class OrderViewSet(ViewSet):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
 
     def list(self, request):
         user = request.user
@@ -125,19 +125,72 @@ class OrderViewSet(ViewSet):
         return Response(serializer.data)
 
     def create(self, request):
-        pass
+        serializer = OrderSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        data = serializer.data
+
+        if not bool(request.user.is_anonymous):
+            cart_units = request.user.cart_units.all()
+            data['user'] = request.user
+        else:
+            if request.session.session_key is None:
+                request.session.save()
+
+            cart_units = Session.objects.get(session_key=request.session.session_key).cart_units.all()
+            data['user'] = None
+
+        if cart_units.count() == 0:
+            raise serializers.ValidationError('Cart is empty, nothing to order')
+
+        order = Order.objects.create(**data)
+
+        for cart_unit in cart_units:
+            if cart_unit.unit.num_in_stock < cart_unit.quantity:
+                raise serializers.ValidationError(
+                    'Not enough units in stock: {}'.format(cart_unit.unit.sku)
+                )
+
+        for cart_unit in cart_units:
+            unit = cart_unit.unit
+
+            OrderUnit.objects.create(
+                order=order,
+                quantity=cart_unit.quantity,
+                unit=unit,
+                unit_price=unit.price
+            )
+
+            unit.num_in_stock -= cart_unit.quantity
+            unit.save()
+
+            # Clear cart
+            cart_unit.delete()
+
+        return Response(OrderDetailSerializer(order).data, status=status.HTTP_201_CREATED)
 
 
-class CartAddView(APIView):
+class CartView(APIView):
     permission_classes = (AllowAny,)
+
+    def get(self, request):
+        if not bool(request.user.is_anonymous):
+            cart_units = request.user.cart_units.all()
+        else:
+            if request.session.session_key is None:
+                request.session.save()
+
+            cart_units = Session.objects.get(session_key=request.session.session_key).cart_units.all()
+
+        data = CartUnitSerializer(cart_units, many=True).data
+
+        return Response({'data': data}, status=status.HTTP_200_OK)
 
     def post(self, request):
         serializer = CartUnitSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
 
-        if not serializer.is_valid():
-            return Response({'errors': serializer.error_messages}, status=status.HTTP_400_BAD_REQUEST)
-
-        data = serializer.data
+        data = serializer.validated_data
 
         unit = Unit.objects.get(sku=data['sku'])
 
@@ -163,59 +216,4 @@ class CartAddView(APIView):
         cart_unit.quantity = data['quantity']
         cart_unit.save()
 
-        return Response(status=status.HTTP_201_CREATED)
-
-    # def create(self, request):
-    #     serializer = OrderUnitSerializer(data=request.data)
-    #
-    #     if not serializer.is_valid():
-    #         return Response({'errors': serializer.error_messages}, status=status.HTTP_400_BAD_REQUEST)
-    #
-    #     data = serializer.data
-    #
-    #     user = request.user
-    #     name = data['name']
-    #     address = data['address']
-    #     phone = data['phone']
-    #
-    #     # One order is broken into several ones: one for each seller.
-    #     # It's done to prevent ambiguous statuses.
-    #     # While iterating through units,
-    #     # their sellers are pushed to sellers list
-    #     # and corresponding orders are pushed to orders list by the same index.
-    #     sellers = []
-    #     orders = []
-    #
-    #     def get_order_by_seller(seller):
-    #         if seller in sellers:
-    #             order_index = sellers.index(seller)
-    #             return orders[order_index]
-    #         else:
-    #             order = Order.objects.create(
-    #                 user=user,
-    #                 name=name,
-    #                 address=address,
-    #                 phone=phone
-    #             )
-    #
-    #             sellers.append(seller)
-    #             orders.append(order)
-    #
-    #             return order
-    #
-    #     for unit_order in data['units']:
-    #         unit = Unit.objects.get(sku=unit_order['sku'])
-    #         unit_seller = unit.product.seller
-    #         quantity = unit_order['quantity']
-    #
-    #         if unit.num_in_stock >= quantity:
-    #             OrderUnit.objects.create(
-    #                 order=get_order_by_seller(unit_seller),
-    #                 unit=unit,
-    #                 quantity=quantity,
-    #                 unit_price=unit.price
-    #             )
-    #             unit.num_in_stock -= quantity
-    #             unit.save()
-    #
-    #     return Response({'status': 'success'}, status=status.HTTP_201_CREATED)
+        return Response({'message': 'Successfully added to cart'}, status=status.HTTP_201_CREATED)

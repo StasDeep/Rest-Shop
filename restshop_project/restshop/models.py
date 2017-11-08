@@ -95,7 +95,7 @@ class UnitImage(models.Model):
 class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     unit_set = models.ManyToManyField(to=Unit, through='OrderUnit')
-    user = models.ForeignKey(to=User, null=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(to=User, null=True, on_delete=models.SET_NULL)
     name = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
     phone = models.CharField(max_length=31)
@@ -133,3 +133,6 @@ class CartUnit(models.Model):
     session = models.ForeignKey(to=Session, null=True, on_delete=models.CASCADE, related_name='cart_units')
     unit = models.ForeignKey(to=Unit)
     quantity = models.PositiveIntegerField()
+
+    def __str__(self):
+        return '{} unit(s) of {}'.format(self.quantity, self.unit)

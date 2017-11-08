@@ -3,7 +3,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Max, Min
 from rest_framework import serializers
 
-from .models import Product, Unit, Seller, Order, Tag, Property
+from .models import Product, Unit, Seller, Order, Tag, Property, OrderUnit, CartUnit
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -104,6 +104,7 @@ class ProductSerializer(ProductListSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = User
         fields = ('email', 'password')
@@ -175,67 +176,81 @@ class SellerSerializer(serializers.ModelSerializer):
         return group
 
 
-class OrderUnitSerializer(serializers.Serializer):
-    units = serializers.ListField()
-    name = serializers.CharField(max_length=255)
-    address = serializers.CharField(max_length=255)
-    phone = serializers.CharField(max_length=31)
+class OrderSerializer(serializers.ModelSerializer):
 
-    def create(self, validated_data):
-        return validated_data
-
-    def validate_units(self, value):
-        if not isinstance(value, list):
-            raise serializers.ValidationError('Units must be passed as an array')
-
-        for unit_order in value:
-            if 'sku' not in unit_order or 'quantity' not in unit_order:
-                raise serializers.ValidationError('Units must contain sku and quantity parameters')
-
-            sku = unit_order['sku']
-            quantity = unit_order['quantity']
-
-            if not isinstance(sku, str):
-                raise serializers.ValidationError('Parameter sku must be a string')
-
-            if not isinstance(quantity, int):
-                raise serializers.ValidationError('Parameter quantity must be an integer number')
-
-            if quantity <= 0:
-                raise serializers.ValidationError('Parameter quantity must be more than zero')
-
-            try:
-                unit = Unit.objects.get(sku=sku)
-            except ObjectDoesNotExist:
-                raise serializers.ValidationError('Unit does not exist')
-
-            if unit.num_in_stock < quantity:
-                raise serializers.ValidationError('There are not enough units in stock')
-
-        return value
+    class Meta:
+        model = Order
+        fields = ('name', 'address', 'phone')
 
 
 class OrderListSerializer(serializers.ModelSerializer):
+    units_num = serializers.SerializerMethodField()
+
     class Meta:
         model = Order
-        fields = ('id', 'status', 'created_at')
+        fields = ('id', 'created_at', 'units_num')
+
+    def get_units_num(self, obj):
+        return obj.unit_set.count()
+
+
+class UnitForOrderDetail(serializers.ModelSerializer):
+    title = serializers.CharField(source='product.title')
+    properties = serializers.SerializerMethodField()
+    image = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Unit
+        fields = ('sku', 'title', 'properties', 'image')
+
+    def get_properties(self, obj):
+        return [{
+            'name': property_value.property.name,
+            'value': property_value.value
+        } for property_value in obj.value_set.all()]
+
+    def get_image(self, obj):
+        image = obj.unitimage_set.order_by('-is_main').first()
+
+        if image is None:
+            return None
+
+        return image.image.url
+
+
+class OrderUnitSerializer(serializers.ModelSerializer):
+    unit = serializers.SerializerMethodField()
+
+    class Meta:
+        model = OrderUnit
+        fields = ('quantity', 'status', 'unit')
+
+    def get_unit(self, obj):
+        data = UnitForOrderDetail(obj.unit).data
+        data['price'] = obj.unit_price
+        return data
 
 
 class OrderDetailSerializer(serializers.ModelSerializer):
-    units = UnitSerializer(
+    units = OrderUnitSerializer(
         many=True,
         read_only=True,
-        source='unit_set'
+        source='orderunit_set'
     )
 
     class Meta:
         model = Order
-        fields = ('id', 'status', 'created_at', 'name', 'address', 'phone', 'units')
+        fields = ('id', 'created_at', 'name', 'address', 'phone', 'units')
 
 
 class CartUnitSerializer(serializers.Serializer):
-    sku = serializers.CharField()
+    sku = serializers.CharField(write_only=True)
     quantity = serializers.IntegerField(default=1, min_value=1)
+    unit = UnitForOrderDetail(read_only=True)
+
+    class Meta:
+        model = OrderUnit
+        fields = ('sku', 'quantity', 'unit')
 
     def validate(self, data):
         sku = data['sku']
