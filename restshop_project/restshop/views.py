@@ -110,9 +110,13 @@ class OrderViewSet(ViewSet):
 
     def list(self, request):
         user = request.user
+
+        if user.is_anonymous:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+
         queryset = Order.objects.filter(user=user)
         serializer = OrderListSerializer(queryset, many=True)
-        return Response(serializer.data)
+        return Response({'data': serializer.data})
 
     def retrieve(self, request, pk=None):
         user = request.user
@@ -122,7 +126,7 @@ class OrderViewSet(ViewSet):
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 
         serializer = OrderDetailSerializer(order)
-        return Response(serializer.data)
+        return Response({'data': serializer.data})
 
     def create(self, request):
         serializer = OrderSerializer(data=request.data)
@@ -167,7 +171,7 @@ class OrderViewSet(ViewSet):
             # Clear cart
             cart_unit.delete()
 
-        return Response(OrderDetailSerializer(order).data, status=status.HTTP_201_CREATED)
+        return Response({'data': OrderDetailSerializer(order).data}, status=status.HTTP_201_CREATED)
 
 
 class CartView(APIView):

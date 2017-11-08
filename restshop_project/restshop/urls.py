@@ -15,7 +15,7 @@ urlpatterns = [
     url(r'^products/(?P<pk>[0-9]+)/$', ProductDetailView.as_view(), name='product-detail'),
     url(r'^user/create/$', UserCreateView.as_view(), name='user-create'),
     url(r'^seller/create/$', SellerCreateView.as_view(), name='seller-create'),
-    url(r'^cart/$', CartView.as_view(), name='cart-add'),
+    url(r'^cart/$', CartView.as_view(), name='cart'),
     url(r'^auth/$', session_auth_view, name='auth'),
     url(r'^', include(router.urls)),
 ]
