@@ -95,13 +95,13 @@ function ProductListController($location, productDataService) {
         let paramString = $location.url().split('?')[1] || '';
 
         productDataService.getProducts(paramString).then(function (data) {
-            vm.hasNext = data.has_next;
-            vm.hasPrev = data.has_prev;
-            vm.page = data.page;
-            vm.products = data.results;
+            vm.hasNext = data.meta.has_next;
+            vm.hasPrev = data.meta.has_prev;
+            vm.page = data.meta.page;
+            vm.products = data.data;
             vm.loading = false;
 
-            initializeSlider(data.min_price, data.max_price);
+            initializeSlider(data.meta.min_price, data.meta.max_price);
         });
     }
 

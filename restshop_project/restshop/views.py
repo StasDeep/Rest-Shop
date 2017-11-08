@@ -2,32 +2,34 @@ from collections import defaultdict
 
 from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
-from django.db.models import Q, Min, Max
+from django.db.models import Min, Max
 from rest_framework import generics, status, serializers
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ViewSet
 
 from .models import Product, Order, Unit, OrderUnit, PropertyValue, Tag, Property, CartUnit
 from .serializers import ProductListSerializer, ProductSerializer, UserSerializer, SellerSerializer, \
-    OrderUnitSerializer, OrderListSerializer, OrderDetailSerializer, TagSerializer, PropertySerializer, \
-    CartUnitSerializer, OrderSerializer
+    OrderListSerializer, OrderDetailSerializer, TagSerializer, PropertySerializer, CartUnitSerializer, \
+    OrderSerializer
 
 
-class StandardResultsSetPagination(PageNumberPagination):
+class ProductSetPagination(PageNumberPagination):
     page_size = 32
 
     def get_paginated_response(self, data):
         prices = Unit.objects.aggregate(max=Max('price'), min=Min('price'))
         return Response({
-            'page': self.page.number,
-            'has_prev': self.page.has_previous(),
-            'has_next': self.page.has_next(),
-            'min_price': prices['min'],
-            'max_price': prices['max'],
-            'results': data
+            'meta': {
+                'page': self.page.number,
+                'has_prev': self.page.has_previous(),
+                'has_next': self.page.has_next(),
+                'min_price': prices['min'],
+                'max_price': prices['max'],
+            },
+            'data': data
         })
 
 
@@ -43,7 +45,7 @@ class PropertyListView(generics.ListAPIView):
 
 class ProductListView(generics.ListAPIView):
     serializer_class = ProductListSerializer
-    pagination_class = StandardResultsSetPagination
+    pagination_class = ProductSetPagination
 
     def get_queryset(self):
         queryset = Product.objects.all()
@@ -116,7 +118,7 @@ class OrderViewSet(ViewSet):
 
         queryset = Order.objects.filter(user=user)
         serializer = OrderListSerializer(queryset, many=True)
-        return Response({'data': serializer.data})
+        return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
         user = request.user
@@ -126,7 +128,7 @@ class OrderViewSet(ViewSet):
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 
         serializer = OrderDetailSerializer(order)
-        return Response({'data': serializer.data})
+        return Response(serializer.data)
 
     def create(self, request):
         serializer = OrderSerializer(data=request.data)
@@ -171,7 +173,7 @@ class OrderViewSet(ViewSet):
             # Clear cart
             cart_unit.delete()
 
-        return Response({'data': OrderDetailSerializer(order).data}, status=status.HTTP_201_CREATED)
+        return Response(OrderDetailSerializer(order).data, status=status.HTTP_201_CREATED)
 
 
 class CartView(APIView):
@@ -186,9 +188,7 @@ class CartView(APIView):
 
             cart_units = Session.objects.get(session_key=request.session.session_key).cart_units.all()
 
-        data = CartUnitSerializer(cart_units, many=True).data
-
-        return Response({'data': data}, status=status.HTTP_200_OK)
+        return Response(CartUnitSerializer(cart_units, many=True).data, status=status.HTTP_200_OK)
 
     def post(self, request):
         serializer = CartUnitSerializer(data=request.data)
@@ -220,4 +220,4 @@ class CartView(APIView):
         cart_unit.quantity = data['quantity']
         cart_unit.save()
 
-        return Response({'message': 'Successfully added to cart'}, status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_201_CREATED)
