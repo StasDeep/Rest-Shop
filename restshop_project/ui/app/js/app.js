@@ -47,5 +47,6 @@ function addStateToRootScope($rootScope, $state) {
 
 function addUserToRootScope($rootScope, authDataService) {
     $rootScope.user = null;
+    $rootScope.isLogged = () => !!$rootScope.user;
     authDataService.setUser();
 }

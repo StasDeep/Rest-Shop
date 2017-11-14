@@ -53,6 +53,10 @@ a:focus {
     &.btn-top-margin {
         margin-top: 10px;
     }
+
+    &.ng-animate.ng-leave {
+        display: none;
+    }
 }
 
 .form-control {

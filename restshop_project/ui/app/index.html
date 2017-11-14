@@ -13,50 +13,11 @@
     <link rel="shortcut icon" type="image/png" href="/static/img/favicon.png">
 </head>
 <body>
-    <header ng-controller="HeaderController as vm">
-        <div class="container text-center">
-            <div class="row bottom-buffer">
-                <div class="col-xs-12">
-                    <img class="img-responsive center-block restshop-logo"
-                         src="/static/img/logo.png"
-                         ng-click="$state.go('product-list', {}, {reload: true})">
-                </div>
-            </div>
-
-            <div class="row bottom-buffer">
-                <div class="search-column">
-                    <form class="navbar-search"
-                          role="search"
-                          ng-submit="vm.searchProducts()">
-                        <div class="input-group">
-                            <input type="search" class="form-control"
-                                   placeholder="Search"
-                                   name="q"
-                                   required
-                                   ng-model="vm.query">
-                            <div class="input-group-btn">
-                                <button class="btn btn-red">
-                                    <span class="glyphicon glyphicon-search"></span>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="extra-button-column">
-                    <a class="btn btn-red text-uppercase btn-sign-in"
-                       ui-sref="login"
-                       ng-if="!user">Log in</a>
-                    <button class="btn btn-red text-uppercase btn-sign-in"
-                            ng-click="vm.logout()"
-                            ng-if="!!user">Log out</button>
-                </div>
-            </div>
-        </div>
-    </header>
-
     <!--[if lt IE 7]>
         <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
+
+    <header ng-include="'/static/partials/header.html'"></header>
 
     <main>
         <div class="container">

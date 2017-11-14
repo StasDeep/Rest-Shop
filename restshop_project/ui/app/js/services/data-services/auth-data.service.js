@@ -3,7 +3,7 @@ angular
     .factory('authDataService', authDataService);
 
 /* @ngInject */
-function authDataService($http, $rootScope, config, $timeout) {
+function authDataService($http, $rootScope, config) {
     let service = {
         getUser: getUser,
         login: login,
@@ -38,7 +38,7 @@ function authDataService($http, $rootScope, config, $timeout) {
 
     function setUser() {
         return getUser().then((user) => {
-            $timeout(() => $rootScope.user = user, 0);
+            $rootScope.user = user;
             return user;
         });
     }

@@ -2,7 +2,7 @@ angular
     .module('restShopApp')
     .controller('HeaderController', HeaderController);
 
-function HeaderController($location, $rootScope, $state, $window, authDataService) {
+function HeaderController($location, $state, $window, authDataService) {
     let vm = this;
 
     vm.logout = logout;

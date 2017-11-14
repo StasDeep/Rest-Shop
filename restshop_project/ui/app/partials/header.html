@@ -1,0 +1,39 @@
+<div class="container text-center"
+     ng-controller="HeaderController as vm">
+    <div class="row bottom-buffer">
+        <div class="col-xs-12">
+            <img class="img-responsive center-block restshop-logo"
+                 src="/static/img/logo.png"
+                 ng-click="$state.go('product-list', {}, {reload: true})">
+        </div>
+    </div>
+
+    <div class="row bottom-buffer">
+        <div class="search-column">
+            <form class="navbar-search"
+                  role="search"
+                  ng-submit="vm.searchProducts()">
+                <div class="input-group">
+                    <input type="search" class="form-control"
+                           placeholder="Search"
+                           name="q"
+                           required
+                           ng-model="vm.query">
+                    <div class="input-group-btn">
+                        <button class="btn btn-red">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="extra-button-column">
+            <a class="btn btn-red text-uppercase btn-sign-in"
+               ui-sref="login"
+               ng-if="!isLogged()">Log in</a>
+            <button class="btn btn-red text-uppercase btn-sign-in"
+                    ng-click="vm.logout()"
+                    ng-if="isLogged()">Log out</button>
+        </div>
+    </div>
+</div>
