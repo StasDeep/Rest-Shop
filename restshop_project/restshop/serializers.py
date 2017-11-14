@@ -266,3 +266,9 @@ class CartUnitSerializer(serializers.Serializer):
 
         return data
 
+
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ('username',)

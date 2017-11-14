@@ -4,23 +4,37 @@ header {
     .restshop-logo {
         cursor: pointer;
 
-        @media screen and (min-width: 630px) {
+        @media screen and (min-width: 645px) {
             & {
                 width: 600px;
             }
         }
     }
 
-    .input-group {
-        width: 100%;
-        display: table;  /* Instead of display:block */
-        margin-left: auto;
-        margin-right: auto;
+    .search-column {
+        display: inline-block;
+        width: 75%;
 
-        @media screen and (min-width: 630px) {
+        @media screen and (min-width: 645px) {
             & {
-                width: 600px;
+                width: 500px;
             }
+        }
+    }
+
+    .extra-button-column {
+        display: inline-block;
+        vertical-align: top;
+        width: 22%;
+
+        @media screen and (min-width: 645px) {
+            & {
+                width: 95px;
+            }
+        }
+
+        .btn-sign-in, .btn-user {
+            width: 100%;
         }
     }
 }

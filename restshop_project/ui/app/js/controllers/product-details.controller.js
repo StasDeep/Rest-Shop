@@ -2,7 +2,8 @@ angular
     .module('restShopApp')
     .controller('ProductDetailsController', ProductDetailsController);
 
-function ProductDetailsController($stateParams, $state, $window, $timeout, productDataService, orderingService, _) {
+function ProductDetailsController($stateParams, $state, $window, $timeout, productDataService, cartOrderDataService,
+                                  orderingService, _) {
     let vm = this;
 
     vm.addToCart = addToCart;
@@ -35,7 +36,7 @@ function ProductDetailsController($stateParams, $state, $window, $timeout, produ
 
     function addToCart() {
         let selectedSku = getMatchingUnit().sku;
-        productDataService.addUnitToCart(selectedSku);
+        cartOrderDataService.addToCart(selectedSku);
     }
 
     function applyOption(property, value) {

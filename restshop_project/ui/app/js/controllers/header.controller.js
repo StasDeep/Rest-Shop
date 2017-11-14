@@ -2,9 +2,10 @@ angular
     .module('restShopApp')
     .controller('HeaderController', HeaderController);
 
-function HeaderController($location, $state, $window) {
+function HeaderController($location, $rootScope, $state, $window, authDataService) {
     let vm = this;
 
+    vm.logout = logout;
     vm.searchProducts = searchProducts;
     vm.query = '';
 
@@ -14,6 +15,10 @@ function HeaderController($location, $state, $window) {
 
     function activate() {
         vm.query = $location.search().q || '';
+    }
+
+    function logout() {
+        authDataService.logout();
     }
 
     function searchProducts() {

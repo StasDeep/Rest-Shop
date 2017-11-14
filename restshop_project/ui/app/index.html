@@ -24,11 +24,11 @@
             </div>
 
             <div class="row bottom-buffer">
-                <div class="col-xs-12">
+                <div class="search-column">
                     <form class="navbar-search"
                           role="search"
                           ng-submit="vm.searchProducts()">
-                        <div class="input-group center-block">
+                        <div class="input-group">
                             <input type="search" class="form-control"
                                    placeholder="Search"
                                    name="q"
@@ -41,6 +41,14 @@
                             </div>
                         </div>
                     </form>
+                </div>
+                <div class="extra-button-column">
+                    <a class="btn btn-red text-uppercase btn-sign-in"
+                       ui-sref="login"
+                       ng-if="!user">Log in</a>
+                    <button class="btn btn-red text-uppercase btn-sign-in"
+                            ng-click="vm.logout()"
+                            ng-if="!!user">Log out</button>
                 </div>
             </div>
         </div>

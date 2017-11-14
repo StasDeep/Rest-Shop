@@ -6,7 +6,8 @@ angular
         'rzModule'
     ])
     .config(routeConfig)
-    .run(addStateToRootScope);
+    .run(addStateToRootScope)
+    .run(addUserToRootScope);
 
 function routeConfig($stateProvider, $locationProvider, $urlRouterProvider) {
     $stateProvider
@@ -20,6 +21,12 @@ function routeConfig($stateProvider, $locationProvider, $urlRouterProvider) {
             url: '/products/:id',
             templateUrl: '/static/partials/product-details.html',
             controller: 'ProductDetailsController',
+            controllerAs: 'vm'
+        })
+        .state('login', {
+            url: '/login',
+            templateUrl: '/static/partials/login.html',
+            controller: 'LoginController',
             controllerAs: 'vm'
         });
 
@@ -36,4 +43,9 @@ function routeConfig($stateProvider, $locationProvider, $urlRouterProvider) {
 
 function addStateToRootScope($rootScope, $state) {
     $rootScope.$state = $state;
+}
+
+function addUserToRootScope($rootScope, authDataService) {
+    $rootScope.user = null;
+    authDataService.setUser();
 }
