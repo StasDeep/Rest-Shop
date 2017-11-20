@@ -28,11 +28,17 @@ function routeConfig($stateProvider, $locationProvider, $urlRouterProvider) {
             templateUrl: '/static/partials/login.html',
             controller: 'LoginController',
             controllerAs: 'vm'
+        })
+        .state('signup', {
+            url: '/signup',
+            templateUrl: '/static/partials/signup.html',
+            controller: 'SignupController',
+            controllerAs: 'vm'
         });
 
     $locationProvider.html5Mode({
-      enabled: true,
-      requireBase: false
+        enabled: true,
+        requireBase: false
     });
 
     $urlRouterProvider.otherwise(function ($injector) {

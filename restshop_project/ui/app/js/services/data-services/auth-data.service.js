@@ -8,7 +8,8 @@ function authDataService($http, $rootScope, config) {
         getUser: getUser,
         login: login,
         logout: logout,
-        setUser: setUser
+        setUser: setUser,
+        signup: signup
     };
 
     return service;
@@ -40,6 +41,13 @@ function authDataService($http, $rootScope, config) {
         return getUser().then((user) => {
             $rootScope.user = user;
             return user;
+        });
+    }
+
+    function signup(email, password) {
+        return $http.post(config.apiUrl + '/user/create/', {
+            email: email,
+            password: password
         });
     }
 }

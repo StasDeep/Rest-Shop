@@ -13,8 +13,17 @@ main {
     flex: 1 0 auto;
 }
 
-a:focus {
-    outline: none;
+a {
+    color: $crimson;
+
+    &:focus {
+        outline: none;
+    }
+
+    &:hover {
+        cursor: pointer;
+        color: darken($crimson, 8%);
+    }
 }
 
 .top-buffer {

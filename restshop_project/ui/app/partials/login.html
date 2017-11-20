@@ -1,18 +1,31 @@
-<div class="row">
+<div class="row login-page">
     <div class="col-xs-12 col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4">
-        <form ng-submit="vm.loginUser()">
+        <form ng-submit="vm.loginUser()"
+              name="form">
             <div class="form-group">
-                <label class="col-form-label" for="emailInput">E-mail</label>
-                <input type="text" class="form-control" id="emailInput" placeholder="user@example.com" name="email"
-                       ng-model="vm.email">
+                <label class="text-uppercase" for="emailInput">E-mail</label>
+                <input type="text"
+                       class="form-control"
+                       id="emailInput"
+                       placeholder="user@example.com"
+                       name="email"
+                       ng-model="vm.user.email"
+                       required>
             </div>
             <div class="form-group">
-                <label class="col-form-label" for="passwordInput">Password</label>
-                <input type="password" class="form-control" id="passwordInput" name="password"
+                <label class="text-uppercase" for="passwordInput">Password</label>
+                <input type="password"
+                       class="form-control"
+                       id="passwordInput"
+                       name="password"
                        placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
-                       ng-model="vm.password">
+                       ng-model="vm.user.password"
+                       required>
             </div>
-            <input class="btn btn-red text-uppercase" type="submit" value="Log in">
+            <div>
+                <input class="btn btn-red text-uppercase" type="submit" value="Log in" ng-disabled="form.$invalid">
+                <h3 class="signup-prompt"><small>No account? <a ui-sref="signup">Sign up</a>.</small></h3>
+            </div>
         </form>
     </div>
 </div>

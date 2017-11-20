@@ -13,10 +13,10 @@ urlpatterns = [
     url(r'^properties/$', PropertyListView.as_view(), name='property-list'),
     url(r'^products/$', ProductListView.as_view(), name='product-list'),
     url(r'^products/(?P<pk>[0-9]+)/$', ProductDetailView.as_view(), name='product-detail'),
+    url(r'^user/$', UserView.as_view(), name='user'),
     url(r'^user/create/$', UserCreateView.as_view(), name='user-create'),
     url(r'^seller/create/$', SellerCreateView.as_view(), name='seller-create'),
     url(r'^cart/$', CartView.as_view(), name='cart'),
-    url(r'^user/$', UserView.as_view(), name='user'),
     url(r'^auth/$', session_auth_view, name='auth'),
     url(r'^', include(router.urls)),
 ]

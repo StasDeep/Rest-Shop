@@ -101,6 +101,16 @@ class UserCreateView(generics.CreateAPIView):
     serializer_class = UserSerializer
 
 
+class UserView(APIView):
+    permission_classes = (AllowAny,)
+
+    def get(self, request):
+        if bool(request.user.is_anonymous):
+            return Response()
+
+        return Response(UserSerializer(request.user).data)
+
+
 class SellerCreateView(generics.CreateAPIView):
     permission_classes = (AllowAny,)
     queryset = User.objects.all()
@@ -221,13 +231,3 @@ class CartView(APIView):
         cart_unit.save()
 
         return Response(status=status.HTTP_201_CREATED)
-
-
-class UserView(APIView):
-    permission_classes = (AllowAny,)
-
-    def get(self, request):
-        if bool(request.user.is_anonymous):
-            return Response()
-
-        return Response(UserSerializer(request.user).data)

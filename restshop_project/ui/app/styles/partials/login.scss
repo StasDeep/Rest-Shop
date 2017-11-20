@@ -1,0 +1,11 @@
+.login-page {
+    .signup-prompt {
+        display: inline-block;
+        margin: 0 0 0 7px;
+        vertical-align: bottom;
+
+        small {
+            line-height: 30px;
+        }
+    }
+}

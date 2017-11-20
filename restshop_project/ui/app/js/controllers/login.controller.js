@@ -6,8 +6,7 @@ function LoginController($state, authDataService) {
     let vm = this;
 
     vm.loginUser = loginUser;
-    vm.email = '';
-    vm.password = '';
+    vm.user = {};
 
     ////////////
 
@@ -18,7 +17,7 @@ function LoginController($state, authDataService) {
     }
 
     function loginUser() {
-        authDataService.login(vm.email, vm.password).then(function (response) {
+        authDataService.login(vm.user.email, vm.user.password).then(function (response) {
             $state.go('product-list');
         });
     }
