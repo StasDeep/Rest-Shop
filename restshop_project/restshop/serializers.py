@@ -207,10 +207,11 @@ class UnitForOrderDetail(serializers.ModelSerializer):
     title = serializers.CharField(source='product.title')
     properties = serializers.SerializerMethodField()
     image = serializers.SerializerMethodField()
+    product_id = serializers.IntegerField(source='product.id')
 
     class Meta:
         model = Unit
-        fields = ('sku', 'title', 'properties', 'image')
+        fields = ('title', 'properties', 'image', 'product_id')
 
     def get_properties(self, obj):
         return [{
@@ -229,6 +230,7 @@ class UnitForOrderDetail(serializers.ModelSerializer):
 
 class OrderUnitSerializer(serializers.ModelSerializer):
     unit = serializers.SerializerMethodField()
+    status = serializers.SerializerMethodField()
 
     class Meta:
         model = OrderUnit
@@ -238,6 +240,9 @@ class OrderUnitSerializer(serializers.ModelSerializer):
         data = UnitForOrderDetail(obj.unit).data
         data['price'] = obj.unit_price
         return data
+
+    def get_status(self, obj):
+        return obj.get_status_display()
 
 
 class OrderDetailSerializer(serializers.ModelSerializer):

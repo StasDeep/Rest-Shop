@@ -17,7 +17,6 @@ function ProfileOrderDetailsController($scope, $stateParams, cartOrderDataServic
 
         cartOrderDataService.getOrder($stateParams.id).then((order) => {
             vm.order = order;
-            console.log(vm.order);
             vm.loading = false;
         });
     }

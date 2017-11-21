@@ -21,7 +21,7 @@
         transition: background-color 0.3s ease;
 
         &:hover {
-            background-color: #fbf4f5;
+            background-color: #f5f5f5;
         }
     }
 }
@@ -39,17 +39,42 @@
         margin-top: 5px;
     }
 
-    .ordered-unit {
-        padding: 20px;
+    .order-unit {
+        padding: 10px;
         border: solid #ccc 1px;
         margin-bottom: 8px;
         display: inline-block;
         width: 100%;
         color: inherit;
         transition: background-color 0.3s ease;
+        overflow: hidden;
 
         &:hover {
-            background-color: #fbf4f5;
+            background-color: #f5f5f5;
+            text-decoration: none;
+        }
+
+        .order-unit-image {
+            width: 150px;
+            display: inline-block;
+            float: left;
+            border: solid $image-border-color 1px;
+        }
+
+        @media (max-width: 400px) {
+            .order-unit-image {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+
+        .order-unit-details {
+            padding-left: 15px;
+            overflow: hidden;
+
+            p {
+                margin: 3px 0;
+            }
         }
     }
 }
