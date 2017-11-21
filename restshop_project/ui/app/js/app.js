@@ -7,7 +7,8 @@ angular
     ])
     .config(routeConfig)
     .run(addStateToRootScope)
-    .run(addUserToRootScope);
+    .run(addUserToRootScope)
+    .run(addAuthorization);
 
 function routeConfig($stateProvider, $locationProvider, $urlRouterProvider) {
     $stateProvider
@@ -39,7 +40,10 @@ function routeConfig($stateProvider, $locationProvider, $urlRouterProvider) {
             url: '/profile',
             templateUrl: '/static/partials/profile.html',
             controller: 'ProfileController',
-            controllerAs: 'vm'
+            controllerAs: 'vm',
+            data: {
+                isAuthenticated: true
+            }
         })
         .state('profile.info', {
             url: '/info',
@@ -79,4 +83,23 @@ function addUserToRootScope($rootScope, authDataService) {
     $rootScope.user = null;
     $rootScope.isLogged = () => !!$rootScope.user;
     authDataService.setUser();
+}
+
+function addAuthorization($rootScope, $state) {
+    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+        if (needAuthentication(toState) && !$rootScope.isLogged()) {
+            event.preventDefault();
+            $state.go('login')
+        }
+    });
+}
+
+function needAuthentication(state) {
+    if (state.data && state.data.isAuthenticated) {
+        return true;
+    } else if (state.parent) {
+        return needAuthentication(state.parent);
+    } else {
+        return false;
+    }
 }
