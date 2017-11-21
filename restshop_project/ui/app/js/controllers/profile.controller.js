@@ -23,8 +23,9 @@ function ProfileController($state, authDataService) {
     }
 
     function logout() {
-        authDataService.logout();
-        $state.go('product-list')
+        authDataService.logout().then((response) => {
+            $state.go('product-list')
+        });
     }
 
     function setActive(state) {
