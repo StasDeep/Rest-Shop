@@ -5,7 +5,8 @@ angular
 /* @ngInject */
 function cartOrderDataService($http, config) {
     let service = {
-        addToCart: addToCart
+        addToCart: addToCart,
+        getOrders: getOrders
     };
 
     return service;
@@ -14,5 +15,11 @@ function cartOrderDataService($http, config) {
 
     function addToCart(sku) {
         return $http.post(config.apiUrl + '/cart/', {sku: sku});
+    }
+
+    function getOrders() {
+        return $http.get(config.apiUrl + '/orders/').then((response) => {
+            return response.data.data;
+        });
     }
 }

@@ -34,6 +34,24 @@ function routeConfig($stateProvider, $locationProvider, $urlRouterProvider) {
             templateUrl: '/static/partials/signup.html',
             controller: 'SignupController',
             controllerAs: 'vm'
+        })
+        .state('profile', {
+            url: '/profile',
+            templateUrl: '/static/partials/profile.html',
+            controller: 'ProfileController',
+            controllerAs: 'vm'
+        })
+        .state('profile.info', {
+            url: '/info',
+            templateUrl: '/static/partials/profile.info.html',
+            controller: 'ProfileInfoController',
+            controllerAs: 'vm'
+        })
+        .state('profile.orders', {
+            url: '/orders',
+            templateUrl: '/static/partials/profile.orders.html',
+            controller: 'ProfileOrdersController',
+            controllerAs: 'vm'
         });
 
     $locationProvider.html5Mode({
@@ -41,7 +59,7 @@ function routeConfig($stateProvider, $locationProvider, $urlRouterProvider) {
         requireBase: false
     });
 
-    $urlRouterProvider.otherwise(function ($injector) {
+    $urlRouterProvider.otherwise(($injector) => {
         let $state = $injector.get('$state');
         $state.go('product-list');
     });

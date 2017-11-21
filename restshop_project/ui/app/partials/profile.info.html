@@ -1,0 +1,45 @@
+<div class="row profile-info-page">
+    <div class="col-xs-12 col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4">
+        <form name="form">
+            <div class="form-group">
+                <label class="control-label text-uppercase" for="email">Email:</label>
+                <div>
+                    <p class="form-control-static">{{ user.email }}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="text-uppercase" for="oldPasswordInput">Old Password</label>
+                <input type="password"
+                       class="form-control"
+                       id="oldPasswordInput"
+                       name="oldPassword"
+                       placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
+                       ng-model="vm.user.oldPassword"
+                       required>
+            </div>
+            <div class="form-group">
+                <label class="text-uppercase" for="newPasswordInput">New Password</label>
+                <input type="password"
+                       class="form-control"
+                       id="newPasswordInput"
+                       name="newPassword"
+                       placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
+                       ng-model="vm.user.newPassword"
+                       required>
+            </div>
+            <div class="form-group">
+                <label class="text-uppercase" for="newPasswordConfirmationInput">New Password Confirmation</label>
+                <input type="password"
+                       class="form-control"
+                       id="newPasswordConfirmationInput"
+                       name="newPasswordConfirmation"
+                       placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
+                       ng-model="vm.user.newPasswordConfirmation"
+                       required>
+            </div>
+            <div>
+                <input class="btn btn-red text-uppercase" type="submit" value="Save" ng-disabled="form.$invalid">
+            </div>
+        </form>
+    </div>
+</div>

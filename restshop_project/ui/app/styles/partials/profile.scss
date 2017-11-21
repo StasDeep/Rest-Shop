@@ -1,0 +1,10 @@
+.profile-page {
+    .list-group-item {
+        border-radius: 0;
+
+        &.active {
+            background-color: $crimson;
+            border-color: $crimson;
+        }
+    }
+}

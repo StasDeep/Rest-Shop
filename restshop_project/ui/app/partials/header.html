@@ -31,9 +31,9 @@
             <a class="btn btn-red text-uppercase btn-sign-in"
                ui-sref="login"
                ng-if="!isLogged()">Log in</a>
-            <button class="btn btn-red text-uppercase btn-sign-in"
-                    ng-click="vm.logout()"
-                    ng-if="isLogged()">Log out</button>
+            <a class="btn btn-red text-uppercase btn-user"
+               ui-sref="profile"
+               ng-if="isLogged()">Profile</a>
         </div>
     </div>
 </div>
