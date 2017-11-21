@@ -2,7 +2,6 @@ angular
     .module('restShopApp')
     .factory('productDataService', productDataService);
 
-/* @ngInject */
 function productDataService($http, orderingService, config) {
     let service = {
         getProduct: getProduct,

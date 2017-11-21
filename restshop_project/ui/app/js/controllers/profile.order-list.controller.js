@@ -1,8 +1,8 @@
 angular
     .module('restShopApp')
-    .controller('ProfileOrdersController', ProfileOrdersController);
+    .controller('ProfileOrderListController', ProfileOrderListController);
 
-function ProfileOrdersController($scope, cartOrderDataService) {
+function ProfileOrderListController($scope, cartOrderDataService) {
     let vm = this;
 
     vm.orders = [];

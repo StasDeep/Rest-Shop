@@ -1,10 +1,10 @@
 <div class="row profile-page">
-    <div class="col-xs-12 col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4">
-        <ul class="list-group text-uppercase">
+    <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
+        <ul class="list-group text-uppercase text-center">
             <a ng-click="vm.goToChild('info')"
                ng-class="{'active': vm.active.info}"
                class="list-group-item">Account info</a>
-            <a ng-click="vm.goToChild('orders')"
+            <a ng-click="vm.goToChild('order-list')"
                ng-class="{'active': vm.active.orders}"
                class="list-group-item">Orders</a>
             <a ng-click="vm.logout()" href

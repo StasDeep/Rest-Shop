@@ -2,7 +2,6 @@ angular
     .module('restShopApp')
     .factory('authDataService', authDataService);
 
-/* @ngInject */
 function authDataService($http, $rootScope, config) {
     let service = {
         getUser: getUser,

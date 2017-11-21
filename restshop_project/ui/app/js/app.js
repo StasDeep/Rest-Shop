@@ -47,10 +47,16 @@ function routeConfig($stateProvider, $locationProvider, $urlRouterProvider) {
             controller: 'ProfileInfoController',
             controllerAs: 'vm'
         })
-        .state('profile.orders', {
+        .state('profile.order-list', {
             url: '/orders',
-            templateUrl: '/static/partials/profile.orders.html',
-            controller: 'ProfileOrdersController',
+            templateUrl: '/static/partials/profile.order-list.html',
+            controller: 'ProfileOrderListController',
+            controllerAs: 'vm'
+        })
+        .state('profile.order-details', {
+            url: '/orders/:id',
+            templateUrl: '/static/partials/profile.order-details.html',
+            controller: 'ProfileOrderDetailsController',
             controllerAs: 'vm'
         });
 

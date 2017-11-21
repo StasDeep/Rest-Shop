@@ -2,10 +2,10 @@ angular
     .module('restShopApp')
     .factory('cartOrderDataService', cartOrderDataService);
 
-/* @ngInject */
 function cartOrderDataService($http, config) {
     let service = {
         addToCart: addToCart,
+        getOrder: getOrder,
         getOrders: getOrders
     };
 
@@ -15,6 +15,12 @@ function cartOrderDataService($http, config) {
 
     function addToCart(sku) {
         return $http.post(config.apiUrl + '/cart/', {sku: sku});
+    }
+
+    function getOrder(id) {
+        return $http.get(config.apiUrl + '/orders/' + id + '/').then((response) => {
+            return response.data.data;
+        });
     }
 
     function getOrders() {

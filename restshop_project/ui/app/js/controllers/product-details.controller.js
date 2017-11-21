@@ -93,14 +93,14 @@ function ProductDetailsController($stateParams, $state, $window, $timeout, produ
     }
 
     function getProduct(id) {
-        return productDataService.getProduct(id).then(product => {
+        return productDataService.getProduct(id).then((product) => {
             vm.product = product;
             vm.loading = false;
         });
     }
 
     function getPropertyValue(unit, propertyName) {
-        return unit.properties.find((p) => p.name == propertyName).value;
+        return unit.properties.find(p => p.name == propertyName).value;
     }
 
     function getUnitPrice() {
@@ -131,7 +131,7 @@ function ProductDetailsController($stateParams, $state, $window, $timeout, produ
 
             for (let unit of vm.product.units) {
                 let value = getPropertyValue(unit, prop.name);
-                if (!options.map((opt) => opt.value).includes(value)) {
+                if (!options.map(opt => opt.value).includes(value)) {
                     options.push({
                         value: value,
                         allowed: true
