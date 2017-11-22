@@ -211,7 +211,7 @@ class UnitForOrderDetail(serializers.ModelSerializer):
 
     class Meta:
         model = Unit
-        fields = ('title', 'properties', 'image', 'product_id')
+        fields = ('title', 'properties', 'image', 'product_id', 'price', 'sku')
 
     def get_properties(self, obj):
         return [{
@@ -238,7 +238,10 @@ class OrderUnitSerializer(serializers.ModelSerializer):
 
     def get_unit(self, obj):
         data = UnitForOrderDetail(obj.unit).data
+
+        # Use the price that was at the moment of purchase instead of current price.
         data['price'] = obj.unit_price
+
         return data
 
     def get_status(self, obj):

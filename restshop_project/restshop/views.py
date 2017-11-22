@@ -231,3 +231,27 @@ class CartView(APIView):
         cart_unit.save()
 
         return Response(status=status.HTTP_201_CREATED)
+
+
+class CartUnitView(APIView):
+    permission_classes = (AllowAny,)
+
+    def delete(self, request, sku=None):
+        print(request.data)
+
+        if not bool(request.user.is_anonymous):
+            cart_units = request.user.cart_units.all()
+        else:
+            if request.session.session_key is None:
+                request.session.save()
+
+            cart_units = Session.objects.get(session_key=request.session.session_key).cart_units.all()
+
+        cart_unit = cart_units.filter(unit__sku=sku).first()
+
+        if cart_unit is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        cart_unit.delete()
+
+        return Response(status=status.HTTP_200_OK)
