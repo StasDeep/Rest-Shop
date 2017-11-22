@@ -1,0 +1,23 @@
+<div class="row cart-page">
+    <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
+        <div class="cart-unit-container"
+             ng-repeat="cartUnit in vm.cartUnits"
+             ng-if="vm.cartUnits.length && !vm.loading">
+            <a class="text-uppercase"
+               ui-sref="product-details({id: cartUnit.unit.product_id})">
+                <rs-cart-order-unit item="cartUnit"
+                                    is-cart="true"
+                                    on-quantity-change="vm.onQuantityChange($change, cartUnit)"></rs-cart-order-unit>
+            </a>
+
+            <button class="delete-button"
+                    ng-click="vm.deleteItem(cartUnit)">&times;</button>
+        </div>
+
+        <div ng-if="!vm.cartUnits.length && !vm.loading">Cart is empty</div>
+
+        <div class="text-center" ng-if="vm.loading">
+            <img src="/static/img/spinner.gif">
+        </div>
+    </div>
+</div>

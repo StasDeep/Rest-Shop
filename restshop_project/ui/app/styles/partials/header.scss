@@ -13,11 +13,11 @@ header {
 
     .search-column {
         display: inline-block;
-        width: 75%;
+        width: 58%;
 
         @media screen and (min-width: 645px) {
             & {
-                width: 500px;
+                width: 425px;
             }
         }
     }
@@ -34,6 +34,22 @@ header {
         }
 
         .btn-sign-in, .btn-user {
+            width: 100%;
+        }
+    }
+
+    .cart-button-column {
+        display: inline-block;
+        vertical-align: top;
+        width: 14%;
+
+        @media screen and (min-width: 645px) {
+            & {
+                width: 70px;
+            }
+        }
+
+        .btn {
             width: 100%;
         }
     }

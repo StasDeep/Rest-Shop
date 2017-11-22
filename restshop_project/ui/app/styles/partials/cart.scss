@@ -1,0 +1,31 @@
+.cart-page {
+    .cart-unit-container {
+        position: relative;
+
+        .delete-button {
+            position: absolute;
+            right: 0;
+            top: 0;
+            border: none;
+            background-color: transparent;
+            color: lighten($crimson, 10%);
+            font-size: 15pt;
+            font-weight: bold;
+            width: 40px;
+            height: 40px;
+            transition: color 0.3s ease;
+
+            &:hover {
+                color: darken($crimson, 10%);
+            }
+
+            &:focus {
+                outline: none;
+            }
+        }
+
+        rs-cart-order-unit > div {
+            padding-right: 25px;
+        }
+    }
+}

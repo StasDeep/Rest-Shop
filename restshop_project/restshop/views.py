@@ -198,7 +198,7 @@ class CartView(APIView):
 
             cart_units = Session.objects.get(session_key=request.session.session_key).cart_units.all()
 
-        return Response(CartUnitSerializer(cart_units, many=True).data, status=status.HTTP_200_OK)
+        return Response(CartUnitSerializer(cart_units.order_by('unit__sku'), many=True).data, status=status.HTTP_200_OK)
 
     def post(self, request):
         serializer = CartUnitSerializer(data=request.data)

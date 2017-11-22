@@ -33,17 +33,10 @@
                 </div>
             </div>
 
-            <a class="order-unit text-uppercase"
+            <a class="text-uppercase"
                ui-sref="product-details({id: orderUnit.unit.product_id})"
                ng-repeat="orderUnit in vm.order.units">
-                <img class="order-unit-image" ng-src="{{ orderUnit.unit.image }}">
-                <div class="order-unit-details">
-                    <p><b>Title</b>: {{ orderUnit.unit.title }}</p>
-                    <p><b>Price</b>: ${{ orderUnit.unit.price }}</p>
-                    <p><b>Quantity</b>: {{ orderUnit.quantity }}</p>
-                    <p><b>Status</b>: {{ orderUnit.status }}</p>
-                    <p ng-repeat="prop in orderUnit.unit.properties">{{ prop.name }}: {{ prop.value }}</p>
-                </div>
+                <rs-cart-order-unit item="orderUnit" is-cart="false"></rs-cart-order-unit>
             </a>
         </div>
         <div class="text-center" ng-show="vm.loading">

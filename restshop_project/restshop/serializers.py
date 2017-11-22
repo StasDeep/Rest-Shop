@@ -211,7 +211,7 @@ class UnitForOrderDetail(serializers.ModelSerializer):
 
     class Meta:
         model = Unit
-        fields = ('title', 'properties', 'image', 'product_id', 'price', 'sku')
+        fields = ('title', 'properties', 'image', 'product_id', 'price', 'sku', 'num_in_stock')
 
     def get_properties(self, obj):
         return [{

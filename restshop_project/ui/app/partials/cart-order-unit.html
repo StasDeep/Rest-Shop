@@ -1,0 +1,25 @@
+<div ng-class="{'no-hover': vm.quantityHovered}">
+    <img class="unit-image" ng-src="{{ vm.item.unit.image }}">
+    <div class="unit-details">
+        <p><b>Title</b>: {{ vm.item.unit.title }}</p>
+        <p><b>Price</b>: ${{ vm.item.unit.price }}</p>
+        <p>
+            <b>Quantity</b>:
+            <span ng-mouseenter="vm.toggleHover('enter')"
+                  ng-mouseleave="vm.toggleHover('leave')"
+                  ng-click="vm.onQuantityContainerClick($event)">
+                <button class="quantity-button"
+                        ng-if="vm.isCart"
+                        ng-class="{disabled: vm.item.quantity == 1}"
+                        ng-click="vm.onQuantityClick($event, -1)">-</button>
+                {{ vm.item.quantity }}
+                <button class="quantity-button"
+                        ng-if="vm.isCart"
+                        ng-class="{disabled: vm.item.quantity == vm.item.unit.num_in_stock}"
+                        ng-click="vm.onQuantityClick($event, 1)">+</button>
+            </span>
+        </p>
+        <p ng-if="!vm.isCart"><b>Status</b>: {{ vm.item.status }}</p>
+        <p ng-repeat="prop in vm.item.unit.properties">{{ prop.name }}: {{ prop.value }}</p>
+    </div>
+</div>

@@ -1,0 +1,74 @@
+$quantity-buttons-size: 16px;
+
+rs-cart-order-unit > div {
+    padding: 10px;
+    border: solid #ccc 1px;
+    margin-bottom: 8px;
+    display: inline-block;
+    width: 100%;
+    color: #171717;
+    transition: background-color 0.3s ease;
+    overflow: hidden;
+
+    &:hover {
+        background-color: #f5f5f5;
+        text-decoration: none;
+    }
+
+    &.no-hover:hover {
+        background-color: white;
+    }
+
+    .unit-image {
+        width: 150px;
+        display: inline-block;
+        float: left;
+        border: solid $image-border-color 1px;
+    }
+
+    @media (max-width: 400px) {
+        .unit-image {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+    }
+
+    .unit-details {
+        padding-left: 15px;
+        overflow: hidden;
+
+        p {
+            margin: 3px 0;
+        }
+    }
+
+    .quantity-button {
+        border: solid $crimson 1px;
+        background-color: white;
+        color: $crimson;
+        width: $quantity-buttons-size;
+        height: $quantity-buttons-size;
+        border-radius: $quantity-buttons-size;
+        font-weight: bold;
+        font-size: $quantity-buttons-size;
+        padding: 0;
+        line-height: 14px;
+        transition: color 0.3s ease, background-color 0.3s ease;
+
+        &:hover {
+            background-color: $crimson;
+            color: white;
+        }
+
+        &:focus {
+            outline: none;
+        }
+
+        &.disabled {
+            opacity: 0.3;
+            pointer-events: none;
+            background-color: white;
+            color: $crimson
+        }
+    }
+}

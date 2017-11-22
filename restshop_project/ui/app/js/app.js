@@ -36,6 +36,12 @@ function routeConfig($stateProvider, $locationProvider, $urlRouterProvider) {
             controller: 'SignupController',
             controllerAs: 'vm'
         })
+        .state('cart', {
+            url: '/cart',
+            templateUrl: '/static/partials/cart.html',
+            controller: 'CartController',
+            controllerAs: 'vm'
+        })
         .state('profile', {
             url: '/profile',
             templateUrl: '/static/partials/profile.html',
