@@ -6,7 +6,6 @@ angular
         'rzModule'
     ])
     .config(routeConfig)
-    .run(addStateToRootScope)
     .run(addUserToRootScope)
     .run(addAuthorization);
 
@@ -79,10 +78,6 @@ function routeConfig($stateProvider, $locationProvider, $urlRouterProvider) {
         let $state = $injector.get('$state');
         $state.go('product-list');
     });
-}
-
-function addStateToRootScope($rootScope, $state) {
-    $rootScope.$state = $state;
 }
 
 function addUserToRootScope($rootScope, authDataService) {

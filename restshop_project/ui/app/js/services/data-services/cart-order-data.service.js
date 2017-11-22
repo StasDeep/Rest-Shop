@@ -8,7 +8,8 @@ function cartOrderDataService($http, config) {
         deleteFromCart: deleteFromCart,
         getCart: getCart,
         getOrder: getOrder,
-        getOrders: getOrders
+        getOrders: getOrders,
+        createOrder: createOrder
     };
 
     return service;
@@ -38,6 +39,14 @@ function cartOrderDataService($http, config) {
     function getOrders() {
         return $http.get(config.apiUrl + '/orders/').then((response) => {
             return response.data.data;
+        });
+    }
+
+    function createOrder(name, address, phone) {
+        return $http.post(config.apiUrl + '/orders/', {
+            name: name,
+            address: address,
+            phone: phone
         });
     }
 }

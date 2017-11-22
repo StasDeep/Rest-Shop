@@ -8,8 +8,12 @@ function CartController(cartOrderDataService, _) {
     vm.cartUnits = [];
     vm.changeQuantity = _.debounce(changeQuantity, 600);
     vm.deleteItem = deleteItem;
+    vm.deliveryInfo = {};
+    vm.getTotalSum = getTotalSum;
     vm.loading = true;
     vm.onQuantityChange = onQuantityChange;
+    vm.placeOrder = placeOrder;
+    vm.successfullyOrdered = false;
 
     ////////////
 
@@ -36,6 +40,10 @@ function CartController(cartOrderDataService, _) {
         });
     }
 
+    function getTotalSum() {
+        return vm.cartUnits.map(cu => cu.quantity * cu.unit.price).reduce((a, b) => a + b, 0);
+    }
+
     function onQuantityChange(change, cartUnit) {
         if (!cartUnit.actualQuantity) {
             cartUnit.actualQuantity = cartUnit.quantity;
@@ -43,5 +51,13 @@ function CartController(cartOrderDataService, _) {
 
         cartUnit.quantity += change;
         vm.changeQuantity(cartUnit);
+    }
+
+    function placeOrder() {
+        cartOrderDataService.createOrder(vm.deliveryInfo.name,
+                                         vm.deliveryInfo.address,
+                                         vm.deliveryInfo.phone).then((response) => {
+            vm.successfullyOrdered = true;
+        });
     }
 }
