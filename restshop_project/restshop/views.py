@@ -5,7 +5,7 @@ from django.contrib.sessions.models import Session
 from django.db.models import Min, Max
 from rest_framework import generics, status, serializers
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ViewSet
@@ -237,8 +237,6 @@ class CartUnitView(APIView):
     permission_classes = (AllowAny,)
 
     def delete(self, request, sku=None):
-        print(request.data)
-
         if not bool(request.user.is_anonymous):
             cart_units = request.user.cart_units.all()
         else:
@@ -253,5 +251,16 @@ class CartUnitView(APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
         cart_unit.delete()
+
+        return Response(status=status.HTTP_200_OK)
+
+
+class ChangePasswordView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        user = request.user
+        user.set_password(request.data['password'])
+        user.save()
 
         return Response(status=status.HTTP_200_OK)

@@ -7,6 +7,7 @@ function authDataService($http, $rootScope, config) {
         getUser: getUser,
         login: login,
         logout: logout,
+        setPassword: setPassword,
         setUser: setUser,
         signup: signup
     };
@@ -34,6 +35,10 @@ function authDataService($http, $rootScope, config) {
         return $http.delete(config.apiUrl + '/auth/').then((response) => {
             $rootScope.user = null;
         });
+    }
+
+    function setPassword(password) {
+        return $http.post(config.apiUrl + '/password/', {password: password})
     }
 
     function setUser() {

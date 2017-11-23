@@ -5,7 +5,8 @@ angular
 function ProfileInfoController($scope, authDataService) {
     let vm = this;
 
-    vm.user = {};
+    vm.changePassword = changePassword;
+    vm.password = {};
 
     ////////////
 
@@ -13,5 +14,11 @@ function ProfileInfoController($scope, authDataService) {
 
     function activate() {
         $scope.vm.setActive('info');
+    }
+
+    function changePassword() {
+        authDataService.setPassword(vm.password.new).then((response) => {
+            console.log('Successfully changed');
+        });
     }
 }

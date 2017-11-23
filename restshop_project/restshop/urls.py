@@ -3,7 +3,7 @@ from rest_framework.routers import DefaultRouter
 from rest_framework_sav.views import session_auth_view
 
 from .views import ProductDetailView, ProductListView, UserCreateView, SellerCreateView, OrderViewSet, TagListView, \
-    PropertyListView, CartView, UserView, CartUnitView
+    PropertyListView, CartView, UserView, CartUnitView, ChangePasswordView
 
 router = DefaultRouter()
 router.register(r'orders', OrderViewSet, base_name='order')
@@ -19,5 +19,6 @@ urlpatterns = [
     url(r'^cart/$', CartView.as_view(), name='cart'),
     url(r'^cart/(?P<sku>[A-Za-z\-_0-9]+)/$', CartUnitView.as_view(), name='cart-unit'),
     url(r'^auth/$', session_auth_view, name='auth'),
+    url(r'^password/$', ChangePasswordView.as_view(), name='change-password'),
     url(r'^', include(router.urls)),
 ]
