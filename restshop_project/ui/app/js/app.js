@@ -83,15 +83,17 @@ function routeConfig($stateProvider, $locationProvider, $urlRouterProvider) {
 function addUserToRootScope($rootScope, authDataService) {
     $rootScope.user = null;
     $rootScope.isLogged = () => !!$rootScope.user;
-    authDataService.setUser();
+    $rootScope.userPromise = authDataService.setUser();
 }
 
 function addAuthorization($rootScope, $state) {
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-        if (needAuthentication(toState) && !$rootScope.isLogged()) {
-            event.preventDefault();
-            $state.go('login')
-        }
+        $rootScope.userPromise.then(function () {
+            if (needAuthentication(toState) && !$rootScope.isLogged()) {
+                event.preventDefault();
+                $state.go('login')
+            }
+        });
     });
 }
 
