@@ -5,8 +5,9 @@ angular
 function ProfileOrderDetailsController($scope, $stateParams, cartOrderDataService) {
     let vm = this;
 
-    vm.order = {};
+    vm.getTotalSum = getTotalSum;
     vm.loading = true;
+    vm.order = {};
 
     ////////////
 
@@ -19,5 +20,9 @@ function ProfileOrderDetailsController($scope, $stateParams, cartOrderDataServic
             vm.order = order;
             vm.loading = false;
         });
+    }
+
+    function getTotalSum() {
+        return vm.order.units.map(ou => ou.quantity * ou.unit.price).reduce((a, b) => a + b, 0);
     }
 }

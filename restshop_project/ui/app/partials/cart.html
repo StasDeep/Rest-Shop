@@ -58,7 +58,9 @@
             </form>
         </div>
 
-        <div ng-if="!vm.cartUnits.length && !vm.loading">Cart is empty</div>
+        <div class="jumbotron" ng-if="!vm.cartUnits.length && !vm.loading">
+            Cart is empty
+        </div>
 
         <div class="text-center" ng-if="vm.loading">
             <img src="/static/img/spinner.gif">

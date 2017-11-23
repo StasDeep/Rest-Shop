@@ -33,11 +33,17 @@
                 </div>
             </div>
 
-            <a class="text-uppercase"
-               ui-sref="product-details({id: orderUnit.unit.product_id})"
-               ng-repeat="orderUnit in vm.order.units">
-                <rs-cart-order-unit item="orderUnit" is-cart="false"></rs-cart-order-unit>
-            </a>
+            <div>
+                <a class="text-uppercase"
+                   ui-sref="product-details({id: orderUnit.unit.product_id})"
+                   ng-repeat="orderUnit in vm.order.units">
+                    <rs-cart-order-unit item="orderUnit" is-cart="false"></rs-cart-order-unit>
+                </a>
+            </div>
+
+            <div>
+                <h3 class="text-uppercase total-sum"><b>Total Sum</b>: ${{ vm.getTotalSum() }}</h3>
+            </div>
         </div>
         <div class="text-center" ng-show="vm.loading">
             <img src="/static/img/spinner.gif">
