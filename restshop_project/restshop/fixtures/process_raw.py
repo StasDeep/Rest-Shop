@@ -1,7 +1,7 @@
 from json import load, dump
 from argparse import ArgumentParser
 
-from fixture_creator import FixtureCreator
+from restshop.fixtures.fixture_creator import FixtureCreator
 
 
 def get_args():

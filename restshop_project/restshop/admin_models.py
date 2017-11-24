@@ -3,8 +3,11 @@ from django.contrib import admin
 from django.contrib.admin.options import BaseModelAdmin
 from django.core.exceptions import ValidationError
 
-from .models import Seller, Unit, OrderUnit, UnitImage, Product, Order
-
+from restshop.api.order.models import Order
+from restshop.api.order_unit.models import OrderUnit
+from restshop.api.product.models import Product
+from restshop.api.unit.models import Unit, UnitImage
+from restshop.api.user.models import Seller
 
 SELLER_LOOKUPS = {
     'unit': {

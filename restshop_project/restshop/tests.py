@@ -2,7 +2,10 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
-from .models import Order, Product, Seller, Unit, OrderUnit
+
+from restshop.api.product.models import Product
+from restshop.api.unit.models import Unit
+from restshop.api.user.models import Seller
 
 
 class OrderTestCase(APITestCase):
