@@ -2,7 +2,7 @@ angular
     .module('restShopApp')
     .controller('LoginController', LoginController);
 
-function LoginController($state, authDataService) {
+function LoginController($state, userDataService) {
     let vm = this;
 
     vm.loginUser = loginUser;
@@ -17,7 +17,7 @@ function LoginController($state, authDataService) {
     }
 
     function loginUser() {
-        authDataService.login(vm.user.email, vm.user.password).then(function (response) {
+        userDataService.login(vm.user.email, vm.user.password).then(function (response) {
             $state.go('product-list');
         });
     }

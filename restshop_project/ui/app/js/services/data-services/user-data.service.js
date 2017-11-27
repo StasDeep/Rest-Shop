@@ -1,9 +1,10 @@
 angular
     .module('restShopApp')
-    .factory('authDataService', authDataService);
+    .factory('userDataService', userDataService);
 
-function authDataService($http, $rootScope, config) {
+function userDataService($http, $rootScope, config) {
     let service = {
+        getDeliveryInfo: getDeliveryInfo,
         getUser: getUser,
         login: login,
         logout: logout,
@@ -15,6 +16,12 @@ function authDataService($http, $rootScope, config) {
     return service;
 
     ////////////
+
+    function getDeliveryInfo() {
+        return $http.get(config.apiUrl + '/deliveryinfo/').then((response) => {
+            return response.data.data;
+        });
+    }
 
     function getUser() {
         return $http.get(config.apiUrl + '/user/').then((response) => {

@@ -2,7 +2,7 @@ angular
     .module('restShopApp')
     .controller('ProfileController', ProfileController);
 
-function ProfileController($state, authDataService) {
+function ProfileController($state, userDataService) {
     let vm = this;
 
     vm.active = {};
@@ -23,7 +23,7 @@ function ProfileController($state, authDataService) {
     }
 
     function logout() {
-        authDataService.logout().then((response) => {
+        userDataService.logout().then((response) => {
             $state.go('product-list')
         });
     }

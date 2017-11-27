@@ -80,10 +80,10 @@ function routeConfig($stateProvider, $locationProvider, $urlRouterProvider) {
     });
 }
 
-function addUserToRootScope($rootScope, authDataService) {
+function addUserToRootScope($rootScope, userDataService) {
     $rootScope.user = null;
     $rootScope.isLogged = () => !!$rootScope.user;
-    $rootScope.userPromise = authDataService.setUser();
+    $rootScope.userPromise = userDataService.setUser();
 }
 
 function addAuthorization($rootScope, $state) {

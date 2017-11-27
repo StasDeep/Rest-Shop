@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 from restshop.api.order.models import Order
 from restshop.api.order.serializers import OrderListSerializer, OrderSerializer, OrderDetailSerializer
 from restshop.api.order_unit.models import OrderUnit
+from restshop.api.user.models import DeliveryInfo
 
 
 class OrderView(APIView):
@@ -31,6 +32,7 @@ class OrderView(APIView):
         if not bool(request.user.is_anonymous):
             cart_units = request.user.cart_units.all()
             data['user'] = request.user
+            DeliveryInfo.objects.create(**data)
         else:
             if request.session.session_key is None:
                 request.session.save()

@@ -2,7 +2,7 @@ angular
     .module('restShopApp')
     .controller('SignupController', SignupController);
 
-function SignupController($state, authDataService) {
+function SignupController($state, userDataService) {
     let vm = this;
 
     vm.signup = signup;
@@ -18,7 +18,7 @@ function SignupController($state, authDataService) {
     }
 
     function signup() {
-        authDataService.signup(vm.user.email, vm.user.password).then(function (response) {
+        userDataService.signup(vm.user.email, vm.user.password).then(function (response) {
             vm.successfullySigned = true;
         });
     }

@@ -4,7 +4,8 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from restshop.api.user.serializers import UserSerializer, SellerSerializer
+from restshop.api.user.models import DeliveryInfo
+from restshop.api.user.serializers import UserSerializer, SellerSerializer, DeliveryInfoSerializer
 
 
 class UserCreateView(generics.CreateAPIView):
@@ -38,3 +39,16 @@ class ChangePasswordView(APIView):
         user.save()
 
         return Response(status=status.HTTP_200_OK)
+
+
+class DeliveryInfoView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        user = request.user
+        try:
+            deliveryinfo = user.deliveryinfo
+        except DeliveryInfo.DoesNotExist:
+            return Response()
+
+        return Response(DeliveryInfoSerializer(deliveryinfo).data)

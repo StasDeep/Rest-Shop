@@ -3,7 +3,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
-from restshop.api.user.models import Seller
+from restshop.api.user.models import Seller, DeliveryInfo
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -85,3 +85,10 @@ class SellerSerializer(serializers.ModelSerializer):
                 group.permissions.add(permission)
 
         return group
+
+
+class DeliveryInfoSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = DeliveryInfo
+        fields = ('name', 'address', 'phone')

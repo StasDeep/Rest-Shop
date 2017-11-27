@@ -2,7 +2,7 @@ angular
     .module('restShopApp')
     .controller('ProfileInfoController', ProfileInfoController);
 
-function ProfileInfoController($scope, authDataService) {
+function ProfileInfoController($scope, userDataService) {
     let vm = this;
 
     vm.changePassword = changePassword;
@@ -17,8 +17,9 @@ function ProfileInfoController($scope, authDataService) {
     }
 
     function changePassword() {
-        authDataService.setPassword(vm.password.new).then((response) => {
-            console.log('Successfully changed');
+        userDataService.setPassword(vm.password.new).then((response) => {
+            vm.password = {};
+            // TODO: add logger notification.
         });
     }
 }
