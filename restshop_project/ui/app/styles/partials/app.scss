@@ -102,3 +102,13 @@ a {
         }
     }
 }
+
+.jumbotron.jumbotron-crimson {
+    border-radius: 0;
+    background-color: #f9f0f2;
+    color: $crimson;
+    text-transform: uppercase;
+    font-size: 16pt;
+    text-align: center;
+    padding: 35px;
+}

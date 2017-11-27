@@ -16,7 +16,7 @@ rs-cart-order-unit > div {
     }
 
     &.no-hover:hover {
-        background-color: white;
+        background-color: $light;
     }
 
     .unit-image {
@@ -44,7 +44,7 @@ rs-cart-order-unit > div {
 
     .quantity-button {
         border: solid $crimson 1px;
-        background-color: white;
+        background-color: $light;
         color: $crimson;
         width: $quantity-buttons-size;
         height: $quantity-buttons-size;
@@ -57,7 +57,7 @@ rs-cart-order-unit > div {
 
         &:hover {
             background-color: $crimson;
-            color: white;
+            color: $light;
         }
 
         &:focus {
@@ -67,7 +67,7 @@ rs-cart-order-unit > div {
         &.disabled {
             opacity: 0.3;
             pointer-events: none;
-            background-color: white;
+            background-color: $light;
             color: $crimson
         }
     }
