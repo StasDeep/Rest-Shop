@@ -16,12 +16,11 @@ pip install -r requirements.txt
 
 Install PostgreSQL: [instructions here](POSTGRESQL.md).
 
-Copy secrets:
+Set environment variables:
 ```
-cp restshop_project/restshop_project/secret_settings.py.example restshop_project/restshop_project/secret_settings.py
+export DB_USER=YOUR_DB_USERNAME
+export DB_PASSWORD=YOUR_DB_PASSWORD
 ```
-
-Change `USER_NAME` and `USER_PASSWORD` constants in `secret_settings.py`.
 
 Set up database schema:
 ```
