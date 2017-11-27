@@ -49,6 +49,20 @@ class DeliveryInfoView(APIView):
         try:
             deliveryinfo = user.deliveryinfo
         except DeliveryInfo.DoesNotExist:
-            return Response()
+            return Response({})
 
         return Response(DeliveryInfoSerializer(deliveryinfo).data)
+
+    def post(self, request):
+        serializer = DeliveryInfoSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        # Remove current delivery info if exists.
+        try:
+            request.user.deliveryinfo.delete()
+        except DeliveryInfo.DoesNotExist:
+            pass
+
+        serializer.save(user=request.user)
+
+        return Response(status=status.HTTP_201_CREATED)

@@ -56,6 +56,12 @@ function routeConfig($stateProvider, $locationProvider, $urlRouterProvider) {
             controller: 'ProfileInfoController',
             controllerAs: 'vm'
         })
+        .state('profile.delivery-info', {
+            url: '/delivery-info',
+            templateUrl: '/static/partials/profile.delivery-info.html',
+            controller: 'ProfileDeliveryInfoController',
+            controllerAs: 'vm'
+        })
         .state('profile.order-list', {
             url: '/orders',
             templateUrl: '/static/partials/profile.order-list.html',

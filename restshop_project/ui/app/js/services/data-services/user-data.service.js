@@ -8,6 +8,7 @@ function userDataService($http, $rootScope, config) {
         getUser: getUser,
         login: login,
         logout: logout,
+        setDeliveryInfo: setDeliveryInfo,
         setPassword: setPassword,
         setUser: setUser,
         signup: signup
@@ -44,8 +45,12 @@ function userDataService($http, $rootScope, config) {
         });
     }
 
+    function setDeliveryInfo(deliveryInfo) {
+        return $http.post(config.apiUrl + '/deliveryinfo/', deliveryInfo);
+    }
+
     function setPassword(password) {
-        return $http.post(config.apiUrl + '/password/', {password: password})
+        return $http.post(config.apiUrl + '/password/', {password: password});
     }
 
     function setUser() {
