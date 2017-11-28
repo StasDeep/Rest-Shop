@@ -1,17 +1,19 @@
-<div class="row profile-orders-page">
-    <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
-        <a class="order-list-item text-uppercase"
-           ui-sref="profile.order-details({id: order.id})"
-           ng-if="vm.orders.length && !vm.loading"
-           ng-repeat="order in vm.orders">
-            <div class="col-xs-7"><b>Order #{{ order.id }}:</b> {{ order.units_num }} unit(s)</div>
-            <div class="col-xs-5 text-right">{{ order.created_at | date: 'mediumDate' }}</div>
-        </a>
+<div class="profile-orders-page">
+    <div class="row">
+        <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
+            <a class="order-list-item text-uppercase"
+               ui-sref="profile.order-details({id: order.id})"
+               ng-if="vm.orders.length && !vm.loading"
+               ng-repeat="order in vm.orders">
+                <div class="col-xs-7"><b>Order #{{ order.id }}:</b> {{ order.units_num }} unit(s)</div>
+                <div class="col-xs-5 text-right">{{ order.created_at | date: 'mediumDate' }}</div>
+            </a>
 
-        <div ng-if="!vm.orders.length && !vm.loading"><p>No orders yet</p></div>
+            <div ng-if="!vm.orders.length && !vm.loading"><p>No orders yet</p></div>
 
-        <div class="text-center" ng-show="vm.loading">
-            <img src="/static/img/spinner.gif">
+            <div class="text-center" ng-show="vm.loading">
+                <img src="/static/img/spinner.gif">
+            </div>
         </div>
     </div>
 </div>

@@ -1,36 +1,38 @@
-<div class="row profile-info-page">
-    <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
-        <form name="form" ng-submit="vm.changePassword()">
-            <div class="form-group">
-                <label class="control-label text-uppercase" for="email">Email</label>
-                <div>
-                    <p class="form-control-static">{{ user.email }}</p>
+<div class="profile-info-page">
+    <div class="row">
+        <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
+            <form name="form" ng-submit="vm.changePassword()">
+                <div class="form-group">
+                    <label class="control-label text-uppercase" for="email">Email</label>
+                    <div>
+                        <p class="form-control-static">{{ user.email }}</p>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="text-uppercase" for="newPasswordInput">New Password</label>
-                <input type="password"
-                       class="form-control"
-                       id="newPasswordInput"
-                       name="newPassword"
-                       placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
-                       ng-model="vm.password.new"
-                       required>
-            </div>
-            <div class="form-group">
-                <label class="text-uppercase" for="newPasswordConfirmationInput">New Password Confirmation</label>
-                <input type="password"
-                       class="form-control"
-                       id="newPasswordConfirmationInput"
-                       name="newPasswordConfirmation"
-                       placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
-                       ng-model="vm.password.newConfirmation"
-                       pwd-check="vm.password.new"
-                       required>
-            </div>
-            <div>
-                <input class="btn btn-red text-uppercase" type="submit" value="Save" ng-disabled="form.$invalid">
-            </div>
-        </form>
+                <div class="form-group">
+                    <label class="text-uppercase" for="newPasswordInput">New Password</label>
+                    <input type="password"
+                           class="form-control"
+                           id="newPasswordInput"
+                           name="newPassword"
+                           placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
+                           ng-model="vm.password.new"
+                           required>
+                </div>
+                <div class="form-group">
+                    <label class="text-uppercase" for="newPasswordConfirmationInput">New Password Confirmation</label>
+                    <input type="password"
+                           class="form-control"
+                           id="newPasswordConfirmationInput"
+                           name="newPasswordConfirmation"
+                           placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
+                           ng-model="vm.password.newConfirmation"
+                           pwd-check="vm.password.new"
+                           required>
+                </div>
+                <div>
+                    <input class="btn btn-red text-uppercase" type="submit" value="Save" ng-disabled="form.$invalid">
+                </div>
+            </form>
+        </div>
     </div>
 </div>

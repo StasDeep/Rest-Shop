@@ -1,39 +1,41 @@
-<div class="row profile-info-page">
-    <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
-        <form name="form" ng-submit="vm.setDeliveryInfo()">
-            <div class="form-group">
-                <label class="text-uppercase" for="nameInput">Name</label>
-                <input type="text"
-                       class="form-control"
-                       id="nameInput"
-                       placeholder="John"
-                       name="name"
-                       ng-model="vm.deliveryInfo.name"
-                       required>
-            </div>
-            <div class="form-group">
-                <label class="text-uppercase" for="addressInput">Address</label>
-                <input type="text"
-                       class="form-control"
-                       id="addressInput"
-                       placeholder="USA, IL, Chicago, Wood Street, 15"
-                       name="address"
-                       ng-model="vm.deliveryInfo.address"
-                       required>
-            </div>
-            <div class="form-group">
-                <label class="text-uppercase" for="phoneInput">Phone</label>
-                <input type="text"
-                       class="form-control"
-                       id="phoneInput"
-                       placeholder="+375 29 196 33 34"
-                       name="phone"
-                       ng-model="vm.deliveryInfo.phone"
-                       required>
-            </div>
-            <div>
-                <input class="btn btn-red text-uppercase" type="submit" value="Save" ng-disabled="form.$invalid">
-            </div>
-        </form>
+<div class="profile-info-page">
+    <div class="row">
+        <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
+            <form name="form" ng-submit="vm.setDeliveryInfo()">
+                <div class="form-group">
+                    <label class="text-uppercase" for="nameInput">Name</label>
+                    <input type="text"
+                           class="form-control"
+                           id="nameInput"
+                           placeholder="John"
+                           name="name"
+                           ng-model="vm.deliveryInfo.name"
+                           required>
+                </div>
+                <div class="form-group">
+                    <label class="text-uppercase" for="addressInput">Address</label>
+                    <input type="text"
+                           class="form-control"
+                           id="addressInput"
+                           placeholder="USA, IL, Chicago, Wood Street, 15"
+                           name="address"
+                           ng-model="vm.deliveryInfo.address"
+                           required>
+                </div>
+                <div class="form-group">
+                    <label class="text-uppercase" for="phoneInput">Phone</label>
+                    <input type="text"
+                           class="form-control"
+                           id="phoneInput"
+                           placeholder="+375 29 196 33 34"
+                           name="phone"
+                           ng-model="vm.deliveryInfo.phone"
+                           required>
+                </div>
+                <div>
+                    <input class="btn btn-red text-uppercase" type="submit" value="Save" ng-disabled="form.$invalid">
+                </div>
+            </form>
+        </div>
     </div>
 </div>

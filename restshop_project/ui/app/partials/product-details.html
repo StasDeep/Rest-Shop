@@ -1,62 +1,64 @@
-<div class="row text-center" ng-show="vm.loading">
-    <img src="/static/img/spinner.gif">
-</div>
-
-<div class="row product-details-container"  ng-show="!vm.loading">
-    <div class="col-xs-1 thumbnails-container">
-        <div class="thumbnail-image-container text-right"
-             ng-repeat="image in vm.thumbnails">
-            <img ng-src="{{ image }}"
-                 ng-click="vm.setSelectedImage(image)">
-        </div>
+<div class="product-details-page">
+    <div class="row text-center" ng-show="vm.loading">
+        <img src="/static/img/spinner.gif">
     </div>
 
-    <div class="col-xs-5 selected-image-container">
-        <img ng-src="{{ vm.selectedImage }}">
-    </div>
-
-    <div class="col-xs-6">
-        <h1 class="title text-uppercase">{{ vm.product.title }}</h1>
-
-        <div class="tags-container">
-            <span class="label label-tag"
-                  ng-repeat="tag in vm.product.tags"
-                  ng-click="vm.applyTag($event, tag)">{{ tag }}</span>
-        </div>
-
-        <p class="description text-muted">
-            {{ vm.product.description }}
-        </p>
-
-        <div ng-repeat="optionsGroup in vm.selectedOptions">
-            <div class="options-row">
-                <h3 class="text-uppercase">{{ optionsGroup.name }}:</h3>
-
-                <div class="option-container"
-                     ng-class="{
-                        selected: optionsGroup.selected === option.value,
-                        'not-allowed': !option.allowed
-                     }"
-                     ng-repeat="option in optionsGroup.options"
-                     ng-click="vm.applyOption(optionsGroup.name, option.value)">
-                    <img class="color-option"
-                         ng-if="optionsGroup.name === 'Color'"
-                         ng-src="{{ vm.colorMap[option.value] }}"
-                         alt="{{ option.value }}"
-                         title="{{ option.value }}">
-
-                    <span class="option"
-                          ng-if="optionsGroup.name !== 'Color'">
-                        {{ option.value }}
-                    </span>
-                </div>
+    <div class="row" ng-show="!vm.loading">
+        <div class="col-xs-1 thumbnails-container">
+            <div class="thumbnail-image-container text-right"
+                 ng-repeat="image in vm.thumbnails">
+                <img ng-src="{{ image }}"
+                     ng-click="vm.setSelectedImage(image)">
             </div>
         </div>
 
-        <div class="unit-price">{{ vm.price }}</div>
+        <div class="col-xs-5 selected-image-container">
+            <img ng-src="{{ vm.selectedImage }}">
+        </div>
 
-        <button class="btn btn-red btn-large text-uppercase btn-top-margin"
-                ng-class="{disabled: !vm.isChosen()}"
-                ng-click="vm.addToCart()">Add to cart</button>
+        <div class="col-xs-6">
+            <h1 class="title text-uppercase">{{ vm.product.title }}</h1>
+
+            <div class="tags-container">
+            <span class="label label-tag"
+                  ng-repeat="tag in vm.product.tags"
+                  ng-click="vm.applyTag($event, tag)">{{ tag }}</span>
+            </div>
+
+            <p class="description text-muted">
+                {{ vm.product.description }}
+            </p>
+
+            <div ng-repeat="optionsGroup in vm.selectedOptions">
+                <div class="options-row">
+                    <h3 class="text-uppercase">{{ optionsGroup.name }}:</h3>
+
+                    <div class="option-container"
+                         ng-class="{
+                        selected: optionsGroup.selected === option.value,
+                        'not-allowed': !option.allowed
+                     }"
+                         ng-repeat="option in optionsGroup.options"
+                         ng-click="vm.applyOption(optionsGroup.name, option.value)">
+                        <img class="color-option"
+                             ng-if="optionsGroup.name === 'Color'"
+                             ng-src="{{ vm.colorMap[option.value] }}"
+                             alt="{{ option.value }}"
+                             title="{{ option.value }}">
+
+                        <span class="option"
+                              ng-if="optionsGroup.name !== 'Color'">
+                        {{ option.value }}
+                    </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="unit-price">{{ vm.price }}</div>
+
+            <button class="btn btn-red btn-large text-uppercase btn-top-margin"
+                    ng-class="{disabled: !vm.isChosen()}"
+                    ng-click="vm.addToCart()">Add to cart</button>
+        </div>
     </div>
 </div>
