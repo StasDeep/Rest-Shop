@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 
 from restshop.api.user.models import DeliveryInfo, Seller
 from restshop.api.user.serializers import UserSerializer, SellerSerializer, DeliveryInfoSerializer
+from restshop.api.user.service import DeliveryInfoService
 
 
 class UserCreateView(APIView):
@@ -117,11 +118,7 @@ class DeliveryInfoView(APIView):
         serializer = DeliveryInfoSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        # Remove current delivery info if exists.
-        try:
-            request.user.deliveryinfo.delete()
-        except DeliveryInfo.DoesNotExist:
-            pass
+        DeliveryInfoService.delete_by_user(request.user)
 
         serializer.save(user=request.user)
 
