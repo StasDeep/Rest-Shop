@@ -7,7 +7,6 @@ angular
     .constant('_', window._)
     .config(configCsrf);
 
-/* @ngInject */
 function configCsrf($httpProvider) {
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
     $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';

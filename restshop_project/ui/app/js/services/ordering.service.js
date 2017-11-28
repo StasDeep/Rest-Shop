@@ -2,7 +2,6 @@ angular
     .module('restShopApp')
     .factory('orderingService', orderingService);
 
-/* @ngInject */
 function orderingService(_) {
     let service = {
         orderProperties: orderProperties,

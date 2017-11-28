@@ -2,7 +2,7 @@ angular
     .module('restShopApp')
     .factory('userDataService', userDataService);
 
-function userDataService($http, $rootScope, config) {
+function userDataService(apiService, $rootScope) {
     let service = {
         getDeliveryInfo: getDeliveryInfo,
         getUser: getUser,
@@ -19,19 +19,19 @@ function userDataService($http, $rootScope, config) {
     ////////////
 
     function getDeliveryInfo() {
-        return $http.get(config.apiUrl + '/deliveryinfo/').then((response) => {
+        return apiService.get('deliveryinfo').then((response) => {
             return response.data.data;
         });
     }
 
     function getUser() {
-        return $http.get(config.apiUrl + '/user/').then((response) => {
+        return apiService.get('user').then((response) => {
             return response.data.data;
         });
     }
 
     function login(username, password) {
-        return $http.post(config.apiUrl + '/auth/', {
+        return apiService.post('auth', {
             username: username,
             password: password
         }).then((response) => {
@@ -40,17 +40,17 @@ function userDataService($http, $rootScope, config) {
     }
 
     function logout() {
-        return $http.delete(config.apiUrl + '/auth/').then((response) => {
+        return apiService.delete('auth').then((response) => {
             $rootScope.user = null;
         });
     }
 
     function setDeliveryInfo(deliveryInfo) {
-        return $http.post(config.apiUrl + '/deliveryinfo/', deliveryInfo);
+        return apiService.post('deliveryinfo', deliveryInfo);
     }
 
     function setPassword(password) {
-        return $http.post(config.apiUrl + '/password/', {password: password});
+        return apiService.post('password', {password: password});
     }
 
     function setUser() {
@@ -61,7 +61,7 @@ function userDataService($http, $rootScope, config) {
     }
 
     function signup(email, password) {
-        return $http.post(config.apiUrl + '/user/create/', {
+        return apiService.post('user/create', {
             email: email,
             password: password
         });

@@ -2,7 +2,7 @@ angular
     .module('restShopApp')
     .factory('cartOrderDataService', cartOrderDataService);
 
-function cartOrderDataService($http, config) {
+function cartOrderDataService(apiService) {
     let service = {
         addToCart: addToCart,
         deleteFromCart: deleteFromCart,
@@ -17,33 +17,33 @@ function cartOrderDataService($http, config) {
     ////////////
 
     function addToCart(sku, quantity) {
-        return $http.post(config.apiUrl + '/cart/', {sku: sku, quantity: quantity});
+        return apiService.post('cart', {sku: sku, quantity: quantity});
     }
 
     function deleteFromCart(sku) {
-        return $http.delete(config.apiUrl + '/cart/' + sku + '/');
+        return apiService.delete('cart', sku);
     }
 
     function getCart() {
-        return $http.get(config.apiUrl + '/cart/').then((response) => {
+        return apiService.get('cart').then((response) => {
             return response.data.data;
         });
     }
 
     function getOrder(id) {
-        return $http.get(config.apiUrl + '/orders/' + id + '/').then((response) => {
+        return apiService.get('orders', id).then((response) => {
             return response.data.data;
         });
     }
 
     function getOrders() {
-        return $http.get(config.apiUrl + '/orders/').then((response) => {
+        return apiService.get('orders').then((response) => {
             return response.data.data;
         });
     }
 
     function createOrder(name, address, phone) {
-        return $http.post(config.apiUrl + '/orders/', {
+        return apiService.post('orders', {
             name: name,
             address: address,
             phone: phone
