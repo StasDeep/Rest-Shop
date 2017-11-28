@@ -2,7 +2,7 @@ angular
     .module('restShopApp')
     .controller('CartController', CartController);
 
-function CartController(cartOrderDataService, userDataService, _) {
+function CartController($rootScope, cartOrderDataService, userDataService, _) {
     let vm = this;
 
     vm.cartUnits = [];
@@ -24,7 +24,7 @@ function CartController(cartOrderDataService, userDataService, _) {
             vm.cartUnits = cartUnits;
             vm.loading = false;
 
-            if (vm.cartUnits.length) {
+            if (vm.cartUnits.length && $rootScope.isLogged()) {
                 userDataService.getDeliveryInfo().then((deliveryInfo) => {
                     vm.deliveryInfo = deliveryInfo;
                 });

@@ -2,7 +2,7 @@ angular
     .module('restShopApp')
     .controller('SignupController', SignupController);
 
-function SignupController($state, userDataService) {
+function SignupController(userDataService, notifier) {
     let vm = this;
 
     vm.signup = signup;
@@ -20,6 +20,16 @@ function SignupController($state, userDataService) {
     function signup() {
         userDataService.signup(vm.user.email, vm.user.password).then((response) => {
             vm.successfullySigned = true;
+        }, (response) => {
+            if (response.data.error.email) {
+                if (response.data.error.email[0] == 'Enter a valid email address.') {
+                    notifier.error('Invalid email address')
+                } else {
+                    notifier.error('Email is already taken');
+                }
+            } else {
+                notifier.error('Cannot create new account');
+            }
         });
     }
 }
