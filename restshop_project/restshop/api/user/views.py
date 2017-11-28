@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from restshop.api.user.models import DeliveryInfo, Seller
-from restshop.api.user.serializers import UserSerializer, SellerSerializer, DeliveryInfoSerializer
+from restshop.api.user.serializers import UserSerializer, SellerSerializer, DeliveryInfoSerializer, PasswordSerializer
 from restshop.api.user.service import DeliveryInfoService
 
 
@@ -96,8 +96,11 @@ class ChangePasswordView(APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
+        serializer = PasswordSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
         user = request.user
-        user.set_password(request.data['password'])
+        user.set_password(serializer.data['password'])
         user.save()
 
         # Need to relogin user, because he is logged out after password change.

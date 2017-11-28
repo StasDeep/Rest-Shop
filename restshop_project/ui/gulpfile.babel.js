@@ -33,7 +33,8 @@ const path = {
             'bower_components/angular-animate/angular-animate.min.js',
             'bower_components/angular-ui-router/release/angular-ui-router.min.js',
             'bower_components/angular-bootstrap/ui-bootstrap.min.js',
-            'bower_components/angularjs-slider/dist/rzslider.min.js'
+            'bower_components/angularjs-slider/dist/rzslider.min.js',
+            'bower_components/angular-notify/dist/angular-notify.js'
         ],
         srcJs: [
             'js/app.js',
@@ -46,7 +47,8 @@ const path = {
         htmlPartials: 'partials/**/*',
         vendorStyles: [
             'bower_components/bootstrap/dist/css/bootstrap.css',
-            'bower_components/angularjs-slider/dist/rzslider.css'
+            'bower_components/angularjs-slider/dist/rzslider.css',
+            'bower_components/angular-notify/dist/angular-notify.css',
         ],
         srcStyles: [
             'styles/main.scss'

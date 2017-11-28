@@ -34,3 +34,7 @@ class DeliveryInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = DeliveryInfo
         fields = ('name', 'address', 'phone')
+
+
+class PasswordSerializer(serializers.Serializer):
+    password = serializers.CharField(min_length=6, max_length=127)

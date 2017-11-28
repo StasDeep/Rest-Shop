@@ -3,7 +3,8 @@ angular
         'ui.router',
         'ngAnimate',
         'ui.bootstrap',
-        'rzModule'
+        'rzModule',
+        'cgNotify'
     ])
     .config(routeConfig)
     .run(addUserToRootScope)

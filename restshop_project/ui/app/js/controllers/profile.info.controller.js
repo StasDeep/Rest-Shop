@@ -2,7 +2,7 @@ angular
     .module('restShopApp')
     .controller('ProfileInfoController', ProfileInfoController);
 
-function ProfileInfoController($scope, userDataService) {
+function ProfileInfoController($scope, userDataService, notifier) {
     let vm = this;
 
     vm.changePassword = changePassword;
@@ -19,7 +19,9 @@ function ProfileInfoController($scope, userDataService) {
     function changePassword() {
         userDataService.setPassword(vm.password.new).then((response) => {
             vm.password = {};
-            // TODO: add logger notification.
+            notifier.success('Successfully changed password');
+        }, (response) => {
+            notifier.error('Cannot change password');
         });
     }
 }

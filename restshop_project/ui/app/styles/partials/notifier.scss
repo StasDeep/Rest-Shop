@@ -1,0 +1,27 @@
+.cg-notify-message {
+    text-transform: uppercase;
+    border-radius: 0;
+    max-width: 300px;
+}
+
+.cg-notify-message.error {
+    border-width: 1px;
+    border-color: $crimson;
+    background-color: $light;
+    color: $crimson;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+}
+
+.cg-notify-message.success {
+    border-width: 0;
+    background-color: $crimson;
+    color: $light;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.275);
+}
+
+.cg-notify-message.warning {
+    border-width: 0;
+    background-color: #ec7560;
+    color: $light;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.275);
+}

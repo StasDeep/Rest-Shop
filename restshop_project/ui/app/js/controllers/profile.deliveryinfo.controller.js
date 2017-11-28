@@ -2,7 +2,7 @@ angular
     .module('restShopApp')
     .controller('ProfileDeliveryInfoController', ProfileDeliveryInfoController);
 
-function ProfileDeliveryInfoController($scope, userDataService) {
+function ProfileDeliveryInfoController($scope, userDataService, notifier) {
     let vm = this;
 
     vm.setDeliveryInfo = setDeliveryInfo;
@@ -22,7 +22,9 @@ function ProfileDeliveryInfoController($scope, userDataService) {
 
     function setDeliveryInfo() {
         userDataService.setDeliveryInfo(vm.deliveryInfo).then((response) => {
-            // TODO: add logger notification.
+            notifier.success('Successfully changed delivery info');
+        }, (response) => {
+            notifier.error('Cannot change delivery info');
         });
     }
 }
