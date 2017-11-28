@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User, Group, Permission
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth import update_session_auth_hash
 from rest_framework import generics, status
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
@@ -98,6 +99,9 @@ class ChangePasswordView(APIView):
         user = request.user
         user.set_password(request.data['password'])
         user.save()
+
+        # Need to relogin user, because he is logged out after password change.
+        update_session_auth_hash(request, user)
 
         return Response(status=status.HTTP_200_OK)
 
