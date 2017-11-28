@@ -15,7 +15,7 @@ function productDataService(apiService, orderingService) {
     ////////////
 
     function getProduct(id) {
-        return apiService.get('products', id).then(function (response) {
+        return apiService.get('products', id).then((response) => {
             for (let unit of response.data.data.units) {
                 if (unit.images.length == 0) {
                     unit.images.push(config.emptyImageUrl);
@@ -27,7 +27,7 @@ function productDataService(apiService, orderingService) {
     }
 
     function getProducts(paramString) {
-        return apiService.get('products', null, paramString).then(function (response) {
+        return apiService.get('products', null, paramString).then((response) => {
             let items = response.data.data;
 
             for (let i = 0; i < items.length; i++) {
@@ -43,13 +43,13 @@ function productDataService(apiService, orderingService) {
     }
 
     function getProperties() {
-        return apiService.get('properties').then(function (response) {
+        return apiService.get('properties').then((response) => {
             return orderingService.orderProperties(response.data.data);
         });
     }
 
     function getTags() {
-        return apiService.get('tags').then(function (response) {
+        return apiService.get('tags').then((response) => {
             return orderingService.orderTags(response.data.data);
         });
     }

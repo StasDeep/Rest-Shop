@@ -39,7 +39,7 @@ function ProductListController($location, productDataService) {
                 ceil: 995,
                 noSwitching: true,
                 step: 5,
-                translate: function (value, sliderId, label) {
+                translate: (value, sliderId, label) => {
                     switch (label) {
                         case 'model':
                             return 'Min: $' + value;
@@ -49,7 +49,7 @@ function ProductListController($location, productDataService) {
                             return '$' + value
                     }
                 },
-                onEnd: function () {
+                onEnd: () => {
                     refreshFilter();
                 }
             }
@@ -57,12 +57,12 @@ function ProductListController($location, productDataService) {
     }
 
     function getInitializedProperties() {
-        return productDataService.getProperties().then(function (properties) {
+        return productDataService.getProperties().then((properties) => {
             let propertiesFromUrl = $location.search().properties || '';
             propertiesFromUrl = propertiesFromUrl.split(',');
 
-            return properties.map(function (property) {
-                property.values.map(function (value) {
+            return properties.map((property) => {
+                property.values.map((value) => {
                     value.selected = propertiesFromUrl.includes(value.id.toString());
                     return value;
                 });
@@ -72,13 +72,13 @@ function ProductListController($location, productDataService) {
     }
 
     function getInitializedTags() {
-        return productDataService.getTags().then(function (tags) {
+        return productDataService.getTags().then((tags) => {
             let tagsFromUrl = $location.search().tags || '';
-            tagsFromUrl = tagsFromUrl.split(',').map(function (tag) {
+            tagsFromUrl = tagsFromUrl.split(',').map((tag) => {
                 return tag.toLowerCase()
             });
 
-            return tags.map(function (tag) {
+            return tags.map((tag) => {
                 return {
                     name: tag,
                     selected: tagsFromUrl.includes(tag.toLowerCase())
@@ -94,7 +94,7 @@ function ProductListController($location, productDataService) {
         // that is why we can request API with this query string.
         let paramString = $location.url().split('?')[1] || '';
 
-        productDataService.getProducts(paramString).then(function (data) {
+        productDataService.getProducts(paramString).then((data) => {
             vm.hasNext = data.meta.has_next;
             vm.hasPrev = data.meta.has_prev;
             vm.page = data.meta.page;
@@ -106,11 +106,11 @@ function ProductListController($location, productDataService) {
     }
 
     function initializeFilterValues() {
-        getInitializedTags().then(function (tags) {
+        getInitializedTags().then((tags) => {
             vm.tags = tags;
         });
 
-        getInitializedProperties().then(function (properties) {
+        getInitializedProperties().then((properties) => {
             vm.properties = properties;
         });
 
@@ -145,13 +145,7 @@ function ProductListController($location, productDataService) {
     }
 
     function refreshFilter() {
-        let selectedTags = vm.tags
-            .filter(function (tagObj) {
-                return tagObj.selected;
-            })
-            .map(function (tagObj) {
-                return tagObj.name;
-            });
+        let selectedTags = vm.tags.filter(tagObj => tagObj.selected).map(tagObj => tagObj.name);
 
         let tagsParamValue = selectedTags.join(',') || null;
         addFilterParam('tags', tagsParamValue);

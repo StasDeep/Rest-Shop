@@ -18,7 +18,7 @@ function SignupController($state, userDataService) {
     }
 
     function signup() {
-        userDataService.signup(vm.user.email, vm.user.password).then(function (response) {
+        userDataService.signup(vm.user.email, vm.user.password).then((response) => {
             vm.successfullySigned = true;
         });
     }

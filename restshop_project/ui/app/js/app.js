@@ -93,8 +93,8 @@ function addUserToRootScope($rootScope, userDataService) {
 }
 
 function addAuthorization($rootScope, $state) {
-    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-        $rootScope.userPromise.then(function () {
+    $rootScope.$on('$stateChangeStart', (event, toState, toParams, fromState, fromParams) => {
+        $rootScope.userPromise.then(() => {
             if (needAuthentication(toState) && !$rootScope.isLogged()) {
                 event.preventDefault();
                 $state.go('login')

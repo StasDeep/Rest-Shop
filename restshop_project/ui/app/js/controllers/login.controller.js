@@ -17,7 +17,7 @@ function LoginController($state, userDataService) {
     }
 
     function loginUser() {
-        userDataService.login(vm.user.email, vm.user.password).then(function (response) {
+        userDataService.login(vm.user.email, vm.user.password).then((response) => {
             $state.go('product-list');
         });
     }
