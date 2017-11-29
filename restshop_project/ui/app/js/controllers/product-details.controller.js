@@ -3,7 +3,7 @@ angular
     .controller('ProductDetailsController', ProductDetailsController);
 
 function ProductDetailsController($stateParams, $state, $window, $timeout, productDataService, cartOrderDataService,
-                                  orderingService, _, notifier) {
+                                  propertiesTagService, _, notifier) {
     let vm = this;
 
     vm.addToCart = addToCart;
@@ -148,7 +148,7 @@ function ProductDetailsController($stateParams, $state, $window, $timeout, produ
             })
         }
 
-        vm.selectedOptions = orderingService.orderProperties(vm.selectedOptions, 'options');
+        vm.selectedOptions = propertiesTagService.orderProperties(vm.selectedOptions, 'options');
     }
 
     function isChosen() {

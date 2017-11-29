@@ -63,7 +63,9 @@ function ProductListController($location, productDataService) {
 
             return properties.map((property) => {
                 property.values.map((value) => {
-                    value.selected = propertiesFromUrl.includes(value.id.toString());
+                    let idsForValue = property.mapping[value.value];
+                    value.selected = idsForValue.filter(id => !propertiesFromUrl.includes(id.toString())).length == 0;
+
                     return value;
                 });
                 return property;
@@ -151,10 +153,10 @@ function ProductListController($location, productDataService) {
         addFilterParam('tags', tagsParamValue);
 
         let selectedProperties = [];
-        for (let i = 0; i < vm.properties.length; i++) {
-            for (let j = 0; j < vm.properties[i].values.length; j++) {
-                if (vm.properties[i].values[j].selected) {
-                    selectedProperties.push(vm.properties[i].values[j].id)
+        for (let prop of vm.properties) {
+            for (let value of prop.values) {
+                if (value.selected) {
+                    selectedProperties.push(...prop.mapping[value.value]);
                 }
             }
         }

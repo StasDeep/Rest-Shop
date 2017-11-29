@@ -2,7 +2,7 @@ angular
     .module('restShopApp')
     .factory('productDataService', productDataService);
 
-function productDataService(apiService, orderingService) {
+function productDataService(apiService, propertiesTagService) {
     let service = {
         getProduct: getProduct,
         getProducts: getProducts,
@@ -44,13 +44,13 @@ function productDataService(apiService, orderingService) {
 
     function getProperties() {
         return apiService.get('properties').then((response) => {
-            return orderingService.orderProperties(response.data.data);
+            return propertiesTagService.filterProperties(response.data.data);
         });
     }
 
     function getTags() {
         return apiService.get('tags').then((response) => {
-            return orderingService.orderTags(response.data.data);
+            return propertiesTagService.orderTags(response.data.data);
         });
     }
 }
