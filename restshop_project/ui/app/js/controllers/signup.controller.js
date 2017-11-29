@@ -23,7 +23,7 @@ function SignupController(userDataService, notifier) {
         }, (response) => {
             if (response.data.error.email) {
                 if (response.data.error.email[0] == 'Enter a valid email address.') {
-                    notifier.error('Invalid email address')
+                    notifier.error('There is no such email address')
                 } else {
                     notifier.error('Email is already taken');
                 }

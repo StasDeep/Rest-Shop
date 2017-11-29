@@ -16,6 +16,8 @@
                            name="newPassword"
                            placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
                            ng-model="vm.password.new"
+                           minlength="6"
+                           maxlength="127"
                            required>
                 </div>
                 <div class="form-group">
@@ -31,6 +33,16 @@
                 </div>
                 <div>
                     <input class="btn btn-red text-uppercase" type="submit" value="Save" ng-disabled="form.$invalid">
+                </div>
+                <div class='msg-block text-uppercase' ng-show='!form.$valid'>
+                    <p class='msg-error'
+                       ng-show='form.newPassword.$error.minlength || form.newPassword.$error.maxlength'>
+                        Password must be 6-127 characters
+                    </p>
+                    <p class='msg-error'
+                       ng-show='form.newPasswordConfirmation.$touched && form.newPasswordConfirmation.$error.pwMatch'>
+                        Passwords don't match
+                    </p>
                 </div>
             </form>
         </div>

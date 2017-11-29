@@ -13,6 +13,7 @@
                            placeholder="user@example.com"
                            name="email"
                            ng-model="vm.user.email"
+                           ng-model-options="{debounce: 600}"
                            required>
                 </div>
                 <div class="form-group">
@@ -23,6 +24,8 @@
                            name="password"
                            placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"
                            ng-model="vm.user.password"
+                           minlength="6"
+                           maxlength="127"
                            required>
                 </div>
                 <div class="form-group">
@@ -42,10 +45,18 @@
                            value="Sign up"
                            ng-disabled="!signupForm.$valid">
                 </div>
-                <div class='msg-block' ng-show='!signupForm.$valid'>
-                <span class='msg-error' ng-show='signupForm.passwordConfirmation.$error.pwMatch'>
-                    Passwords don't match.
-                </span>
+                <div class='msg-block text-uppercase' ng-show='!signupForm.$valid'>
+                    <p class='msg-error' ng-show='signupForm.email.$error.email'>
+                        Email is not valid
+                    </p>
+                    <p class='msg-error'
+                       ng-show='signupForm.password.$error.minlength || signupForm.password.$error.maxlength'>
+                        Password must be 6-127 characters
+                    </p>
+                    <p class='msg-error'
+                       ng-show='signupForm.passwordConfirmation.$touched && signupForm.passwordConfirmation.$error.pwMatch'>
+                        Passwords don't match
+                    </p>
                 </div>
             </form>
             <div class="jumbotron jumbotron-crimson"

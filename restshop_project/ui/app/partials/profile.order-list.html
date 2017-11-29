@@ -9,7 +9,11 @@
                 <div class="col-xs-5 text-right">{{ order.created_at | date: 'mediumDate' }}</div>
             </a>
 
-            <div ng-if="!vm.orders.length && !vm.loading"><p>No orders yet</p></div>
+            <div ng-if="!vm.orders.length && !vm.loading">
+                <div class="jumbotron jumbotron-crimson">
+                    No orders yet
+                </div>
+            </div>
 
             <div class="text-center" ng-show="vm.loading">
                 <img src="/static/img/spinner.gif">
