@@ -61,8 +61,7 @@
         </div>
 
         <div class="filter-property-block"
-             ng-repeat="property in vm.properties"
-             ng-if="property.name !== 'Color'">
+             ng-repeat="property in vm.properties">
             <p class="filter-title property-name text-uppercase"
                 ng-init="isCollapsed = true"
                 ng-click="isCollapsed = !isCollapsed">

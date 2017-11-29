@@ -23,12 +23,41 @@ function propertiesTagService(_) {
         return [values.map(v => v.value), mapping];
     }
 
+    function filterColors(colors) {
+        let uniqueColors = [
+            'Black',
+            'Grey',
+            'White',
+            'Red',
+            'Blue',
+            'Green',
+            'Yellow',
+            'Pink',
+            'Orange'
+        ].sort();
+
+        let mapping = {};
+
+        for (let uniqueColor of uniqueColors) {
+            mapping[uniqueColor] = [];
+            for (let color of colors) {
+                if (color.value.toLowerCase().includes(uniqueColor.toLowerCase())) {
+                    mapping[uniqueColor].push(color.id);
+                }
+            }
+        }
+
+        return [uniqueColors, mapping];
+    }
+
     function filterProperties(properties) {
         for (let prop of properties) {
             let result = [];
 
             if (prop.name.toLowerCase() == 'size') {
                 result = filterSizes(prop['values']);
+            } else if (prop.name.toLowerCase() == 'color') {
+                result = filterColors(prop['values']);
             } else {
                 result = createMapping(prop['values']);
             }

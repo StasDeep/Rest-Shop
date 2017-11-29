@@ -64,7 +64,9 @@ function ProductListController($location, productDataService) {
             return properties.map((property) => {
                 property.values.map((value) => {
                     let idsForValue = property.mapping[value.value];
-                    value.selected = idsForValue.filter(id => !propertiesFromUrl.includes(id.toString())).length == 0;
+                    let allIdsInUrl = idsForValue.filter(id => !propertiesFromUrl.includes(id.toString())).length == 0;
+                    let anyId = idsForValue.length > 0;
+                    value.selected = anyId && allIdsInUrl;
 
                     return value;
                 });
