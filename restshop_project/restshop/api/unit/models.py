@@ -38,3 +38,8 @@ class UnitImage(models.Model):
             product_title = 'No unit assigned'
 
         return '{}: {}'.format(product_title, self.image.name)
+
+    def delete(self, *args, **kwargs):
+        self.image.delete()
+
+        super(UnitImage, self).delete(*args, **kwargs)
