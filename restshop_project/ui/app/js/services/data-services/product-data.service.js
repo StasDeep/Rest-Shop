@@ -2,7 +2,7 @@ angular
     .module('restShopApp')
     .factory('productDataService', productDataService);
 
-function productDataService(apiService, propertiesTagService) {
+function productDataService(apiService, propertiesTagService, config) {
     let service = {
         getProduct: getProduct,
         getProducts: getProducts,
