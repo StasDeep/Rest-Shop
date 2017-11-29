@@ -63,7 +63,7 @@ class SellerCreateView(APIView):
             address=serializer.validated_data['seller']['address']
         )
 
-        return user
+        return Response(UserSerializer(user).data)
 
     def get_staff_group(self):
         """Get staff group with seller permissions or create if does not exist."""
