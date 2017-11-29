@@ -110,7 +110,7 @@ class OrderUnitInline(QuerysetForSellerMixin, admin.StackedInline):
         if request.user.is_superuser:
             return self.readonly_fields
 
-        return self.readonly_fields + ('unit', 'quantity')
+        return self.readonly_fields + ('unit', 'quantity', 'unit_price')
 
 
 class UnitImageInline(QuerysetForSellerMixin, admin.StackedInline):
@@ -156,11 +156,13 @@ class ProductAdmin(StaffModelAdmin):
 class UnitAdmin(StaffModelAdmin):
     seller_field_path = SELLER_LOOKUPS['unit']['lookup']
     form = UnitForm
-    inlines = (UnitImageInline,)
+    # inlines = (UnitImageInline,)
+    raw_id_fields = ('product', 'value_set')
 
 
 class UnitImageAdmin(StaffModelAdmin):
     seller_field_path = SELLER_LOOKUPS['unitimage']['lookup']
+    raw_id_fields = ('unit_set',)
 
 
 class OrderAdmin(StaffModelAdmin):
@@ -176,3 +178,20 @@ class OrderAdmin(StaffModelAdmin):
 
 class OrderUnitAdmin(StaffModelAdmin):
     seller_field_path = SELLER_LOOKUPS['orderunit']['lookup']
+    raw_id_fields = ('unit', 'order')
+
+
+class PropertyAdmin(admin.ModelAdmin):
+    def get_readonly_fields(self, request, obj=None):
+        if request.user.is_superuser:
+            return self.readonly_fields
+
+        return self.readonly_fields + ('name',)
+
+
+class PropertyValueAdmin(admin.ModelAdmin):
+    def get_readonly_fields(self, request, obj=None):
+        if request.user.is_superuser:
+            return self.readonly_fields
+
+        return self.readonly_fields + ('property', 'value')

@@ -79,8 +79,8 @@ class SellerCreateView(APIView):
             'unitimage': all_permissions,
             'orderunit': all_permissions,
             'order': ('change',),
-            'property': ('add',),
-            'propertyvalue': ('add',)
+            'property': ('add', 'change'),
+            'propertyvalue': ('add', 'change')
         }
 
         for content_type in content_types:
