@@ -107,6 +107,10 @@ function ProductDetailsController($stateParams, $state, $window, $timeout, produ
 
     function getUnitPrice() {
         let prices = getMatchingUnits().map(unit => unit.price);
+        if (prices.length == 0) {
+            return '';
+        }
+
         let minPrice = Math.min(...prices);
         let maxPrice = Math.max(...prices);
 
