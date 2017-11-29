@@ -25,7 +25,7 @@
         <div class="filter-property-block">
             <p class="filter-title property-name text-uppercase"
                ng-init="isFilterCollapsed = true"
-               ng-click="isFilterCollapsed = !isFilterCollapsed">
+               ng-click="isFilterCollapsed = !isFilterCollapsed; vm.showSlider();">
                 Filter <span class="glyphicon glyphicon-chevron-down collapse-chevron"
                              ng-class="{'flipped': !isFilterCollapsed}"></span>
             </p>
@@ -40,26 +40,16 @@
                         In stock
                     </label>
                 </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="col-sm-4">
-        <div class="filter-property-block">
-            <p class="filter-title property-name text-uppercase"
-               ng-init="isPriceCollapsed = true"
-               ng-click="isPriceCollapsed = !isPriceCollapsed; vm.showSlider();">
-                Price <span class="glyphicon glyphicon-chevron-down collapse-chevron"
-                            ng-class="{'flipped': !isPriceCollapsed}"></span>
-            </p>
-            <div uib-collapse="isPriceCollapsed" class="property-collapsing-block">
                 <rzslider class="price-slider"
                           rz-slider-model="vm.slider.min"
                           rz-slider-high="vm.slider.max"
                           rz-slider-options="vm.slider.options"></rzslider>
             </div>
         </div>
+    </div>
 
+    <div class="col-sm-4">
         <div class="filter-property-block"
              ng-repeat="property in vm.properties">
             <p class="filter-title property-name text-uppercase"
