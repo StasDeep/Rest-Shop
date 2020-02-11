@@ -10,7 +10,7 @@ coreschema==0.0.4
 cryptography==2.0.3
 cssselect==1.0.1
 decorator==4.1.2
-Django==1.11.4
+Django==1.11.28
 django-cors-headers==2.1.0
 django-crispy-forms==1.6.1
 django-filter==1.0.4
