@@ -7,7 +7,7 @@ chardet==3.0.4
 constantly==15.1.0
 coreapi==2.3.1
 coreschema==0.0.4
-cryptography==2.0.3
+cryptography==3.2
 cssselect==1.0.1
 decorator==4.1.2
 Django==1.11.4
