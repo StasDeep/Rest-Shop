@@ -44,7 +44,7 @@ pyOpenSSL==17.3.0
 pytz==2017.2
 queuelib==1.4.2
 requests==2.18.4
-Scrapy==1.4.0
+Scrapy==2.6.1
 service-identity==17.0.0
 simplegeneric==0.8.1
 six==1.10.0
