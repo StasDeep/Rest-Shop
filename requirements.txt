@@ -24,7 +24,7 @@ ipython-genutils==0.2.0
 itypes==1.1.0
 jedi==0.10.2
 Jinja2==2.9.6
-lxml==4.0.0
+lxml==4.9.1
 Markdown==2.6.9
 MarkupSafe==1.0
 olefile==0.44
